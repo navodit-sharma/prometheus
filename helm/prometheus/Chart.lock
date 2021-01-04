@@ -1,0 +1,9 @@
+dependencies:
+- name: kube-prometheus-stack
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 12.8.1
+- name: prometheus-elasticsearch-exporter
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 4.0.1
+digest: sha256:631d260742beeea7b49cc5f2f2fef1bb776c92306b8b2a91804e34f56ee8fbd7
+generated: "2021-01-04T16:46:09.14081+02:00"

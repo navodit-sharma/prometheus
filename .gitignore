@@ -1,0 +1,7 @@
+helm/**/charts/**/*.tgz
+helm/**/*_OUTPUT_*.yaml
+helm/**/requirements.lock
+helm/**/tmpcharts
+.idea
+*.iml
+*.DS_Store

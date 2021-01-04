@@ -1,0 +1,13 @@
+apiVersion: v2
+appVersion: "1.0.0"
+description: "Prometheus - Monitoring tool"
+name: prometheus
+version: 1.0.0
+dependencies:
+  - name: kube-prometheus-stack
+    version: ~12.8.0
+    repository: "https://prometheus-community.github.io/helm-charts"
+  - name: prometheus-elasticsearch-exporter
+    version: ~4.0.0
+    repository: "https://prometheus-community.github.io/helm-charts"
+    condition: prometheus-elasticsearch-exporter.enabled
