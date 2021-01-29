@@ -1,0 +1,16 @@
+apiVersion: getambassador.io/v2
+kind: Mapping
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  name: "{{ .Release.Name }}-prometheus-mapping"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  add_response_headers:
+    Strict-Transport-Security: max-age=31536000; includeSubDomains
+    X-Content-Type-Options: nosniff
+    X-XSS-Protection: 1; mode=block
+  host: monitor-sandbox.valamis.io
+  prefix: "/prometheus/"
+  service: "http://{{ .Release.Name }}-prometheus-prometheus:9090"
+  timeout_ms: 90000

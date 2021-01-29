@@ -1,0 +1,10 @@
+apiVersion: getambassador.io/v2
+kind: Module
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  name: "ambassador"
+  namespace: "{{ .Release.Namespace }}" 
+spec:
+  config:
+  {{- .Values.ambassador.module.config | nindent 4 }}
