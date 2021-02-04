@@ -6,11 +6,12 @@ metadata:
   name: "{{ .Release.Name }}-alertmanager-mapping"
   namespace: "{{ .Release.Namespce }}"
 spec:
+  ambassador_id: [ "ambassador1","ambassador2" ]
   add_response_headers:
     Strict-Transport-Security: max-age=31536000; includeSubDomains
     X-Content-Type-Options: nosniff
     X-XSS-Protection: 1; mode=block
-  host: monitor-sandbox.valamis.io
+  host: sandbox.monitor.valamis.io
   prefix: "/alertmanager/"
   service: "http://{{ .Release.Name }}-prometheus-alertmanager:9093"
   timeout_ms: 90000

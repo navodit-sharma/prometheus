@@ -1,3 +1,14 @@
+---
+
+global:
+  ambassador1:
+    enabled: true 
+  ambassador2:
+    enabled: false
+  prometheus-elasticsearch-exporter:
+    enabled: false
+  kube-prometheus-stack:
+    enabled: true
 
 
 
