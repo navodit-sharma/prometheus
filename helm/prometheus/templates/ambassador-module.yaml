@@ -6,6 +6,6 @@ metadata:
   name: "ambassador"
   namespace: "{{ .Release.Namespace }}" 
 spec:
-  ambassador_id: [ "ambassador1" ]
+  #ambassador_id: [ "ambassador1" ]
   config:
-  {{- .Values.ambassador1.module.config | nindent 4 }}
+  {{- .Values.ambassador.module.config | nindent 4 }}

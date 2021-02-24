@@ -1,8 +1,14 @@
+
+
+
+
 helm/**/charts/**/*.tgz
 helm/**/*_OUTPUT_*.yaml
 helm/**/requirements.lock
 helm/**/tmpcharts
 helm/**/Chart.lock
+helm/**/.helmignore
 .idea
 *.iml
 *.DS_Store
+

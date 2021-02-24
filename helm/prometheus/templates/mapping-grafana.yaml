@@ -6,12 +6,12 @@ metadata:
   name: "{{ .Release.Name }}-grafana-mapping"
   namespace: "{{ .Release.Namespace }}"
 spec:
-  ambassador_id: [ "ambassador1","ambassador2" ]
+  #ambassador_id: [ "ambassador1","ambassador2" ]
   add_response_headers:
     Strict-Transport-Security: max-age=31536000; includeSubDomains
     X-Content-Type-Options: nosniff
     X-XSS-Protection: 1; mode=block
-  host: sandbox.monitor.valamis.io
+  host: {{ .Values.global.externalUrl }}
   prefix: "/"
   service: "http://{{ .Release.Name }}-grafana:80"
   timeout_ms: 90000

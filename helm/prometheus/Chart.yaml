@@ -11,14 +11,12 @@ dependencies:
   - name: ambassador
     version: ~6.5.0
     repository: "https://www.getambassador.io"
-    alias: ambassador1
-    condition: global.ambassador1.enabled
-  - name: ambassador
-    version: ~6.5.0
-    repository: "https://www.getambassador.io"
-    alias: ambassador2
-    condition: global.ambassador2.enabled
+    condition: global.ambassador.enabled
   - name: prometheus-elasticsearch-exporter
     version: ~4.0.0
     repository: "https://prometheus-community.github.io/helm-charts"
     condition: global.prometheus-elasticsearch-exporter.enabled
+#  - name: grafana
+#    version: 5.8.14
+#    repository: https://grafana.github.io/helm-charts
+#    condition: grafana.enabled

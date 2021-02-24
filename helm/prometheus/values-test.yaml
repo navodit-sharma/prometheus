@@ -1,16 +1,51 @@
 ---
 
 global:
-  ambassador1:
+  ambassador:
     enabled: true 
-  ambassador2:
-    enabled: false
-  prometheus-elasticsearch-exporter:
-    enabled: false
   kube-prometheus-stack:
     enabled: true
+  prometheus-elasticsearch-exporter:
+    enabled: true 
+  externalUrl: "sandbox.monitor.valamis.io"
+  smtpApiKey: "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"
+  smtpDestinationAddress: "navodit.sharma@valamis.com"
 
+ambassador:
+  service:
+    loadBalancerIP: "20.50.134.231"
 
+prometheus-elasticsearch-exporter:
+  es:
+    uri: "http://aux-elasticsearch-master.shared.svc.cluster.local:9200"
 
-
-
+kube-prometheus-stack: 
+  alertmanager:
+    alertmanagerSpec:
+      externalUrl: "http://sandbox.monitor.valamis.io/alertmanager"
+      storage:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: "managed-premium"
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 5Gi
+  grafana:
+    persistence:
+      size: 10Gi
+      storageClassName: "managed-premium"
+    env: 
+      GF_SECURITY_ADMIN_PASSWORD: "nahibataunga"
+  prometheus:
+    prometheusSpec:
+      externalLabels:
+        cluster: "MC_ValamisSandbox_v4-sandbox-aks_westeurope"
+      storageSpec:      
+        volumeClaimTemplate:
+          spec:
+            storageClassName: "managed-premium"
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 50Gi
