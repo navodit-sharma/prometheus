@@ -6,7 +6,7 @@ global:
   kube-prometheus-stack:
     enabled: true
   prometheus-elasticsearch-exporter:
-    enabled: true 
+    enabled: false 
   externalUrl: "sandbox.monitor.valamis.io"
   smtpApiKey: "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"
   smtpDestinationAddress: "navodit.sharma@valamis.com"
@@ -17,10 +17,11 @@ ambassador:
 
 prometheus-elasticsearch-exporter:
   es:
-    uri: "http://aux-elasticsearch-master.shared.svc.cluster.local:9200"
+    uri: 'http://aux-elasticsearch-master.shared.svc.cluster.local:9200'
 
 kube-prometheus-stack: 
   alertmanager:
+    enabled: true
     alertmanagerSpec:
       externalUrl: "http://sandbox.monitor.valamis.io/alertmanager"
       storage:
@@ -37,6 +38,7 @@ kube-prometheus-stack:
       storageClassName: "managed-premium"
     env: 
       GF_SECURITY_ADMIN_PASSWORD: "nahibataunga"
+      GF_SMTP_ENABLED: "true"
   prometheus:
     prometheusSpec:
       externalLabels:
