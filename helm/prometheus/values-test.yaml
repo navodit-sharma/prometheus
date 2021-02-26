@@ -8,7 +8,7 @@ global:
   prometheus-elasticsearch-exporter:
     enabled: false 
   externalUrl: "sandbox.monitor.valamis.io"
-  smtpApiKey: "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"
+  smtpApiKey: "SENDGRID_API_KEY"
   smtpDestinationAddress: "navodit.sharma@valamis.com"
 
 ambassador:
@@ -37,7 +37,7 @@ kube-prometheus-stack:
       size: 10Gi
       storageClassName: "managed-premium"
     env: 
-      GF_SECURITY_ADMIN_PASSWORD: "nahibataunga"
+      GF_SECURITY_ADMIN_PASSWORD: "GR_PASSWORD"
       GF_SMTP_ENABLED: "true"
   prometheus:
     prometheusSpec:
