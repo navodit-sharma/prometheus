@@ -5,7 +5,7 @@ name: prometheus
 version: 1.0.0
 dependencies:
   - name: kube-prometheus-stack
-    version: ~12.8.0
+    version: 12.8.1
     repository: "https://prometheus-community.github.io/helm-charts"
     condition: global.kube-prometheus-stack.enabled
   - name: ambassador
