@@ -1,0 +1,91 @@
+{{- $secretName := printf "%s-secret" ($.Values.global.externalUrl | adler32sum) }}
+{{- $issuer := printf "%s-issuer" ($.Values.global.externalUrl | adler32sum) }}
+---
+{{- if not $.Values.global.web.certManagerApiMigration }}
+apiVersion: certmanager.k8s.io/v1alpha1
+{{- else }}
+apiVersion: cert-manager.io/v1
+{{- end }}
+kind: Issuer
+metadata:
+  name: {{ $issuer }}
+  namespace: {{ $.Release.Namespace }}
+spec:
+  acme:
+    server: "https://acme-v02.api.letsencrypt.org/directory"
+    preferredChain: "{{ .Values.global.web.preferredRootChain }}"
+    email: {{ tpl $.Values.global.web.issuerEmail . }}
+    privateKeySecretRef:
+      name: {{ $issuer }}
+    {{- if not $.Values.global.web.certManagerApiMigration }}
+    http01: {}
+    {{- else }}
+    solvers:
+      - http01:
+          ingress:
+            class: nginx
+    {{- end }}
+---
+apiVersion: getambassador.io/v2
+kind: Mapping
+metadata:
+  name: {{ $.Release.Name }}-{{ $.Chart.Name }}-{{ $.Values.global.externalUrl | adler32sum }}-crt-svc
+spec:
+  host: {{ $.Values.global.externalUrl }}
+  prefix: "/.well-known/acme-challenge/"
+  rewrite: ""
+  service: {{ $.Release.Name }}-{{ $.Chart.Name }}-{{ $.Values.global.externalUrl | adler32sum }}-crt-svc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $.Release.Name }}-{{ $.Chart.Name }}-{{ $.Values.global.externalUrl | adler32sum }}-crt-svc
+spec:
+  ports:
+    - port: 80
+      targetPort: 8089
+  selector:
+    {{- if not $.Values.global.web.certManagerApiMigration }}
+    certmanager.k8s.io/acme-http-domain: "{{ $.Values.global.externalUrl | adler32sum }}"
+    {{- else }}
+    acme.cert-manager.io/http-domain: "{{ $.Values.global.externalUrl | adler32sum }}"
+    {{- end }}
+---
+{{- if not $.Values.global.web.certManagerApiMigration }}
+apiVersion: certmanager.k8s.io/v1alpha1
+{{- else }}
+apiVersion: cert-manager.io/v1
+{{- end }}
+kind: Certificate
+metadata:
+  name: {{ $secretName }}
+  namespace: {{ $.Release.Namespace }}
+spec:
+  secretName: {{ $secretName }}
+  issuerRef:
+    name: {{ $issuer }}
+    kind: Issuer
+  commonName: {{ $.Values.global.externalUrl }}
+  dnsNames:
+    - {{ $.Values.global.externalUrl }}
+  {{- if not $.Values.global.web.certManagerApiMigration }}
+  acme:
+    config:
+    - http01:
+        ingressClass: nginx
+      domains:
+        - {{ $.Values.global.externalUrl }}
+  {{- end }}
+---
+apiVersion: getambassador.io/v2
+kind: TLSContext
+metadata:
+  name: {{ $.Values.global.externalUrl }}-context
+spec:
+  hosts:
+    - {{ $.Values.global.externalUrl }}
+  secret: {{ $secretName }}
+  alpn_protocols: h2,http/1.1
+  min_tls_version: v1.2
+  max_tls_version: v1.3
+  redirect_cleartext_from: 8080

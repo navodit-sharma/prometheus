@@ -8,6 +8,7 @@ helm/**/requirements.lock
 helm/**/tmpcharts
 helm/**/Chart.lock
 helm/**/.helmignore
+helm/**/values-sandbox.yaml
 .idea
 *.iml
 *.DS_Store
