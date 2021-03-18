@@ -1,7 +1,10 @@
+
+{{- if $.Values.global.web.ssl.enabled -}}
 {{- $secretName := printf "%s-secret" ($.Values.global.externalUrl | adler32sum) }}
+{{- if $.Values.global.web.ssl.letsencrypt.enabled -}}
 {{- $issuer := printf "%s-issuer" ($.Values.global.externalUrl | adler32sum) }}
 ---
-{{- if not $.Values.global.web.certManagerApiMigration }}
+{{- if not $.Values.global.web.ssl.letsencrypt.certManagerApiMigration }}
 apiVersion: certmanager.k8s.io/v1alpha1
 {{- else }}
 apiVersion: cert-manager.io/v1
@@ -12,12 +15,12 @@ metadata:
   namespace: {{ $.Release.Namespace }}
 spec:
   acme:
-    server: "https://acme-v02.api.letsencrypt.org/directory"
-    preferredChain: "{{ .Values.global.web.preferredRootChain }}"
-    email: {{ tpl $.Values.global.web.issuerEmail . }}
+    server: "{{ .Values.global.web.ssl.letsencrypt.server }}"
+    preferredChain: "{{ .Values.global.web.ssl.letsencrypt.preferredRootChain }}"
+    email: {{ tpl $.Values.global.web.ssl.letsencrypt.issuerEmail . }}
     privateKeySecretRef:
       name: {{ $issuer }}
-    {{- if not $.Values.global.web.certManagerApiMigration }}
+    {{- if not $.Values.global.web.ssl.letsencrypt.certManagerApiMigration }}
     http01: {}
     {{- else }}
     solvers:
@@ -45,13 +48,13 @@ spec:
     - port: 80
       targetPort: 8089
   selector:
-    {{- if not $.Values.global.web.certManagerApiMigration }}
+    {{- if not $.Values.global.web.ssl.letsencrypt.certManagerApiMigration }}
     certmanager.k8s.io/acme-http-domain: "{{ $.Values.global.externalUrl | adler32sum }}"
     {{- else }}
     acme.cert-manager.io/http-domain: "{{ $.Values.global.externalUrl | adler32sum }}"
     {{- end }}
 ---
-{{- if not $.Values.global.web.certManagerApiMigration }}
+{{- if not $.Values.global.web.ssl.letsencrypt.certManagerApiMigration }}
 apiVersion: certmanager.k8s.io/v1alpha1
 {{- else }}
 apiVersion: cert-manager.io/v1
@@ -68,7 +71,7 @@ spec:
   commonName: {{ $.Values.global.externalUrl }}
   dnsNames:
     - {{ $.Values.global.externalUrl }}
-  {{- if not $.Values.global.web.certManagerApiMigration }}
+  {{- if not $.Values.global.web.ssl.letsencrypt.certManagerApiMigration }}
   acme:
     config:
     - http01:
@@ -89,3 +92,37 @@ spec:
   min_tls_version: v1.2
   max_tls_version: v1.3
   redirect_cleartext_from: 8080
+{{- else if and .Values.global.web.ssl.externalSecret.enabled (eq .Values.global.web.ssl.externalSecret.backendType "azureKeyVault") }}
+---
+# Adding cert and key into secret from Key vault. 
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: {{ $secretName }}
+spec:
+  backendType: {{ .Values.global.web.ssl.externalSecret.backendType }}
+  template:
+    type: kubernetes.io/tls
+  keyVaultName: {{ .Values.global.web.ssl.externalSecret.keyVaultName }}
+  data:
+    - name: tls.crt
+      key: {{ .Values.global.externalUrl | replace "." "-" }}-crt
+      isBinary: false
+    - name: tls.key
+      key: {{ .Values.global.externalUrl | replace "." "-" }}-key
+      isBinary: false
+{{- else }}
+---
+# Secret with self-signed crt and key.
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ $secretName }}
+type: kubernetes.io/tls
+data:
+  tls.crt: |
+    {{ .Values.global.web.ssl.default.selfsigned.cert | b64enc }}
+  tls.key: |
+    {{ .Values.global.web.ssl.default.selfsigned.key | b64enc }}
+{{- end -}}
+{{- end -}}

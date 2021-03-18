@@ -54,7 +54,7 @@
                     "type": "object",
                     "properties": {
                         "config": {
-                            "type": "string"
+                            "type": "object"
                         }
                     }
                 },
@@ -185,6 +185,134 @@
                 },
                 "smtpDestinationAddress": {
                     "type": "string"
+                },
+                "web": {
+                  "type": "object",
+                  "properties": {
+                    "ssl": {
+                      "type": "object",
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "letsencrypt": {
+                              "properties": {
+                                "enabled": {
+                                  "enum": [
+                                    true
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "properties": {
+                            "externalSecret": {
+                              "properties": {
+                                "enabled": {
+                                  "enum": [
+                                    true
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "properties": {
+                            "externalSecret": {
+                              "properties": {
+                                "enabled": {
+                                  "enum": [
+                                    false
+                                  ]
+                                }
+                              }
+                            },
+                            "letsencrypt": {
+                              "properties": {
+                                "enabled": {
+                                  "enum": [
+                                    false
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ],
+                      "properties": {
+                        "default": {
+                          "type": "object",
+                          "properties": {
+                            "selfsigned": {
+                              "type": "object",
+                              "properties": {
+                                "cert": {
+                                  "type": "string"
+                                },
+                                "key": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "externalSecret": {
+                          "type": "object",
+                          "if": {
+                            "properties": {
+                              "enabled": {
+                                "enum": [true]
+                              }
+                            }
+                          },
+                          "then": {
+                            "required": [ "keyVaultName" ],
+                            "properties": {
+                              "keyVaultName": {
+                                "minLength": 1
+                              }
+                            }
+                          },
+                          "properties": {
+                            "backendType": {
+                              "type": "string"
+                            },
+                            "enabled": {
+                              "type": "boolean"
+                            },
+                            "keyVaultName": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "letsencrypt": {
+                          "type": "object",
+                          "properties": {
+                            "certManagerApiMigration": {
+                              "type": "boolean"
+                            },
+                            "enabled": {
+                              "type": "boolean"
+                            },
+                            "issuerEmail": {
+                              "type": "string"
+                            },
+                            "preferredRootChain": {
+                              "type": "string"
+                            },
+                            "server": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
             }
         },

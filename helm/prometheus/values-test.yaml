@@ -10,6 +10,15 @@ global:
   externalUrl: "ENV.monitor.valamis.io"
   smtpApiKey: "SENDGRID_API_KEY"
   smtpDestinationAddress: "navodit.sharma@valamis.com"
+  web:
+    ssl:
+      enabled: true 
+      letsencrypt:
+        enabled: true 
+        certManagerApiMigration: true
+      externalSecret: 
+        enabled: false
+        keyVaultName: "CHANGE_ME"
 
 ambassador:
   service:

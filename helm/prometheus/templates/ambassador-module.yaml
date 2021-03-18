@@ -8,4 +8,7 @@ metadata:
 spec:
   #ambassador_id: [ "ambassador1" ]
   config:
-  {{- .Values.ambassador.module.config | nindent 4 }}
+  {{- .Values.ambassador.module.config.custom | nindent 4 }}
+  {{- if not .Values.global.web.ssl.letsencrypt.enabled -}}
+  {{- .Values.ambassador.module.config.ipWhitelist | nindent 4 }}
+  {{- end -}}
