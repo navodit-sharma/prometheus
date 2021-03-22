@@ -1,0 +1,8 @@
+
+# Excluding all files except ".gitkeep" from helm/prometheus/charts directory
+
+# exclude all 
+*
+# but not files listed below
+!.gitignore
+!.gitkeep 
