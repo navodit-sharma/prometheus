@@ -1,8 +1,4 @@
 
-
-
-
-helm/**/charts/**/*.tgz
 helm/**/*_OUTPUT_*.yaml
 helm/**/requirements.lock
 helm/**/tmpcharts
