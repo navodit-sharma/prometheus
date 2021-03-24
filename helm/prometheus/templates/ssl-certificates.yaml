@@ -1,6 +1,19 @@
 
 {{- if $.Values.global.web.ssl.enabled -}}
 {{- $secretName := printf "%s-secret" ($.Values.global.externalUrl | adler32sum) }}
+---
+apiVersion: getambassador.io/v2
+kind: TLSContext
+metadata:
+  name: {{ $.Values.global.externalUrl }}-context
+spec:
+  hosts:
+    - {{ $.Values.global.externalUrl }}
+  secret: {{ $secretName }}
+  alpn_protocols: h2,http/1.1
+  min_tls_version: v1.2
+  max_tls_version: v1.3
+  redirect_cleartext_from: 8080
 {{- if $.Values.global.web.ssl.letsencrypt.enabled -}}
 {{- $issuer := printf "%s-issuer" ($.Values.global.externalUrl | adler32sum) }}
 ---
@@ -79,19 +92,6 @@ spec:
       domains:
         - {{ $.Values.global.externalUrl }}
   {{- end }}
----
-apiVersion: getambassador.io/v2
-kind: TLSContext
-metadata:
-  name: {{ $.Values.global.externalUrl }}-context
-spec:
-  hosts:
-    - {{ $.Values.global.externalUrl }}
-  secret: {{ $secretName }}
-  alpn_protocols: h2,http/1.1
-  min_tls_version: v1.2
-  max_tls_version: v1.3
-  redirect_cleartext_from: 8080
 {{- else if and .Values.global.web.ssl.externalSecret.enabled (eq .Values.global.web.ssl.externalSecret.backendType "azureKeyVault") }}
 ---
 # Adding cert and key into secret from Key vault. 
