@@ -1,4 +1,5 @@
 
+{{- if $.Values.global.ambassador.enabled -}}
 {{- if $.Values.global.web.ssl.enabled -}}
 {{- $secretName := printf "%s-secret" ($.Values.global.externalUrl | adler32sum) }}
 ---
@@ -124,5 +125,6 @@ data:
     {{ .Values.global.web.ssl.default.selfsigned.cert | b64enc }}
   tls.key: |
     {{ .Values.global.web.ssl.default.selfsigned.key | b64enc }}
+{{- end -}}
 {{- end -}}
 {{- end -}}

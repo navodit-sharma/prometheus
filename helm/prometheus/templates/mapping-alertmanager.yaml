@@ -1,3 +1,4 @@
+{{- if $.Values.global.ambassador.enabled -}}
 apiVersion: getambassador.io/v2
 kind: Mapping
 metadata:
@@ -15,3 +16,4 @@ spec:
   prefix: "/alertmanager/"
   service: "http://{{ .Release.Name }}-prometheus-alertmanager:9093"
   timeout_ms: 90000
+{{- end -}}

@@ -1,3 +1,4 @@
+{{- if $.Values.global.ambassador.enabled -}}
 apiVersion: getambassador.io/v2
 kind: Module
 metadata:
@@ -12,3 +13,4 @@ spec:
   {{- if not .Values.global.web.ssl.letsencrypt.enabled -}}
   {{- .Values.ambassador.module.config.ipWhitelist | nindent 4 }}
   {{- end -}}
+{{- end -}}
