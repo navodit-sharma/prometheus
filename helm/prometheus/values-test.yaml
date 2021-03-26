@@ -7,9 +7,10 @@ global:
     enabled: true
   prometheus-elasticsearch-exporter:
     enabled: false 
-  externalUrl: "ENV.monitor.valamis.io"
-  smtpApiKey: "SENDGRID_API_KEY"
-  smtpDestinationAddress: "navodit.sharma@valamis.com"
+  grafanaAdminPassword: CHANGE_ME 
+  externalUrl: "CHANGE_ME" 
+  smtpApiKey: CHANGE_ME
+  smtpDestinationAddress: "CHANGE_ME"
   web:
     ssl:
       enabled: true 
@@ -22,7 +23,7 @@ global:
 
 ambassador:
   service:
-    loadBalancerIP: "LOAD_BALANCER_IP"
+    loadBalancerIP: "CHANGE_ME"
 
 prometheus-elasticsearch-exporter:
   es:
@@ -46,7 +47,6 @@ kube-prometheus-stack:
       size: 10Gi
       storageClassName: "managed-premium"
     env: 
-      GF_SECURITY_ADMIN_PASSWORD: "GF_ADMIN_PASSWORD"
       GF_SMTP_ENABLED: "true"
   prometheus:
     prometheusSpec:

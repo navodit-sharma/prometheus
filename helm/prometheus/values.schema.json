@@ -143,6 +143,7 @@
         "global": {
             "type": "object",
             "required": [
+                "grafanaAdminPassword",
                 "externalUrl",
                 "smtpApiKey",
                 "smtpDestinationAddress"
@@ -155,6 +156,10 @@
                             "type": "boolean"
                         }
                     }
+                },
+                "grafanaAdminPassword": {
+                  "type": "string",
+                  "minLength": 12
                 },
                 "externalUrl": {
                     "type": "string",
@@ -508,9 +513,11 @@
                                 ],
                                 "properties": {
                                     "GF_SMTP_PASSWORD": {
+                                        "type": "string",
                                         "minLength": 1
                                     },
                                     "GF_SMTP_USER": {
+                                        "type": "string",
                                         "minLength": 1
                                     }
                                 }
