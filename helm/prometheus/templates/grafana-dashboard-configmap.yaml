@@ -1,0 +1,21 @@
+{{ $releasename := .Release.Name }}
+{{ $releasenamespace := .Release.Namespace }}
+{{ range $path, $_ := .Files.Glob "files/dashboards/*.json" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    meta.helm.sh/release-name: "{{ $releasename }}"
+    meta.helm.sh/release-namespace: "{{ $releasenamespace }}"
+  labels:
+    app: prometheus-grafana
+    app.kubernetes.io/managed-by: Helm
+    grafana_dashboard: "1"
+    release: "{{ $releasename }}"
+  name: "{{ $releasename }}-dashboard-cm-{{ $path | base | trimSuffix ".json" }}"
+  namespace: "{{ $releasenamespace }}"
+data:
+  {{ $path | base }}: |- 
+{{ $.Files.Get $path | indent 4 }}
+---
+{{ end }}
