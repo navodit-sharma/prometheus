@@ -1,0 +1,35 @@
+groups:
+- name: k8s-job-cronjob.rules
+  rules:
+  - alert: KubernetesJobFailed
+    expr: kube_job_status_failed > 0
+    for: 0m
+    labels:
+      severity: warning
+    annotations:
+      summary: Kubernetes Job failed (instance {{ $labels.instance }})
+      description: "Job {{$labels.namespace}}/{{$labels.exported_job}} failed to complete\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+  - alert: KubernetesCronjobSuspended
+    expr: kube_cronjob_spec_suspend != 0
+    for: 0m
+    labels:
+      severity: warning
+    annotations:
+      summary: Kubernetes CronJob suspended (instance {{ $labels.instance }})
+      description: "CronJob {{ $labels.namespace }}/{{ $labels.cronjob }} is suspended\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+  - alert: KubernetesCronjobTooLong
+    expr: time() - kube_cronjob_next_schedule_time > 3600
+    for: 0m
+    labels:
+      severity: warning
+    annotations:
+      summary: Kubernetes CronJob too long (instance {{ $labels.instance }})
+      description: "CronJob {{ $labels.namespace }}/{{ $labels.cronjob }} is taking more than 1h to complete.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+  - alert: KubernetesJobSlowCompletion
+    expr: kube_job_spec_completions - kube_job_status_succeeded > 0
+    for: 12h
+    labels:
+      severity: critical
+    annotations:
+      summary: Kubernetes job slow completion (instance {{ $labels.instance }})
+      description: "Kubernetes Job {{ $labels.namespace }}/{{ $labels.job_name }} did not complete in time.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"

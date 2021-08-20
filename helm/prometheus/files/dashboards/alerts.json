@@ -1,46 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_PROMETHEUS",
-      "label": "Prometheus",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    }
-  ],
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "7.4.2"
-    },
-    {
-      "type": "panel",
-      "id": "graph",
-      "name": "Graph",
-      "version": ""
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "stat",
-      "name": "Stat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -57,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": null,
-  "iteration": 1623927219730,
+  "id": 134,
+  "iteration": 1628695595328,
   "links": [],
   "panels": [
     {
@@ -103,7 +61,44 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Pod"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Drill down",
+                    "url": "./d/ao_KXjlMk/kubernetes-pods?var-datasource=$datasource&var-cluster=$cluster&var-namespace=${__data.fields.namespace}&var-pod=${__data.fields.pod}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Namespace"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Drill down ",
+                    "url": "./d/85a562078cdf77779eaa1add43ccec1e/kubernetes-pods-by-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=${__data.fields.namespace}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 5,
@@ -119,7 +114,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "sum(prometheus_build_info) by (container,version,goversion,pod,namespace) or sum(alertmanager_build_info) by (container,version,goversion,pod,namespace) or sum(grafana_build_info) by (container,version,goversion,pod,namespace)",
+          "expr": "sum(prometheus_build_info{cluster=~\"$cluster\"}) by (container,version,goversion,pod,namespace) or sum(alertmanager_build_info{cluster=~\"$cluster\"}) by (container,version,goversion,pod,namespace) or sum(grafana_build_info{cluster=~\"$cluster\"}) by (container,version,goversion,pod,namespace)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -214,7 +209,7 @@
       "steppedLine": true,
       "targets": [
         {
-          "expr": "sum(increase(alertmanager_notifications_total{integration=~\"email|slack|webhook|pagerduty\"}[${timeRange}])) by (integration)",
+          "expr": "sum(increase(alertmanager_notifications_total{cluster=~\"$cluster\",integration=~\"email|slack|webhook|pagerduty\"}[${timeRange}])) by (integration)",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -349,7 +344,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "up{job=~\".*-prometheus\"}",
+          "expr": "up{cluster=~\"$cluster\",job=~\".*-prometheus\"}",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -444,7 +439,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "up{job=~\".*-alertmanager\"}",
+          "expr": "up{cluster=~\"$cluster\",job=~\".*-alertmanager\"}",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -539,7 +534,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "prometheus_notifications_alertmanagers_discovered",
+          "expr": "prometheus_notifications_alertmanagers_discovered{cluster=~\"$cluster\"}",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -605,7 +600,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "sum(increase(prometheus_rule_evaluation_failures_total[5m]))",
+          "expr": "sum(increase(prometheus_rule_evaluation_failures_total{cluster=~\"$cluster\"}[5m]))",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -671,7 +666,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "changes(process_start_time_seconds{job=~\".*-prometheus\"}[15m])",
+          "expr": "changes(process_start_time_seconds{cluster=~\"$cluster\",job=~\".*-prometheus\"}[15m])",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -737,7 +732,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "changes(process_start_time_seconds{job=~\".*-alertmanager\"}[15m])",
+          "expr": "changes(process_start_time_seconds{cluster=~\"$cluster\",job=~\".*-alertmanager\"}[15m])",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -803,7 +798,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "prometheus_notifications_queue_length",
+          "expr": "prometheus_notifications_queue_length{cluster=~\"$cluster\"}",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -865,7 +860,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "prometheus_notifications_queue_capacity",
+          "expr": "prometheus_notifications_queue_capacity{cluster=~\"$cluster\"}",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -931,7 +926,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "count(up)",
+          "expr": "count(up{cluster=~\"$cluster\"})",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -997,7 +992,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "count(up==1)",
+          "expr": "count(up{cluster=~\"$cluster\"} == 1)",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1063,7 +1058,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "count(up == 0)",
+          "expr": "count(up{cluster=~\"$cluster\"} == 0)",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1129,7 +1124,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "sum(increase(alertmanager_notifications_failed_total{integration=\"email\"}[24h]))",
+          "expr": "sum(increase(alertmanager_notifications_failed_total{cluster=~\"$cluster\",integration=\"email\"}[24h]))",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1141,6 +1136,7 @@
       "type": "stat"
     },
     {
+      "collapsed": false,
       "datasource": null,
       "gridPos": {
         "h": 1,
@@ -1149,6 +1145,7 @@
         "y": 15
       },
       "id": 21,
+      "panels": [],
       "title": "Alerts Snapshot",
       "type": "row"
     },
@@ -1181,7 +1178,7 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 3,
+        "w": 8,
         "x": 0,
         "y": 16
       },
@@ -1207,7 +1204,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "count(ALERTS) or vector(0)",
+          "expr": "count(ALERTS{cluster=~\"$cluster\"}) or vector(0)",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1215,7 +1212,7 @@
           "refId": "A"
         }
       ],
-      "title": "Alerts",
+      "title": "Total",
       "type": "stat"
     },
     {
@@ -1247,8 +1244,8 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 3,
-        "x": 3,
+        "w": 7,
+        "x": 8,
         "y": 16
       },
       "id": 40,
@@ -1273,7 +1270,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "count(ALERTS{alertstate=\"firing\"}) or vector(0)",
+          "expr": "count(ALERTS{cluster=~\"$cluster\",alertstate=\"firing\"}) or vector(0)",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1313,8 +1310,8 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 3,
-        "x": 6,
+        "w": 9,
+        "x": 15,
         "y": 16
       },
       "id": 41,
@@ -1339,7 +1336,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "count(ALERTS{alertstate=\"pending\"}) or vector(0)",
+          "expr": "count(ALERTS{cluster=~\"$cluster\",alertstate=\"pending\"}) or vector(0)",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1379,9 +1376,9 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 3,
-        "x": 9,
-        "y": 16
+        "w": 7,
+        "x": 0,
+        "y": 19
       },
       "id": 9,
       "options": {
@@ -1405,7 +1402,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "count(ALERTS{severity=\"critical\"}) or vector(0)",
+          "expr": "count(ALERTS{cluster=~\"$cluster\",severity=\"critical\"}) or vector(0)",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1445,9 +1442,9 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 3,
-        "x": 12,
-        "y": 16
+        "w": 5,
+        "x": 7,
+        "y": 19
       },
       "id": 10,
       "options": {
@@ -1471,7 +1468,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "count(ALERTS{severity=\"warning\"}) or vector(0)",
+          "expr": "count(ALERTS{cluster=~\"$cluster\",severity=\"warning\"}) or vector(0)",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1480,142 +1477,6 @@
         }
       ],
       "title": "Warning",
-      "type": "stat"
-    },
-    {
-      "datasource": null,
-      "description": "All alerts with severity == Info. Such alerts are only for information purpose. Ex. - DeadManSwitch.",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "semi-dark-green",
-                "value": null
-              },
-              {
-                "color": "dark-red",
-                "value": 0
-              },
-              {
-                "color": "semi-dark-green",
-                "value": 0.0001
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 3,
-        "x": 15,
-        "y": 16
-      },
-      "id": 43,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "titleSize": 30,
-          "valueSize": 30
-        },
-        "textMode": "value"
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "expr": "count(ALERTS{severity=\"info\"}) or vector(0)",
-          "format": "time_series",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Info",
-      "type": "stat"
-    },
-    {
-      "datasource": null,
-      "description": "All active alerts for which notification has been disabled by someone manually. May be for maintenance purposes.",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "semi-dark-green",
-                "value": null
-              },
-              {
-                "color": "dark-orange",
-                "value": 0.0001
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 3,
-        "x": 18,
-        "y": 16
-      },
-      "id": 11,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "titleSize": 30,
-          "valueSize": 30
-        },
-        "textMode": "value"
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "expr": "alertmanager_silences{state=\"active\"}",
-          "format": "time_series",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Silenced",
       "type": "stat"
     },
     {
@@ -1647,9 +1508,9 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 3,
-        "x": 21,
-        "y": 16
+        "w": 5,
+        "x": 12,
+        "y": 19
       },
       "id": 28,
       "options": {
@@ -1673,7 +1534,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "alertmanager_alerts{state=\"suppressed\"}",
+          "expr": "alertmanager_alerts{cluster=~\"$cluster\",state=\"suppressed\"}",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1685,15 +1546,197 @@
       "type": "stat"
     },
     {
+      "datasource": null,
+      "description": "All active alerts for which notification has been disabled by someone manually. May be for maintenance purposes.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              },
+              {
+                "color": "dark-orange",
+                "value": 0.0001
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 7,
+        "x": 17,
+        "y": 19
+      },
+      "id": 11,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "titleSize": 30,
+          "valueSize": 30
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "expr": "alertmanager_silences{cluster=~\"$cluster\",state=\"active\"}",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Silenced",
+      "type": "stat"
+    },
+    {
       "collapsed": false,
       "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 19
+        "y": 22
       },
       "id": 23,
+      "panels": [],
+      "title": "Alerts (Category)",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "decimals": 0,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 23
+      },
+      "hiddenSeries": false,
+      "id": 44,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 2,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.4.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "count(ALERTS{cluster=~\"$cluster\"}) by (alertname)",
+          "interval": "",
+          "legendFormat": "{{ alertname }}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Alerts By Category",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:68",
+          "decimals": 0,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:69",
+          "decimals": 0,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 32
+      },
+      "id": 46,
       "panels": [],
       "title": "Alerts List",
       "type": "row"
@@ -1732,7 +1775,7 @@
         "h": 6,
         "w": 24,
         "x": 0,
-        "y": 20
+        "y": 33
       },
       "id": 4,
       "options": {
@@ -1747,7 +1790,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "sort(ALERTS)",
+          "expr": "sort(ALERTS{cluster=~\"$cluster\"})",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -1757,7 +1800,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Active alert(s) list",
+      "title": "Active alerts",
       "transformations": [
         {
           "id": "organize",
@@ -1790,12 +1833,68 @@
       "type": "table"
     }
   ],
-  "refresh": "5s",
+  "refresh": "30s",
   "schemaVersion": 27,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "alerts",
+    "kubernetes",
+    "prometheus"
+  ],
   "templating": {
     "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "Prometheus",
+          "value": "Prometheus"
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "Datasource",
+        "multi": false,
+        "name": "datasource",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": null,
+        "definition": "label_values(kube_pod_info, cluster)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "Cluster",
+        "multi": false,
+        "name": "cluster",
+        "options": [],
+        "query": {
+          "query": "label_values(kube_pod_info, cluster)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
       {
         "auto": true,
         "auto_count": 1,
@@ -1876,12 +1975,12 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "Alerts",
-  "uid": "dybz98lMk",
-  "version": 42
+  "title": "alerts",
+  "uid": "TbYnuC_Gk",
+  "version": 18
 }

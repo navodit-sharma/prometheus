@@ -1,21 +1,20 @@
 {{ $releasename := .Release.Name }}
 {{ $releasenamespace := .Release.Namespace }}
-{{ range $path, $_ := .Files.Glob "files/dashboards/*.json" }}
-apiVersion: v1
-kind: ConfigMap
+{{ range $path, $_ := .Files.Glob "files/alert-rules/*.yaml" }}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
 metadata:
   annotations:
     meta.helm.sh/release-name: "{{ $releasename }}"
     meta.helm.sh/release-namespace: "{{ $releasenamespace }}"
   labels:
-    app: prometheus-grafana
+    app: prometheus
     app.kubernetes.io/managed-by: Helm
-    role: "grafana-dashboard"
+    role: prometheus-alerting-rules
     release: "{{ $releasename }}"
-  name: "{{ $releasename }}-dashboard-cm-{{ $path | base | trimSuffix ".json" }}"
+  name: "{{ $releasename }}-alert-rules-{{ $path | base | trimSuffix ".yaml" }}"
   namespace: "{{ $releasenamespace }}"
-data:
-  {{ $path | base }}: |-
-{{ $.Files.Get $path | indent 4 }}
+spec:
+{{ $.Files.Get $path | indent 2 }}
 ---
 {{ end }}

@@ -16,8 +16,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 133,
-  "iteration": 1628695597621,
+  "id": 138,
+  "iteration": 1628695595861,
   "links": [],
   "panels": [
     {
@@ -89,7 +89,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "sum(kube_statefulset_created{cluster=~\"$cluster\",job=\"kube-state-metrics\",namespace=~\"$namespace\",statefulset=~\"$statefulset\"}) by (statefulset) * 1000",
+          "expr": "sum(kube_deployment_created{cluster=~\"$cluster\",job=\"kube-state-metrics\",namespace=~\"$namespace\",deployment=~\"$deployment\"}) by (deployment) * 1000",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -186,7 +186,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "kube_statefulset_replicas{cluster=~\"$cluster\",job=\"kube-state-metrics\",namespace=~\"$namespace\",statefulset=~\"$statefulset\"}",
+          "expr": "kube_deployment_status_replicas{cluster=~\"$cluster\",job=\"kube-state-metrics\",namespace=~\"$namespace\",deployment=~\"$deployment\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -259,7 +259,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "kube_statefulset_status_replicas_updated{cluster=~\"$cluster\",job=\"kube-state-metrics\",namespace=~\"$namespace\",statefulset=~\"$statefulset\"}",
+          "expr": "kube_deployment_status_replicas_updated{cluster=~\"$cluster\",job=\"kube-state-metrics\",namespace=~\"$namespace\",deployment=~\"$deployment\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -332,7 +332,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "kube_statefulset_status_replicas_ready{cluster=~\"$cluster\",job=\"kube-state-metrics\",namespace=~\"$namespace\",statefulset=~\"$statefulset\"}",
+          "expr": "kube_deployment_status_replicas_available{cluster=~\"$cluster\",job=\"kube-state-metrics\",namespace=~\"$namespace\",deployment=~\"$deployment\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -424,7 +424,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "sum(rate(container_cpu_usage_seconds_total{job=\"kubelet\",metrics_path=\"/metrics/cadvisor\",cluster=~\"$cluster\",namespace=~\"$namespace\",container!~\"\",container!~\"POD\",image!~\"\",pod=~\"$statefulset.*\"}[1m]))",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{job=\"kubelet\",metrics_path=\"/metrics/cadvisor\",cluster=~\"$cluster\",namespace=~\"$namespace\",container!~\"\",container!~\"POD\",image!~\"\",pod=~\"$deployment.*\"}[1m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -496,7 +496,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "sum(container_memory_usage_bytes{job=\"kubelet\",metrics_path=\"/metrics/cadvisor\",cluster=~\"$cluster\",namespace=~\"$namespace\",container!~\"\",container!~\"POD\",image!~\"\",pod=~\"$statefulset.*\"})",
+          "expr": "sum(container_memory_usage_bytes{job=\"kubelet\",metrics_path=\"/metrics/cadvisor\",cluster=~\"$cluster\",namespace=~\"$namespace\",container!~\"\",container!~\"POD\",image!~\"\",pod=~\"$deployment.*\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -568,7 +568,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "sum(rate(container_network_transmit_bytes_total{job=\"kubelet\",metrics_path=\"/metrics/cadvisor\",cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$statefulset.*\"}[3m])) + sum(rate(container_network_receive_bytes_total{job=\"kubelet\",metrics_path=\"/metrics/cadvisor\",cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$statefulset.*\"}[3m]))",
+          "expr": "sum(rate(container_network_transmit_bytes_total{job=\"kubelet\",metrics_path=\"/metrics/cadvisor\",cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$deployment.*\"}[3m])) + sum(rate(container_network_receive_bytes_total{job=\"kubelet\",metrics_path=\"/metrics/cadvisor\",cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$deployment.*\"}[3m]))",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -647,8 +647,9 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "max(kube_statefulset_status_observed_generation{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", statefulset=\"$statefulset\"}) without (instance, pod)",
+          "expr": "max(kube_deployment_status_observed_generation{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", deployment=\"$deployment\"}) without (instance, pod)",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "",
           "refId": "A"
@@ -737,8 +738,9 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "max(kube_statefulset_metadata_generation{job=\"kube-state-metrics\", statefulset=\"$statefulset\", cluster=\"$cluster\", namespace=\"$namespace\"}) without (instance, pod)",
+          "expr": "max(kube_deployment_metadata_generation{job=\"kube-state-metrics\", deployment=\"$deployment\", cluster=\"$cluster\", namespace=\"$namespace\"}) without (instance, pod)",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "",
           "refId": "A"
@@ -813,7 +815,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "max(kube_statefulset_replicas{job=\"kube-state-metrics\", statefulset=~\"$statefulset\", cluster=~\"$cluster\", namespace=\"$namespace\"}) without (instance, pod)",
+          "expr": "max(kube_deployment_status_replicas{job=\"kube-state-metrics\", deployment=~\"$deployment\", cluster=~\"$cluster\", namespace=\"$namespace\"}) without (instance, pod)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -821,15 +823,7 @@
           "refId": "A"
         },
         {
-          "expr": "max(kube_statefulset_status_replicas{job=\"kube-state-metrics\", statefulset=~\"$statefulset\", cluster=~\"$cluster\", namespace=~\"$namespace\"}) without (instance, pod)",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "replicas created",
-          "refId": "B"
-        },
-        {
-          "expr": "min(kube_statefulset_status_replicas_ready{job=\"kube-state-metrics\", statefulset=~\"$statefulset\", cluster=~\"$cluster\", namespace=~\"$namespace\"}) without (instance, pod)",
+          "expr": "min(kube_deployment_status_replicas_available{job=\"kube-state-metrics\", deployment=~\"$deployment\", cluster=~\"$cluster\", namespace=~\"$namespace\"}) without (instance, pod)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -837,15 +831,16 @@
           "refId": "C"
         },
         {
-          "expr": "min(kube_statefulset_status_replicas_current{job=\"kube-state-metrics\", statefulset=~\"$statefulset\", cluster=~\"$cluster\", namespace=~\"$namespace\"}) without (instance, pod)",
+          "expr": "min(kube_deployment_status_replicas_unavailable{job=\"kube-state-metrics\", deployment=~\"$deployment\", cluster=~\"$cluster\", namespace=~\"$namespace\"}) without (instance, pod)",
           "format": "time_series",
+          "hide": false,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "replicas of current version",
+          "legendFormat": "unavailable",
           "refId": "D"
         },
         {
-          "expr": "min(kube_statefulset_status_replicas_updated{job=\"kube-state-metrics\", statefulset=~\"$statefulset\", cluster=~\"$cluster\", namespace=~\"$namespace\"}) without (instance, pod)",
+          "expr": "min(kube_deployment_status_replicas_updated{job=\"kube-state-metrics\", deployment=~\"$deployment\", cluster=~\"$cluster\", namespace=~\"$namespace\"}) without (instance, pod)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -980,7 +975,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "kube_pod_info{cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$statefulset.*\"}",
+          "expr": "kube_pod_info{cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$deployment.*\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -1047,7 +1042,7 @@
   "style": "dark",
   "tags": [
     "kubernetes",
-    "statefulsets"
+    "deployments"
   ],
   "templating": {
     "list": [
@@ -1112,7 +1107,7 @@
           "value": "cake"
         },
         "datasource": null,
-        "definition": "label_values(kube_statefulset_metadata_generation{job=\"kube-state-metrics\", cluster=\"$cluster\"}, namespace)",
+        "definition": "label_values(kube_deployment_metadata_generation{job=\"kube-state-metrics\", cluster=\"$cluster\"}, namespace)",
         "description": null,
         "error": null,
         "hide": 0,
@@ -1122,7 +1117,7 @@
         "name": "namespace",
         "options": [],
         "query": {
-          "query": "label_values(kube_statefulset_metadata_generation{job=\"kube-state-metrics\", cluster=\"$cluster\"}, namespace)",
+          "query": "label_values(kube_deployment_metadata_generation{job=\"kube-state-metrics\", cluster=\"$cluster\"}, namespace)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -1139,21 +1134,21 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "cake-course-result",
-          "value": "cake-course-result"
+          "text": "cake-ambassador",
+          "value": "cake-ambassador"
         },
         "datasource": null,
-        "definition": "label_values(kube_statefulset_metadata_generation{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\"}, statefulset)",
+        "definition": "label_values(kube_deployment_metadata_generation{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\"}, deployment)",
         "description": null,
         "error": null,
         "hide": 0,
         "includeAll": false,
-        "label": "Statefulset",
+        "label": "Deployment",
         "multi": false,
-        "name": "statefulset",
+        "name": "deployment",
         "options": [],
         "query": {
-          "query": "label_values(kube_statefulset_metadata_generation{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\"}, statefulset)",
+          "query": "label_values(kube_deployment_metadata_generation{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\"}, deployment)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -1198,7 +1193,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "kubernetes / statefulsets",
-  "uid": "z8t_k2uMk",
-  "version": 7
+  "title": "kubernetes / deployments",
+  "uid": "QMPfZCM7z",
+  "version": 4
 }
