@@ -8,7 +8,7 @@ groups:
       severity: info
     annotations:
       summary: Prometheus AlertManager E2E dead man switch.
-      description: DeadManSwitch is an alwayss firing alert to make sure end-to-end
+      description: DeadManSwitch is an always firing alert to make sure end-to-end
         (E2E) connection b/w Prometheus and Alertmanager is active.
   - alert: PrometheusTargetMissing
     expr: up == 0
