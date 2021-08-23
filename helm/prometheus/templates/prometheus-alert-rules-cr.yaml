@@ -1,3 +1,4 @@
+{{- if $.Values.prometheusCustomAlertRules.create -}}
 {{ $releasename := .Release.Name }}
 {{ $releasenamespace := .Release.Namespace }}
 {{ range $path, $_ := .Files.Glob "files/alert-rules/*.yaml" }}
@@ -17,4 +18,5 @@ metadata:
 spec:
 {{ $.Files.Get $path | indent 2 }}
 ---
-{{ end }}
+{{- end -}}
+{{- end -}}
