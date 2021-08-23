@@ -7,29 +7,31 @@ groups:
     labels:
       severity: warning
     annotations:
-      summary: Kubernetes Job failed (instance {{ $labels.instance }})
-      description: "Job {{$labels.namespace}}/{{$labels.exported_job}} failed to complete\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
-  - alert: KubernetesCronjobSuspended
-    expr: kube_cronjob_spec_suspend != 0
-    for: 0m
-    labels:
-      severity: warning
-    annotations:
-      summary: Kubernetes CronJob suspended (instance {{ $labels.instance }})
-      description: "CronJob {{ $labels.namespace }}/{{ $labels.cronjob }} is suspended\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+      summary: Kubernetes Job failed
+      description: "Job {{$labels.namespace}}/{{$labels.job_name}} failed to complete."
+      value: '{{ printf "%.2f" $value }}'
+  # - alert: KubernetesCronjobSuspended
+  #   expr: kube_cronjob_spec_suspend != 0
+  #   for: 0m
+  #   labels:
+  #     severity: warning
+  #   annotations:
+  #     summary: Kubernetes CronJob suspended
+  #     description: "CronJob {{ $labels.namespace }}/{{ $labels.cronjob }} is suspended."
   - alert: KubernetesCronjobTooLong
-    expr: time() - kube_cronjob_next_schedule_time > 3600
+    expr: time() - kube_cronjob_next_schedule_time > 18000
     for: 0m
     labels:
       severity: warning
     annotations:
-      summary: Kubernetes CronJob too long (instance {{ $labels.instance }})
-      description: "CronJob {{ $labels.namespace }}/{{ $labels.cronjob }} is taking more than 1h to complete.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+      summary: Kubernetes CronJob too long
+      description: "CronJob {{ $labels.namespace }}/{{ $labels.cronjob }} is taking more than 6h to complete."
+      value: '{{ printf "%.2f" $value }}'
   - alert: KubernetesJobSlowCompletion
     expr: kube_job_spec_completions - kube_job_status_succeeded > 0
     for: 12h
     labels:
       severity: critical
     annotations:
-      summary: Kubernetes job slow completion (instance {{ $labels.instance }})
-      description: "Kubernetes Job {{ $labels.namespace }}/{{ $labels.job_name }} did not complete in time.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+      summary: Kubernetes job slow completion
+      description: "Kubernetes Job {{ $labels.namespace }}/{{ $labels.job_name }} did not complete for last 12h."

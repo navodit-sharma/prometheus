@@ -3,17 +3,17 @@ groups:
   rules:
   - alert: KubernetesDaemonsetRolloutStuck
     expr: kube_daemonset_status_number_ready / kube_daemonset_status_desired_number_scheduled * 100 < 100 or kube_daemonset_status_desired_number_scheduled - kube_daemonset_status_current_number_scheduled > 0
-    for: 10m
+    for: 15m
     labels:
       severity: warning
     annotations:
-      summary: Kubernetes DaemonSet rollout stuck (instance {{ $labels.instance }})
-      description: "Some Pods of DaemonSet are not scheduled or not ready\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+      summary: Kubernetes DaemonSet rollout stuck
+      description: "Some Pods of DaemonSet are not scheduled or not ready."
   - alert: KubernetesDaemonsetMisscheduled
     expr: kube_daemonset_status_number_misscheduled > 0
     for: 1m
     labels:
       severity: critical
     annotations:
-      summary: Kubernetes DaemonSet misscheduled (instance {{ $labels.instance }})
-      description: "Some DaemonSet Pods are running where they are not supposed to run\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+      summary: Kubernetes DaemonSet misscheduled
+      description: "Some DaemonSet Pods are running where they are not supposed to run."

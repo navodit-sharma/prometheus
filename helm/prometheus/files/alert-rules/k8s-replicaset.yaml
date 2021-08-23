@@ -7,5 +7,6 @@ groups:
     labels:
       severity: warning
     annotations:
-      summary: Kubernetes ReplicasSet mismatch (instance {{ $labels.instance }})
-      description: "Deployment Replicas mismatch\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+      summary: Kubernetes ReplicasSet mismatch
+      description: "Number of ready replicas for replicaset {{ $labels.replicaset }} does not match the desired number of replicas for last 10m."
+      value: '{{ printf "%.2f" $value }}'

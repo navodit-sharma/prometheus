@@ -10,7 +10,7 @@ groups:
     annotations:
       summary: Kubernetes StatefulSet down
       description: "One or more replicas of statefulSet {{ $labels.statefulset }} in {{ $labels.namespace }} namespace are down for 3m."
-      value: '{{ printf "%.2f" $value }}%'
+      value: '{{ printf "%.2f" $value }}'
   - alert: KubernetesStatefulsetReplicasMismatch
     # expr: kube_statefulset_status_replicas_ready != kube_statefulset_status_replicas
     expr: group by (namespace,statefulset) (kube_statefulset_status_replicas_ready != kube_statefulset_status_replicas)
@@ -19,12 +19,12 @@ groups:
       severity: critical
     annotations:
       summary: Kubernetes StatefulSet replicas mismatch
-      description: "Number of ready replicas for statefulSet {{ $labels.statefulset }} does not match the desired number of replicas since last 10m."
+      description: "Number of READY replicas for statefulSet {{ $labels.statefulset }} does not match the DESIRED number of replicas for last 10m."
   - alert: KubernetesStatefulsetUpdateNotRolledOut
     expr: group by (namespace,statefulset) (max without (revision) (kube_statefulset_status_current_revision unless kube_statefulset_status_update_revision) * (kube_statefulset_replicas != kube_statefulset_status_replicas_updated))
-    for: 15m
+    for: 20m
     labels:
       severity: warning
     annotations:
       summary: Kubernetes StatefulSet update not rolled out
-      description: "StatefulSet update roll out has not completed in last 15m."
+      description: "StatefulSet update roll out has not completed in last 20m."

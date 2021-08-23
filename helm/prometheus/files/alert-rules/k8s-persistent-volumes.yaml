@@ -37,13 +37,13 @@ groups:
     labels:
       severity: warning
     annotations:
-      summary: PersistentVolumeClaim pending (instance {{ $labels.instance }})
-      description: "PersistentVolumeClaim {{ $labels.namespace }}/{{ $labels.persistentvolumeclaim }} is pending\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+      summary: PersistentVolumeClaim pending
+      description: "PersistentVolumeClaim {{ $labels.namespace }}/{{ $labels.persistentvolumeclaim }} is pending."
   - alert: PersistentvolumeError
     expr: kube_persistentvolume_status_phase{phase=~"Failed|Pending", job="kube-state-metrics"} > 0
     for: 0m
     labels:
       severity: critical
     annotations:
-      summary: PersistentVolume error (instance {{ $labels.instance }})
-      description: "Persistent volume is in bad state\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+      summary: PersistentVolume error
+      description: "Persistent volume is in Error state."
