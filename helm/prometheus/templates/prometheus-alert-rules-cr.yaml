@@ -1,4 +1,4 @@
-{{- if $.Values.prometheusCustomAlertRules.create -}}
+{{- if $.Values.customResources.prometheusCustomAlertRules.create -}}
 {{ $releasename := .Release.Name }}
 {{ $releasenamespace := .Release.Namespace }}
 {{ range $path, $_ := .Files.Glob "files/alert-rules/*.yaml" }}
