@@ -16,8 +16,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 124,
-  "iteration": 1628695595628,
+  "id": 173,
+  "iteration": 1629979594627,
   "links": [],
   "panels": [
     {
@@ -502,7 +502,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1558",
           "format": "percentunit",
           "label": null,
           "logBase": 1,
@@ -511,7 +510,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:1559",
           "format": "percentunit",
           "label": null,
           "logBase": 1,
@@ -574,7 +572,6 @@
       "repeat": null,
       "seriesOverrides": [
         {
-          "$$hashKey": "object:331",
           "alias": "logical cores",
           "color": "#C4162A"
         }
@@ -637,7 +634,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:258",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -646,7 +642,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:259",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -723,7 +718,6 @@
       "repeat": null,
       "seriesOverrides": [
         {
-          "$$hashKey": "object:293",
           "alias": "memory total",
           "color": "#C4162A"
         }
@@ -793,7 +787,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:348",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -802,7 +795,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:349",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -967,12 +959,10 @@
       "repeat": null,
       "seriesOverrides": [
         {
-          "$$hashKey": "object:369",
           "alias": "/ read| written/",
           "yaxis": 1
         },
         {
-          "$$hashKey": "object:370",
           "alias": "/ io time/",
           "yaxis": 2
         }
@@ -1026,7 +1016,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:542",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -1035,7 +1024,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:543",
           "format": "s",
           "label": null,
           "logBase": 1,
@@ -1098,12 +1086,10 @@
       "repeat": null,
       "seriesOverrides": [
         {
-          "$$hashKey": "object:570",
           "alias": "used",
           "color": "#E0B400"
         },
         {
-          "$$hashKey": "object:571",
           "alias": "available",
           "color": "#73BF69"
         }
@@ -1149,7 +1135,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:584",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -1158,7 +1143,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:585",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -1267,7 +1251,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:668",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -1276,7 +1259,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:669",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -1371,7 +1353,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:752",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -1380,7 +1361,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:753",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -1447,7 +1427,7 @@
                   {
                     "targetBlank": true,
                     "title": "Drill down",
-                    "url": "./d/ao_KXjlMk/kubernetes-pods?var-datasource=$datasource&var-cluster=$cluster&var-namespace=${__data.fields.namespace}&var-pod=${__data.fields.pod}"
+                    "url": "./d/kubernetes-pods/kubernetes-pods?var-datasource=$datasource&var-cluster=$cluster&var-namespace=${__data.fields.namespace}&var-pod=${__data.fields.pod}"
                   }
                 ]
               }
@@ -1465,7 +1445,7 @@
                   {
                     "targetBlank": true,
                     "title": "Drill down",
-                    "url": "./d/85a562078cdf77779eaa1add43ccec1e/kubernetes-pods-by-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=${__data.fields.namespace}"
+                    "url": "./d/kubernetes-pods-by-namespace/kubernetes-pods-by-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=${__data.fields.namespace}"
                   }
                 ]
               }
@@ -1659,6 +1639,6 @@
   },
   "timezone": "browser",
   "title": "kubernetes / nodes",
-  "uid": "xdKMspuGz",
-  "version": 13
+  "uid": "kubernetes-nodes",
+  "version": 2
 }

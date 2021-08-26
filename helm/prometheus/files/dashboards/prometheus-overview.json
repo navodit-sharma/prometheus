@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 137,
-  "iteration": 1628695598254,
+  "id": 157,
+  "iteration": 1629977266217,
   "links": [],
   "panels": [
     {
@@ -1394,6 +1394,6 @@
   },
   "timezone": "browser",
   "title": "prometheus / overview",
-  "uid": "cLkw0KM7z",
-  "version": 13
+  "uid": "prometheus-overview",
+  "version": 1
 }

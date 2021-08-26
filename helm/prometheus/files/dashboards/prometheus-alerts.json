@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 134,
-  "iteration": 1628695595328,
+  "id": 176,
+  "iteration": 1629981941844,
   "links": [],
   "panels": [
     {
@@ -47,6 +47,7 @@
           },
           "mappings": [],
           "min": 0,
+          "noValue": "--",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -74,9 +75,13 @@
                   {
                     "targetBlank": true,
                     "title": "Drill down",
-                    "url": "./d/ao_KXjlMk/kubernetes-pods?var-datasource=$datasource&var-cluster=$cluster&var-namespace=${__data.fields.namespace}&var-pod=${__data.fields.pod}"
+                    "url": "./d/kubernetes-pods/kubernetes-pods?var-datasource=$datasource&var-cluster=$cluster&var-namespace=${__data.fields.namespace}&var-pod=${__data.fields.pod}"
                   }
                 ]
+              },
+              {
+                "id": "custom.width",
+                "value": 346
               }
             ]
           },
@@ -92,29 +97,66 @@
                   {
                     "targetBlank": true,
                     "title": "Drill down ",
-                    "url": "./d/85a562078cdf77779eaa1add43ccec1e/kubernetes-pods-by-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=${__data.fields.namespace}"
+                    "url": "./d/kubernetes-pods-by-namespace/kubernetes-pods-by-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=${__data.fields.namespace}"
                   }
                 ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "GoVersion"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 130
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Version"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 108
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Service"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 209
               }
             ]
           }
         ]
       },
       "gridPos": {
-        "h": 5,
-        "w": 16,
+        "h": 8,
+        "w": 15,
         "x": 0,
         "y": 1
       },
       "id": 32,
       "options": {
         "frameIndex": 0,
-        "showHeader": true
+        "showHeader": true,
+        "sortBy": []
       },
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "sum(prometheus_build_info{cluster=~\"$cluster\"}) by (container,version,goversion,pod,namespace) or sum(alertmanager_build_info{cluster=~\"$cluster\"}) by (container,version,goversion,pod,namespace) or sum(grafana_build_info{cluster=~\"$cluster\"}) by (container,version,goversion,pod,namespace)",
+          "expr": "sum(prometheus_build_info{cluster=~\"$cluster\"}) by (container,version,goversion,pod,namespace) or sum(alertmanager_build_info{cluster=~\"$cluster\"}) by (container,version,goversion,pod,namespace) or sum(grafana_build_info{cluster=~\"$cluster\"}) by (container,version,goversion,pod,namespace) or sum(prometheus_operator_build_info{cluster=~\"$cluster\"}) by (container,version,goversion,pod,namespace) or sum(node_exporter_build_info{cluster=~\"$cluster\"}) by (container,version,goversion,namespace) or sum(kube_state_metrics_build_info{cluster=~\".*\"}) by (container,version,goversion,pod,namespace)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -176,8 +218,8 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 14,
-        "w": 8,
-        "x": 16,
+        "w": 9,
+        "x": 15,
         "y": 1
       },
       "hiddenSeries": false,
@@ -237,7 +279,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:351",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -246,7 +287,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:352",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -318,9 +358,9 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
+        "w": 3,
         "x": 0,
-        "y": 6
+        "y": 9
       },
       "id": 39,
       "options": {
@@ -352,7 +392,7 @@
           "refId": "A"
         }
       ],
-      "title": "Prometheus - Status",
+      "title": "Prometheus",
       "type": "stat"
     },
     {
@@ -413,9 +453,9 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
-        "x": 4,
-        "y": 6
+        "w": 3,
+        "x": 3,
+        "y": 9
       },
       "id": 35,
       "options": {
@@ -447,7 +487,7 @@
           "refId": "A"
         }
       ],
-      "title": "Alertmanager - Status",
+      "title": "Alertmanager",
       "type": "stat"
     },
     {
@@ -508,9 +548,9 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
-        "x": 8,
-        "y": 6
+        "w": 3,
+        "x": 6,
+        "y": 9
       },
       "id": 34,
       "options": {
@@ -574,9 +614,9 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
-        "x": 12,
-        "y": 6
+        "w": 3,
+        "x": 9,
+        "y": 9
       },
       "id": 36,
       "options": {
@@ -613,7 +653,7 @@
     },
     {
       "datasource": null,
-      "description": "Prometheus restarts in last 15m.",
+      "description": "Alertmanager - Failed email notifications in last 24h.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -640,205 +680,11 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
-        "x": 0,
-        "y": 9
-      },
-      "id": 31,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "titleSize": 30,
-          "valueSize": 30
-        },
-        "textMode": "value"
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "expr": "changes(process_start_time_seconds{cluster=~\"$cluster\",job=~\".*-prometheus\"}[15m])",
-          "format": "time_series",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Prometheus restarts [15m]",
-      "type": "stat"
-    },
-    {
-      "datasource": null,
-      "description": "Alertmanager restart in last 15m.",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "semi-dark-green",
-                "value": null
-              },
-              {
-                "color": "dark-red",
-                "value": 0.0001
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 4,
-        "y": 9
-      },
-      "id": 33,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "titleSize": 30,
-          "valueSize": 30
-        },
-        "textMode": "value"
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "expr": "changes(process_start_time_seconds{cluster=~\"$cluster\",job=~\".*-alertmanager\"}[15m])",
-          "format": "time_series",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Alertmanager restarts [15m]",
-      "type": "stat"
-    },
-    {
-      "datasource": null,
-      "description": "Prometheus - no. of notifications currently in queue.\n\nHigher queue length == Higher notification latency (Not Good)",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "semi-dark-green",
-                "value": null
-              },
-              {
-                "color": "dark-red",
-                "value": 0.0001
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 8,
-        "y": 9
-      },
-      "id": 37,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "titleSize": 30,
-          "valueSize": 30
-        },
-        "textMode": "value"
-      },
-      "pluginVersion": "7.4.2",
-      "targets": [
-        {
-          "expr": "prometheus_notifications_queue_length{cluster=~\"$cluster\"}",
-          "format": "time_series",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Queue length",
-      "type": "stat"
-    },
-    {
-      "datasource": null,
-      "description": "Prometheus - notifications queue size",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "semi-dark-green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
+        "w": 3,
         "x": 12,
         "y": 9
       },
-      "id": 42,
+      "id": 38,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -860,7 +706,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "prometheus_notifications_queue_capacity{cluster=~\"$cluster\"}",
+          "expr": "sum(increase(alertmanager_notifications_failed_total{cluster=~\"$cluster\",integration=\"email\"}[24h]))",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -868,7 +714,7 @@
           "refId": "A"
         }
       ],
-      "title": "Queue capacity",
+      "title": "Failed notification [24h]",
       "type": "stat"
     },
     {
@@ -900,7 +746,7 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
+        "w": 3,
         "x": 0,
         "y": 12
       },
@@ -966,8 +812,8 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
-        "x": 4,
+        "w": 3,
+        "x": 3,
         "y": 12
       },
       "id": 30,
@@ -1032,8 +878,8 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
-        "x": 8,
+        "w": 3,
+        "x": 6,
         "y": 12
       },
       "id": 12,
@@ -1058,7 +904,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "count(up{cluster=~\"$cluster\"} == 0)",
+          "expr": "count(up{cluster=~\"$cluster\"} == 0) OR on() vector(0)",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1071,7 +917,69 @@
     },
     {
       "datasource": null,
-      "description": "Alertmanager - Failed email notifications in last 24h.",
+      "description": "Prometheus - notifications queue size",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 9,
+        "y": 12
+      },
+      "id": 42,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "titleSize": 30,
+          "valueSize": 30
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "expr": "prometheus_notifications_queue_capacity{cluster=~\"$cluster\"}",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Queue capacity",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "description": "Prometheus - no. of notifications currently in queue.\n\nHigher queue length == Higher notification latency (Not Good)",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1098,11 +1006,11 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
+        "w": 3,
         "x": 12,
         "y": 12
       },
-      "id": 38,
+      "id": 37,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -1124,7 +1032,7 @@
       "pluginVersion": "7.4.2",
       "targets": [
         {
-          "expr": "sum(increase(alertmanager_notifications_failed_total{cluster=~\"$cluster\",integration=\"email\"}[24h]))",
+          "expr": "prometheus_notifications_queue_length{cluster=~\"$cluster\"}",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1132,7 +1040,7 @@
           "refId": "A"
         }
       ],
-      "title": "Failed notification [24h]",
+      "title": "Queue length",
       "type": "stat"
     },
     {
@@ -1650,7 +1558,7 @@
       "id": 44,
       "legend": {
         "alignAsTable": true,
-        "avg": true,
+        "avg": false,
         "current": true,
         "max": false,
         "min": false,
@@ -1661,7 +1569,7 @@
       },
       "lines": true,
       "linewidth": 2,
-      "nullPointMode": "null",
+      "nullPointMode": "null as zero",
       "options": {
         "alertThreshold": true
       },
@@ -1676,7 +1584,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "count(ALERTS{cluster=~\"$cluster\"}) by (alertname)",
+          "expr": "count(ALERTS{cluster=~\"$cluster\"}) by (alertname) OR on() vector(0)",
           "interval": "",
           "legendFormat": "{{ alertname }}",
           "refId": "A"
@@ -1702,7 +1610,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:68",
           "decimals": 0,
           "format": "short",
           "label": null,
@@ -1712,7 +1619,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:69",
           "decimals": 0,
           "format": "short",
           "label": null,
@@ -1833,7 +1739,7 @@
       "type": "table"
     }
   ],
-  "refresh": "30s",
+  "refresh": "1m",
   "schemaVersion": 27,
   "style": "dark",
   "tags": [
@@ -1980,7 +1886,7 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "alerts",
-  "uid": "TbYnuC_Gk",
-  "version": 18
+  "title": "prometheus / alerts",
+  "uid": "prometheus-alerts",
+  "version": 4
 }

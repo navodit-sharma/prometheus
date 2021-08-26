@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 132,
-  "iteration": 1628695596125,
+  "id": 183,
+  "iteration": 1629979981545,
   "links": [],
   "panels": [
     {
@@ -121,7 +121,7 @@
                   {
                     "targetBlank": true,
                     "title": "Drill down",
-                    "url": "./d/xdKMspuGz/kubernetes-nodes?var-datasource=$datasource&var-cluster=$cluster&var-node=${__data.fields.node}"
+                    "url": "./d/kubernetes-nodes/kubernetes-nodes?var-datasource=$datasource&var-cluster=$cluster&var-node=${__data.fields.node}"
                   }
                 ]
               }
@@ -1068,7 +1068,6 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "$$hashKey": "object:2566",
           "alias": "request",
           "color": "#E0B400",
           "dashes": true,
@@ -1080,7 +1079,6 @@
           "stack": false
         },
         {
-          "$$hashKey": "object:2845",
           "alias": "limit",
           "color": "#C4162A",
           "dashes": true,
@@ -1152,7 +1150,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1838",
           "decimals": 3,
           "format": "short",
           "label": null,
@@ -1162,7 +1159,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:1839",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1238,7 +1234,6 @@
       ],
       "thresholds": [
         {
-          "$$hashKey": "object:8193",
           "colorMode": "critical",
           "fill": true,
           "line": true,
@@ -1266,7 +1261,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:8176",
           "format": "percentunit",
           "label": null,
           "logBase": 1,
@@ -1275,7 +1269,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:8177",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1360,7 +1353,7 @@
               },
               {
                 "id": "decimals",
-                "value": 2
+                "value": 3
               },
               {
                 "id": "custom.align",
@@ -1408,7 +1401,7 @@
               },
               {
                 "id": "decimals",
-                "value": 2
+                "value": 3
               },
               {
                 "id": "custom.align",
@@ -1461,6 +1454,18 @@
               {
                 "id": "custom.align",
                 "value": null
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "container"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Container"
               }
             ]
           }
@@ -1621,7 +1626,6 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "$$hashKey": "object:1832",
           "alias": "requests",
           "color": "#E0B400",
           "dashes": true,
@@ -1632,7 +1636,6 @@
           "stack": false
         },
         {
-          "$$hashKey": "object:1833",
           "alias": "limits",
           "color": "#C4162A",
           "dashes": true,
@@ -1698,7 +1701,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:2087",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -1707,7 +1709,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:2088",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1787,7 +1788,6 @@
       "steppedLine": false,
       "styles": [
         {
-          "$$hashKey": "object:6282",
           "alias": "Time",
           "align": "auto",
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
@@ -1795,7 +1795,6 @@
           "type": "hidden"
         },
         {
-          "$$hashKey": "object:6283",
           "alias": "Memory Usage",
           "align": "auto",
           "colorMode": null,
@@ -1812,7 +1811,6 @@
           "unit": "bytes"
         },
         {
-          "$$hashKey": "object:6284",
           "alias": "Memory Requests",
           "align": "auto",
           "colorMode": null,
@@ -1829,7 +1827,6 @@
           "unit": "bytes"
         },
         {
-          "$$hashKey": "object:6285",
           "alias": "Memory Requests %",
           "align": "auto",
           "colorMode": null,
@@ -1846,7 +1843,6 @@
           "unit": "percentunit"
         },
         {
-          "$$hashKey": "object:6286",
           "alias": "Memory Limits",
           "align": "auto",
           "colorMode": null,
@@ -1863,7 +1859,6 @@
           "unit": "bytes"
         },
         {
-          "$$hashKey": "object:6287",
           "alias": "Memory Limits %",
           "align": "auto",
           "colorMode": null,
@@ -1880,7 +1875,6 @@
           "unit": "percentunit"
         },
         {
-          "$$hashKey": "object:6288",
           "alias": "Memory Usage (RSS)",
           "align": "auto",
           "colorMode": null,
@@ -1897,7 +1891,6 @@
           "unit": "bytes"
         },
         {
-          "$$hashKey": "object:6289",
           "alias": "Memory Usage (Cache)",
           "align": "auto",
           "colorMode": null,
@@ -1914,7 +1907,6 @@
           "unit": "bytes"
         },
         {
-          "$$hashKey": "object:6290",
           "alias": "Memory Usage (Swap)",
           "align": "auto",
           "colorMode": null,
@@ -1931,7 +1923,6 @@
           "unit": "bytes"
         },
         {
-          "$$hashKey": "object:6291",
           "alias": "Container",
           "align": "auto",
           "colorMode": null,
@@ -1948,7 +1939,6 @@
           "unit": "short"
         },
         {
-          "$$hashKey": "object:6292",
           "alias": "",
           "align": "auto",
           "colorMode": null,
@@ -2920,6 +2910,6 @@
   },
   "timezone": "browser",
   "title": "kubernetes / pods",
-  "uid": "ao_KXjlMk",
-  "version": 7
+  "uid": "kubernetes-pods",
+  "version": 2
 }

@@ -18,8 +18,8 @@
   "editable": true,
   "gnetId": 13646,
   "graphTooltip": 0,
-  "id": 131,
-  "iteration": 1628695595630,
+  "id": 160,
+  "iteration": 1629977256958,
   "links": [],
   "panels": [
     {
@@ -38,6 +38,7 @@
     },
     {
       "datasource": null,
+      "description": "PVCs Full in 2 days based on Daily Usage",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -69,8 +70,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 8,
+        "h": 3,
+        "w": 4,
         "x": 0,
         "y": 1
       },
@@ -102,7 +103,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "PVCs Full in 2 days - Based on Daily Usage",
+      "title": "PVCs Full in 2 days",
       "transformations": [
         {
           "id": "organize",
@@ -113,6 +114,7 @@
     },
     {
       "datasource": null,
+      "description": "PVCs Full in 5 days based on Daily Usage",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -144,9 +146,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 8,
-        "x": 8,
+        "h": 3,
+        "w": 4,
+        "x": 4,
         "y": 1
       },
       "id": 28,
@@ -177,7 +179,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "PVCs Full in 5 days - Based on Daily Usage",
+      "title": "PVCs Full in 5 days",
       "transformations": [
         {
           "id": "organize",
@@ -188,6 +190,7 @@
     },
     {
       "datasource": null,
+      "description": "PVCs Full in 1 Week based on Daily Usage",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -219,9 +222,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 8,
-        "x": 16,
+        "h": 3,
+        "w": 4,
+        "x": 8,
         "y": 1
       },
       "id": 27,
@@ -252,7 +255,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "PVCs Full in 1 Week - Based on Daily Usage",
+      "title": "PVCs Full in 1 Week",
       "transformations": [
         {
           "id": "organize",
@@ -293,10 +296,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 8,
-        "x": 0,
-        "y": 5
+        "h": 3,
+        "w": 4,
+        "x": 12,
+        "y": 1
       },
       "id": 21,
       "options": {
@@ -362,10 +365,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 8,
-        "x": 8,
-        "y": 5
+        "h": 3,
+        "w": 4,
+        "x": 16,
+        "y": 1
       },
       "id": 24,
       "options": {
@@ -437,10 +440,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 8,
-        "x": 16,
-        "y": 5
+        "h": 3,
+        "w": 4,
+        "x": 20,
+        "y": 1
       },
       "id": 23,
       "options": {
@@ -486,7 +489,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 4
       },
       "id": 17,
       "panels": [],
@@ -715,10 +718,10 @@
         ]
       },
       "gridPos": {
-        "h": 12,
+        "h": 7,
         "w": 24,
         "x": 0,
-        "y": 10
+        "y": 5
       },
       "id": 29,
       "interval": "",
@@ -855,7 +858,7 @@
         "h": 5,
         "w": 24,
         "x": 0,
-        "y": 22
+        "y": 12
       },
       "id": 7,
       "options": {
@@ -953,7 +956,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 27
+        "y": 17
       },
       "id": 15,
       "panels": [],
@@ -978,7 +981,7 @@
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 28
+        "y": 18
       },
       "hiddenSeries": false,
       "id": 9,
@@ -1036,7 +1039,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:75",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -1045,7 +1047,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:76",
           "format": "Date & time",
           "label": null,
           "logBase": 1,
@@ -1066,7 +1067,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 40
+        "y": 30
       },
       "id": 19,
       "panels": [
@@ -1147,7 +1148,6 @@
           },
           "yaxes": [
             {
-              "$$hashKey": "object:363",
               "format": "binBps",
               "label": null,
               "logBase": 1,
@@ -1156,7 +1156,6 @@
               "show": true
             },
             {
-              "$$hashKey": "object:364",
               "format": "Date & time",
               "label": null,
               "logBase": 1,
@@ -1246,7 +1245,6 @@
           },
           "yaxes": [
             {
-              "$$hashKey": "object:449",
               "format": "binBps",
               "label": null,
               "logBase": 1,
@@ -1255,7 +1253,6 @@
               "show": true
             },
             {
-              "$$hashKey": "object:450",
               "format": "Date & time",
               "label": null,
               "logBase": 1,
@@ -1346,7 +1343,6 @@
           },
           "yaxes": [
             {
-              "$$hashKey": "object:619",
               "format": "binBps",
               "label": null,
               "logBase": 1,
@@ -1355,7 +1351,6 @@
               "show": true
             },
             {
-              "$$hashKey": "object:620",
               "format": "Date & time",
               "label": null,
               "logBase": 1,
@@ -1377,7 +1372,11 @@
   "refresh": "1m",
   "schemaVersion": 27,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "kubernetes",
+    "pvc",
+    "persistentvolumes"
+  ],
   "templating": {
     "list": [
       {
@@ -1499,6 +1498,6 @@
   "timepicker": {},
   "timezone": "",
   "title": "kubernetes / persistent-volumes",
-  "uid": "peR80gTGk",
+  "uid": "kubernetes-persistent-volumes",
   "version": 6
 }

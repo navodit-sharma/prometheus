@@ -16,8 +16,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 133,
-  "iteration": 1628695597621,
+  "id": 182,
+  "iteration": 1629980179810,
   "links": [],
   "panels": [
     {
@@ -873,7 +873,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:153",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -882,7 +881,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:154",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -935,7 +933,7 @@
                   {
                     "targetBlank": true,
                     "title": "Drill down",
-                    "url": "./d/ao_KXjlMk/kubernetes-pods?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$namespace&var-pod=${__data.fields.pod}"
+                    "url": "./d/kubernetes-pods/kubernetes-pods?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$namespace&var-pod=${__data.fields.pod}"
                   }
                 ]
               }
@@ -953,7 +951,7 @@
                   {
                     "targetBlank": true,
                     "title": "Drill down",
-                    "url": "./d/xdKMspuGz/kubernetes-nodes?var-datasource=$datasource&var-cluster=$cluster&var-node=${__data.fields.node}"
+                    "url": "./d/kubernetes-nodes/kubernetes-nodes?var-datasource=$datasource&var-cluster=$cluster&var-node=${__data.fields.node}"
                   }
                 ]
               }
@@ -1108,8 +1106,8 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "cake",
-          "value": "cake"
+          "text": "monitor",
+          "value": "monitor"
         },
         "datasource": null,
         "definition": "label_values(kube_statefulset_metadata_generation{job=\"kube-state-metrics\", cluster=\"$cluster\"}, namespace)",
@@ -1139,8 +1137,8 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "cake-course-result",
-          "value": "cake-course-result"
+          "text": "alertmanager-monitor-prometheus-alertmanager",
+          "value": "alertmanager-monitor-prometheus-alertmanager"
         },
         "datasource": null,
         "definition": "label_values(kube_statefulset_metadata_generation{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\"}, statefulset)",
@@ -1199,6 +1197,6 @@
   },
   "timezone": "browser",
   "title": "kubernetes / statefulsets",
-  "uid": "z8t_k2uMk",
-  "version": 7
+  "uid": "kubernetes-statefulsets",
+  "version": 2
 }
