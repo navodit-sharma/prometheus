@@ -7,10 +7,10 @@ global:
     enabled: true
   prometheus-elasticsearch-exporter:
     enabled: false
-  grafanaAdminPassword: CHANGE_ME
-  externalUrl: "CHANGE_ME"
-  smtpApiKey: CHANGE_ME
-  smtpDestinationAddress: "CHANGE_ME"
+  grafanaAdminPassword: change-me-length-min-12
+  externalUrl: "change-me"
+  smtpApiKey: change-me
+  smtpDestinationAddress: "change-me"
   web:
     ssl:
       enabled: true
@@ -19,7 +19,7 @@ global:
         certManagerApiMigration: true
       externalSecret:
         enabled: false
-        keyVaultName: "CHANGE_ME"
+        keyVaultName: "change-me"
 
 ambassador:
   service:
@@ -33,7 +33,7 @@ kube-prometheus-stack:
   alertmanager:
     enabled: true
     alertmanagerSpec:
-      externalUrl: "http://CHANGE_ME/alertmanager"
+      externalUrl: "http://change-me/alertmanager"
       storage:
         volumeClaimTemplate:
           spec:
@@ -51,7 +51,7 @@ kube-prometheus-stack:
   prometheus:
     prometheusSpec:
       externalLabels:
-        cluster: "CHANGE_ME"
+        cluster: "change-me"
       storageSpec:
         volumeClaimTemplate:
           spec:
