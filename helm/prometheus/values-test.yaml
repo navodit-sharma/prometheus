@@ -2,38 +2,38 @@
 
 global:
   ambassador:
-    enabled: true 
+    enabled: true
   kube-prometheus-stack:
     enabled: true
   prometheus-elasticsearch-exporter:
-    enabled: false 
-  grafanaAdminPassword: CHANGE_ME 
-  externalUrl: "CHANGE_ME" 
+    enabled: false
+  grafanaAdminPassword: CHANGE_ME
+  externalUrl: "CHANGE_ME"
   smtpApiKey: CHANGE_ME
   smtpDestinationAddress: "CHANGE_ME"
   web:
     ssl:
-      enabled: true 
+      enabled: true
       letsencrypt:
-        enabled: true 
+        enabled: true
         certManagerApiMigration: true
-      externalSecret: 
+      externalSecret:
         enabled: false
         keyVaultName: "CHANGE_ME"
 
 ambassador:
   service:
-    loadBalancerIP: "CHANGE_ME"
+    loadBalancerIP: "0.0.0.0" # Change me
 
 prometheus-elasticsearch-exporter:
   es:
     uri: 'http://aux-elasticsearch-master.shared.svc.cluster.local:9200'
 
-kube-prometheus-stack: 
+kube-prometheus-stack:
   alertmanager:
     enabled: true
     alertmanagerSpec:
-      externalUrl: "http://sandbox.monitor.valamis.io/alertmanager"
+      externalUrl: "http://CHANGE_ME/alertmanager"
       storage:
         volumeClaimTemplate:
           spec:
@@ -46,13 +46,13 @@ kube-prometheus-stack:
     persistence:
       size: 10Gi
       storageClassName: "managed-premium"
-    env: 
+    env:
       GF_SMTP_ENABLED: "true"
   prometheus:
     prometheusSpec:
       externalLabels:
-        cluster: "MC_ValamisSandbox_v4-sandbox-aks_westeurope"
-      storageSpec:      
+        cluster: "CHANGE_ME"
+      storageSpec:
         volumeClaimTemplate:
           spec:
             storageClassName: "managed-premium"
