@@ -1,15 +1,15 @@
 groups:
 - name: k8s-statefulset.rules
   rules:
-  - alert: KubernetesStatefulsetDown
+  - alert: KubernetesStatefulsetReplicaDown
     # expr: (kube_statefulset_status_replicas_ready / kube_statefulset_status_replicas_current) != 1
-    expr: group by (namespace,statefulset) ((kube_statefulset_replicas > 0) and ((kube_statefulset_status_replicas_ready / kube_statefulset_status_replicas_current) != 1))
-    for: 3m
+    expr: group by (namespace,statefulset) ((kube_statefulset_replicas > 0) and ((kube_statefulset_status_replicas_ready / kube_statefulset_replicas) != 1))
+    for: 5m
     labels:
       severity: critical
     annotations:
       summary: Kubernetes StatefulSet down
-      description: "One or more replicas of statefulSet {{ $labels.statefulset }} in {{ $labels.namespace }} namespace are down for 3m."
+      description: "One or more replicas of statefulSet {{ $labels.statefulset }} in {{ $labels.namespace }} namespace are down for 5m."
       value: '{{ printf "%.2f" $value }}'
   - alert: KubernetesStatefulsetReplicasMismatch
     # expr: kube_statefulset_status_replicas_ready != kube_statefulset_status_replicas

@@ -22,13 +22,13 @@ groups:
   # cAdvisor can sometimes consume a lot of CPU, so this alert will fire constantly.
   # If you want to exclude it from this alert, exclude the series having an empty name: container_cpu_usage_seconds_total{name!=""}
   - alert: ContainerCpuUsageHigh
-    expr: (sum(rate(container_cpu_usage_seconds_total{name!="",container!=""}[3m])) BY (instance,container,image,name,namespace,node,pod) * 100)  > 80
+    expr: (sum(rate(container_cpu_usage_seconds_total{cluster=~"",namespace=~"shared",container!~"",container!~"POD",image!~""}[3m])) by (container, namespace, pod) / sum(kube_pod_container_resource_limits{cluster=~"",namespace=~"shared",unit="core"}) by (container, namespace,pod)) * 100 > 80
     for: 5m
     labels:
       severity: warning
     annotations:
       summary: Container CPU usage high
-      description: Container CPU usage is above 80% for last 5m. Check dashboard - {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kubernetes-pods/kubernetes-pods?var-datasource=prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-pod={{ $labels.pod }}&var-container={{ $labels.container }}
+      description: Container CPU usage is above 80% for last 5m. Check dashboard - {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kubernetes-pods/kubernetes-pods?var-datasource=Prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-pod={{ $labels.pod }}&var-container={{ $labels.container }}
   # See https://medium.com/faun/how-much-is-too-much-the-linux-oomkiller-and-used-memory-d32186f29c9d
   - alert: ContainerMemoryUsageHigh
     expr: (sum(container_memory_working_set_bytes{container!=""}) BY (instance,container,image,name,namespace,node,pod) / sum(container_spec_memory_limit_bytes{container!=""} > 0) BY (instance,container,image,name,namespace,node,pod) * 100) > 80
