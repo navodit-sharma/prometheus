@@ -22,8 +22,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 1,
-  "iteration": 1630076157197,
+  "id": 38,
+  "iteration": 1633951537788,
   "links": [],
   "panels": [
     {
@@ -37,7 +37,7 @@
       },
       "id": 27,
       "panels": [],
-      "title": "Snapshot",
+      "title": "Summary",
       "type": "row"
     },
     {
@@ -56,10 +56,6 @@
               {
                 "color": "semi-dark-green",
                 "value": null
-              },
-              {
-                "color": "dark-red",
-                "value": 999999
               }
             ]
           },
@@ -69,13 +65,403 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 6,
+        "w": 2,
         "x": 0,
+        "y": 1
+      },
+      "id": 30,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "valueSize": 30
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "kube_node_status_capacity{cluster=~\"$cluster\",node=~\"$node\",resource=\"cpu\",unit=\"core\"}",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "CPU",
+      "type": "stat"
+    },
+    {
+      "datasource": "${datasource}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 80
+              },
+              {
+                "color": "dark-red",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 2,
+        "y": 1
+      },
+      "id": 36,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {
+          "valueSize": 20
+        }
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(rate(node_cpu_seconds_total{cluster=~\"$cluster\",node=~\"$node\",mode!=\"idle\"}[3m])) / sum(kube_node_status_capacity{cluster=~\"$cluster\",node=~\"$node\",resource=\"cpu\",unit=\"core\"})",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "CPU Utilisation (%)",
+      "type": "gauge"
+    },
+    {
+      "datasource": "${datasource}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "noValue": "--",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 4,
+        "y": 1
+      },
+      "id": 34,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "valueSize": 30
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "kube_node_status_capacity{cluster=~\"$cluster\",node=~\"$node\",resource=\"memory\",unit=\"byte\"}",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Memory",
+      "type": "stat"
+    },
+    {
+      "datasource": "${datasource}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "max": 1,
+          "min": 0,
+          "noValue": "0",
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 80
+              },
+              {
+                "color": "dark-red",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 6,
+        "y": 1
+      },
+      "id": 37,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {
+          "valueSize": 20
+        }
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "1 - ((node_memory_MemFree_bytes{cluster=~\"$cluster\",node=~\"$node\"} + node_memory_Cached_bytes{cluster=~\"$cluster\",node=~\"$node\"} + node_memory_Buffers_bytes{cluster=~\"$cluster\",node=~\"$node\"}) / node_memory_MemTotal_bytes{cluster=~\"$cluster\",node=~\"$node\"})",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "memory",
+          "refId": "A"
+        }
+      ],
+      "title": "Memory Utilisation (%)",
+      "type": "gauge"
+    },
+    {
+      "datasource": "${datasource}",
+      "description": "Total storage (including external volumes attached to the node)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "noValue": "--",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 8,
+        "y": 1
+      },
+      "id": 35,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "valueSize": 30
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum (\nmax by (device) (\n    node_filesystem_size_bytes{job=\"node-exporter\",cluster=~\"$cluster\",node=~\"$node\",device!~\"(tmpfs|lxcfs|shm)\",fstype!=\"\"}\n  )\n)",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "Storage",
+          "refId": "A"
+        }
+      ],
+      "title": "Storage",
+      "type": "stat"
+    },
+    {
+      "datasource": "${datasource}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "max": 1,
+          "min": 0,
+          "noValue": "0",
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 80
+              },
+              {
+                "color": "dark-red",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 10,
+        "y": 1
+      },
+      "id": 38,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {
+          "valueSize": 20
+        }
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "(\nsum(\n  max by (device) (\n    node_filesystem_size_bytes{job=\"node-exporter\",cluster=~\"$cluster\",node=~\"$node\",device!~\"(tmpfs|lxcfs|shm)\",fstype!=\"\"}\n  -\n    node_filesystem_avail_bytes{job=\"node-exporter\",cluster=~\"$cluster\",node=~\"$node\",device!~\"(tmpfs|lxcfs|shm)\",fstype!=\"\"}\n  )\n) \n/ \nsum (\nmax by (device) (\n    node_filesystem_size_bytes{job=\"node-exporter\",cluster=~\"$cluster\",node=~\"$node\",device!~\"(tmpfs|lxcfs|shm)\",fstype!=\"\"}\n  )\n)\n)",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Storage Utilisation (%)",
+      "type": "gauge"
+    },
+    {
+      "datasource": "${datasource}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "noValue": "--",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 12,
         "y": 1
       },
       "id": 29,
       "options": {
-        "colorMode": "value",
+        "colorMode": "none",
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
@@ -94,9 +480,11 @@
       "pluginVersion": "8.1.0",
       "targets": [
         {
+          "exemplar": true,
           "expr": "sum(kubelet_running_pods{cluster=~\"$cluster\", job=\"kubelet\", metrics_path=\"/metrics\", node=~\"$node\"}) OR sum(kubelet_running_pod_count{cluster=~\"$cluster\", job=\"kubelet\", metrics_path=\"/metrics\", node=~\"$node\"})",
+          "instant": true,
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "pods",
           "refId": "A"
         }
       ],
@@ -119,10 +507,6 @@
               {
                 "color": "semi-dark-green",
                 "value": null
-              },
-              {
-                "color": "dark-red",
-                "value": 999999
               }
             ]
           },
@@ -132,13 +516,13 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 6,
-        "x": 6,
+        "w": 3,
+        "x": 15,
         "y": 1
       },
-      "id": 30,
+      "id": 33,
       "options": {
-        "colorMode": "value",
+        "colorMode": "none",
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
@@ -157,9 +541,11 @@
       "pluginVersion": "8.1.0",
       "targets": [
         {
-          "expr": "sum(kubelet_running_containers{cluster=~\"$cluster\", job=\"kubelet\", metrics_path=\"/metrics\", node=~\"$node\"}) OR sum(kubelet_running_container_count{cluster=~\"$cluster\", job=\"kubelet\", metrics_path=\"/metrics\", node=~\"$node\"})",
+          "exemplar": true,
+          "expr": "sum(sum by (pod,uid) (kube_pod_info{cluster=~\"$cluster\",node=~\"$node\"}) * on (pod) sum by (pod,uid) (kube_pod_container_info))",
+          "instant": true,
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "containers",
           "refId": "A"
         }
       ],
@@ -195,13 +581,13 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 6,
-        "x": 12,
+        "w": 3,
+        "x": 18,
         "y": 1
       },
       "id": 31,
       "options": {
-        "colorMode": "value",
+        "colorMode": "none",
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
@@ -220,7 +606,9 @@
       "pluginVersion": "8.1.0",
       "targets": [
         {
+          "exemplar": true,
           "expr": "sum(volume_manager_total_volumes{cluster=\"$cluster\", job=\"kubelet\", metrics_path=\"/metrics\", node=~\"$node\", state=\"desired_state_of_world\"})",
+          "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -258,13 +646,13 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 6,
-        "x": 18,
+        "w": 3,
+        "x": 21,
         "y": 1
       },
       "id": 32,
       "options": {
-        "colorMode": "value",
+        "colorMode": "none",
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
@@ -283,7 +671,9 @@
       "pluginVersion": "8.1.0",
       "targets": [
         {
+          "exemplar": true,
           "expr": "sum(volume_manager_total_volumes{cluster=\"$cluster\", job=\"kubelet\", metrics_path=\"/metrics\", node=~\"$node\", state=\"actual_state_of_world\"})",
+          "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -430,6 +820,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "${datasource}",
+      "decimals": 3,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -444,8 +835,8 @@
         "alignAsTable": true,
         "avg": true,
         "current": true,
-        "max": false,
-        "min": false,
+        "max": true,
+        "min": true,
         "rightSide": false,
         "show": true,
         "sideWidth": null,
@@ -453,11 +844,11 @@
         "values": true
       },
       "lines": true,
-      "linewidth": 2,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null as zero",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": false
       },
       "percentage": false,
       "pluginVersion": "8.1.0",
@@ -467,14 +858,14 @@
       "repeat": null,
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "expr": "avg(\n  (1 - rate(node_cpu_seconds_total{job=\"node-exporter\", cluster=~\"$cluster\", mode=\"idle\", node=\"$node\"}[$__interval]))\n/ ignoring(cpu) group_left\n  count without (cpu)( node_cpu_seconds_total{job=\"node-exporter\", cluster=~\"$cluster\", mode=\"idle\", node=\"$node\"})\n)\n",
-          "format": "time_series",
-          "interval": "1m",
-          "intervalFactor": 5,
+          "exemplar": true,
+          "expr": "sum(rate(node_cpu_seconds_total{cluster=~\"$cluster\",node=~\"$node\",mode!=\"idle\"}[3m]))",
+          "hide": false,
+          "interval": "",
           "legendFormat": "cpu",
           "refId": "A"
         }
@@ -486,7 +877,7 @@
       "title": "CPU Usage",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -500,20 +891,22 @@
       "yaxes": [
         {
           "$$hashKey": "object:2721",
-          "format": "percentunit",
+          "decimals": 3,
+          "format": "none",
           "label": null,
           "logBase": 1,
-          "max": 1,
-          "min": 0,
+          "max": null,
+          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:2722",
-          "format": "percentunit",
+          "decimals": 3,
+          "format": "none",
           "label": null,
           "logBase": 1,
-          "max": 1,
-          "min": 0,
+          "max": null,
+          "min": null,
           "show": true
         }
       ],
@@ -528,7 +921,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "$datasource",
-      "fill": 0,
+      "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 7,
@@ -551,7 +944,7 @@
         "values": false
       },
       "lines": true,
-      "linewidth": 2,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null as zero",
       "options": {
@@ -615,7 +1008,7 @@
       "title": "Load Average",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -671,11 +1064,11 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "$datasource",
-      "fill": 0,
+      "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 7,
-        "w": 18,
+        "w": 24,
         "x": 0,
         "y": 18
       },
@@ -694,11 +1087,11 @@
         "values": false
       },
       "lines": true,
-      "linewidth": 2,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null as zero",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": false
       },
       "percentage": false,
       "pluginVersion": "8.1.0",
@@ -765,7 +1158,7 @@
       "title": "Memory Usage",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -800,85 +1193,6 @@
         "align": false,
         "alignLevel": null
       }
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "$datasource",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
-            }
-          ],
-          "max": 100,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "rgba(50, 172, 45, 0.97)",
-                "value": null
-              },
-              {
-                "color": "rgba(237, 129, 40, 0.89)",
-                "value": 80
-              },
-              {
-                "color": "rgba(245, 54, 54, 0.9)",
-                "value": 90
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 18,
-        "y": 18
-      },
-      "id": 5,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "8.1.0",
-      "targets": [
-        {
-          "expr": "100 -\n(\n  avg(node_memory_MemAvailable_bytes{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\"})\n/\n  avg(node_memory_MemTotal_bytes{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\"})\n* 100\n)\n",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Memory Usage",
-      "type": "gauge"
     },
     {
       "collapsed": false,
@@ -1025,6 +1339,12 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "$datasource",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1048,15 +1368,15 @@
         "values": false
       },
       "lines": true,
-      "linewidth": 2,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null as zero",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": false
       },
       "percentage": false,
       "pluginVersion": "8.1.0",
-      "pointradius": 5,
+      "pointradius": 1,
       "points": false,
       "renderer": "flot",
       "repeat": null,
@@ -1064,12 +1384,14 @@
         {
           "$$hashKey": "object:3185",
           "alias": "used",
-          "color": "#E0B400"
+          "color": "#96D98D"
         },
         {
           "$$hashKey": "object:3186",
-          "alias": "available",
-          "color": "#73BF69"
+          "alias": "total",
+          "color": "#C4162A",
+          "fill": 0,
+          "linewidth": 2
         }
       ],
       "spaceLength": 10,
@@ -1077,6 +1399,7 @@
       "steppedLine": false,
       "targets": [
         {
+          "exemplar": true,
           "expr": "sum(\n  max by (device) (\n    node_filesystem_size_bytes{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\", fstype!=\"\"}\n  -\n    node_filesystem_avail_bytes{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\", fstype!=\"\"}\n  )\n)\n",
           "format": "time_series",
           "interval": "",
@@ -1085,11 +1408,11 @@
           "refId": "A"
         },
         {
-          "expr": "sum(\n  max by (device) (\n    node_filesystem_avail_bytes{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\", fstype!=\"\"}\n  )\n)\n",
-          "format": "time_series",
+          "exemplar": true,
+          "expr": "sum (\nmax by (device) (\n    node_filesystem_size_bytes{job=\"node-exporter\",cluster=~\"$cluster\",node=~\"$node\",device!~\"(tmpfs|lxcfs|shm)\",fstype!=\"\"}\n  )\n)",
+          "hide": false,
           "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "available",
+          "legendFormat": "total",
           "refId": "B"
         }
       ],
@@ -1100,7 +1423,7 @@
       "title": "Disk Space Usage",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1115,7 +1438,7 @@
         {
           "$$hashKey": "object:3199",
           "format": "bytes",
-          "label": null,
+          "label": "",
           "logBase": 1,
           "max": null,
           "min": 0,
@@ -1156,7 +1479,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "$datasource",
-      "fill": 0,
+      "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 7,
@@ -1179,11 +1502,11 @@
         "values": false
       },
       "lines": true,
-      "linewidth": 2,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null as zero",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": false
       },
       "percentage": false,
       "pluginVersion": "8.1.0",
@@ -1212,7 +1535,7 @@
       "title": "Network Received",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1254,7 +1577,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "$datasource",
-      "fill": 0,
+      "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 7,
@@ -1277,11 +1600,11 @@
         "values": false
       },
       "lines": true,
-      "linewidth": 2,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null as zero",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": false
       },
       "percentage": false,
       "pluginVersion": "8.1.0",
@@ -1310,7 +1633,7 @@
       "title": "Network Transmitted",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1551,8 +1874,8 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "aks-valpoolsm-13423648-vmss00005d",
-          "value": "aks-valpoolsm-13423648-vmss00005d"
+          "text": "aks-valpoolmd-39765078-vmss00000y",
+          "value": "aks-valpoolmd-39765078-vmss00000y"
         },
         "datasource": "${datasource}",
         "definition": "label_values(kubelet_node_name{job=\"kubelet\",cluster=~\"$cluster\"}, node)",
@@ -1611,5 +1934,5 @@
   "timezone": "browser",
   "title": "kubernetes / nodes",
   "uid": "kubernetes-nodes",
-  "version": 3
+  "version": 20
 }

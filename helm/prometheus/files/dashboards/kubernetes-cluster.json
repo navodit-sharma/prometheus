@@ -8,6 +8,12 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
@@ -15,8 +21,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 171,
-  "iteration": 1629980381667,
+  "id": 58,
+  "iteration": 1633936964296,
   "links": [],
   "panels": [
     {
@@ -35,87 +41,230 @@
       "type": "row"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
-            }
-          ],
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "mappings": [],
+          "noValue": "--",
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "semi-dark-green",
+                "color": "green",
                 "value": null
-              },
-              {
-                "color": "dark-orange",
-                "value": 80
-              },
-              {
-                "color": "dark-red",
-                "value": 90
               }
             ]
-          },
-          "unit": "percentunit"
+          }
         },
         "overrides": []
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
+        "w": 24,
         "x": 0,
         "y": 1
       },
-      "id": 1,
-      "interval": "1m",
-      "links": [],
-      "maxDataPoints": 100,
+      "id": 46,
       "options": {
-        "colorMode": "value",
+        "showHeader": true
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "kubernetes_build_info{cluster=~\"$cluster\",service=\"kubernetes\"}",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Kubernetes Info",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Value": true,
+              "__name__": true,
+              "build_date": true,
+              "compiler": true,
+              "endpoint": true,
+              "git_commit": true,
+              "git_tree_state": true,
+              "job": true,
+              "major": true,
+              "minor": true,
+              "namespace": true
+            },
+            "indexByName": {
+              "Time": 5,
+              "Value": 16,
+              "__name__": 6,
+              "build_date": 7,
+              "compiler": 8,
+              "endpoint": 9,
+              "git_commit": 10,
+              "git_tree_state": 11,
+              "git_version": 3,
+              "go_version": 4,
+              "instance": 1,
+              "job": 12,
+              "major": 13,
+              "minor": 14,
+              "namespace": 15,
+              "platform": 2,
+              "service": 0
+            },
+            "renameByName": {
+              "Time": "",
+              "git_version": "Version",
+              "go_version": "GoVersion",
+              "instance": "Address",
+              "platform": "Platform",
+              "service": "Service"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": "${datasource}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 0,
+        "y": 4
+      },
+      "id": 37,
+      "options": {
+        "colorMode": "none",
         "graphMode": "none",
         "justifyMode": "auto",
-        "orientation": "horizontal",
+        "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "mean"
+            "lastNotNull"
           ],
           "fields": "",
           "values": false
         },
         "text": {
-          "valueSize": 40
+          "valueSize": 30
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
-          "expr": "1 - avg(rate(node_cpu_seconds_total{cluster=~\"$cluster\",mode=\"idle\"}[$__rate_interval]))",
-          "format": "time_series",
-          "instant": true,
+          "exemplar": true,
+          "expr": "sum(machine_cpu_cores{cluster=~\"$cluster\"})",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Total CPU (cores)",
+      "type": "stat"
+    },
+    {
+      "datasource": "${datasource}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "max": 1,
+          "noValue": "0",
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 80
+              },
+              {
+                "color": "dark-red",
+                "value": 95
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 3,
+        "y": 4
+      },
+      "id": 39,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {
+          "valueSize": 20
+        }
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(rate(node_cpu_seconds_total{cluster=~\"$cluster\",mode!=\"idle\"}[3m])) / sum(machine_cpu_cores{cluster=~\"$cluster\"})",
+          "instant": false,
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "CPU Utilisation",
-      "type": "stat"
+      "title": "CPU Utilisation (%)",
+      "type": "gauge"
     },
     {
       "cacheTimeout": null,
@@ -125,18 +274,23 @@
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
+          "decimals": 2,
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
+          "max": 1,
+          "min": 0,
+          "noValue": "0",
           "thresholds": {
-            "mode": "absolute",
+            "mode": "percentage",
             "steps": [
               {
                 "color": "semi-dark-green",
@@ -157,19 +311,16 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 4,
-        "y": 1
+        "h": 5,
+        "w": 3,
+        "x": 6,
+        "y": 4
       },
-      "id": 2,
+      "id": 41,
       "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
@@ -178,17 +329,19 @@
           "fields": "",
           "values": false
         },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
         "text": {
-          "valueSize": 40
-        },
-        "textMode": "auto"
+          "valueSize": 20
+        }
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_requests_cpu_cores{cluster=~\"$cluster\"}) / sum(kube_node_status_allocatable_cpu_cores{cluster=~\"$cluster\"})",
+          "exemplar": true,
+          "expr": "sum(kube_pod_container_resource_requests{cluster=~\"$cluster\",unit=\"core\"}) / sum(machine_cpu_cores{cluster=~\"$cluster\"})",
           "format": "time_series",
-          "instant": true,
+          "instant": false,
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "",
@@ -197,8 +350,8 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "CPU Requests Commitment",
-      "type": "stat"
+      "title": "CPU Request Commitment (%)",
+      "type": "gauge"
     },
     {
       "cacheTimeout": null,
@@ -208,18 +361,23 @@
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
+          "decimals": 2,
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
+          "max": 1,
+          "min": 0,
+          "noValue": "0",
           "thresholds": {
-            "mode": "absolute",
+            "mode": "percentage",
             "steps": [
               {
                 "color": "semi-dark-green",
@@ -240,19 +398,16 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 3,
+        "h": 5,
         "w": 4,
-        "x": 8,
-        "y": 1
+        "x": 9,
+        "y": 4
       },
-      "id": 3,
+      "id": 43,
       "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
@@ -261,17 +416,19 @@
           "fields": "",
           "values": false
         },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
         "text": {
-          "valueSize": 40
-        },
-        "textMode": "auto"
+          "valueSize": 20
+        }
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_limits_cpu_cores{cluster=~\"$cluster\"}) / sum(kube_node_status_allocatable_cpu_cores{cluster=~\"$cluster\"})",
+          "exemplar": true,
+          "expr": "sum(kube_pod_container_resource_limits{cluster=~\"$cluster\",unit=\"core\"}) / sum(machine_cpu_cores{cluster=~\"$cluster\"})",
           "format": "time_series",
-          "instant": true,
+          "instant": false,
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "",
@@ -280,8 +437,8 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "CPU Limits Commitment",
-      "type": "stat"
+      "title": "CPU Limit Commitment (%)",
+      "type": "gauge"
     },
     {
       "cacheTimeout": null,
@@ -291,49 +448,44 @@
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
+          "decimals": 0,
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
+          "noValue": "0",
           "thresholds": {
-            "mode": "absolute",
+            "mode": "percentage",
             "steps": [
               {
                 "color": "semi-dark-green",
                 "value": null
-              },
-              {
-                "color": "dark-orange",
-                "value": 80
-              },
-              {
-                "color": "dark-red",
-                "value": 90
               }
             ]
           },
-          "unit": "percentunit"
+          "unit": "none"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 12,
-        "y": 1
+        "h": 5,
+        "w": 3,
+        "x": 13,
+        "y": 4
       },
-      "id": 4,
+      "id": 47,
       "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
-        "colorMode": "value",
+        "colorMode": "none",
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "horizontal",
@@ -345,14 +497,15 @@
           "values": false
         },
         "text": {
-          "valueSize": 40
+          "valueSize": 30
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
-          "expr": "1 - (sum(node_memory_MemAvailable_bytes{cluster=~\"$cluster\"})/sum(node_memory_MemTotal_bytes{cluster=~\"$cluster\"}))",
+          "exemplar": true,
+          "expr": "sum(kube_node_info{cluster=~\"$cluster\"})",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -363,7 +516,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Memory Utilisation",
+      "title": "# Of Nodes",
       "type": "stat"
     },
     {
@@ -372,82 +525,398 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
           },
-          "custom": {},
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "semi-dark-green",
-                "value": null
-              },
-              {
-                "color": "dark-orange",
-                "value": 80
-              },
-              {
-                "color": "dark-red",
-                "value": 90
-              }
-            ]
-          },
-          "unit": "percentunit"
+          "noValue": "0",
+          "unit": "none"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 3,
+        "h": 10,
         "w": 4,
         "x": 16,
-        "y": 1
+        "y": 4
       },
-      "id": 5,
+      "id": 49,
       "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "values": [
+            "value"
+          ]
+        },
+        "pieType": "donut",
         "reduceOptions": {
           "calcs": [
-            "mean"
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "count(machine_cpu_cores{cluster=~\"$cluster\"} <= 2)",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "0-2",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "count((machine_cpu_cores{cluster=~\"$cluster\"} > 2) and (machine_cpu_cores{cluster=~\"$cluster\"} <= 4))",
+          "format": "time_series",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "2-4",
+          "refId": "B"
+        },
+        {
+          "exemplar": true,
+          "expr": "count((machine_cpu_cores{cluster=~\"$cluster\"} > 4) and (machine_cpu_cores{cluster=~\"$cluster\"} <= 8))",
+          "format": "time_series",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "4-8",
+          "refId": "C"
+        },
+        {
+          "exemplar": true,
+          "expr": "count((machine_cpu_cores{cluster=~\"$cluster\"} > 8) and (machine_cpu_cores{cluster=~\"$cluster\"} <= 16))",
+          "format": "time_series",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "8-16",
+          "refId": "D"
+        },
+        {
+          "exemplar": true,
+          "expr": "count((machine_cpu_cores{cluster=~\"$cluster\"} > 16) and (machine_cpu_cores{cluster=~\"$cluster\"} <= 32))",
+          "format": "time_series",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "16-32",
+          "refId": "E"
+        },
+        {
+          "exemplar": true,
+          "expr": "count(machine_cpu_cores{cluster=~\"$cluster\"} > 32)",
+          "format": "time_series",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "32+",
+          "refId": "F"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "# Of Nodes (CPU)",
+      "type": "piechart"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "$datasource",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "noValue": "0",
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 4,
+        "x": 20,
+        "y": 4
+      },
+      "id": 50,
+      "interval": null,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "values": [
+            "value"
+          ]
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "count(node_memory_MemTotal_bytes{cluster=~\"$cluster\"}/1024/1024/1024 <= 2)",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "0-2",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "count((node_memory_MemTotal_bytes{cluster=~\"$cluster\"}/1024/1024/1024 > 2) and (node_memory_MemTotal_bytes{cluster=~\"$cluster\"}/1024/1024/1024 <= 4))",
+          "format": "time_series",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "2-4",
+          "refId": "B"
+        },
+        {
+          "exemplar": true,
+          "expr": "count((node_memory_MemTotal_bytes{cluster=~\"$cluster\"}/1024/1024/1024 > 4) and (node_memory_MemTotal_bytes{cluster=~\"$cluster\"}/1024/1024/1024 <= 8))",
+          "format": "time_series",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "4-8",
+          "refId": "C"
+        },
+        {
+          "exemplar": true,
+          "expr": "count((node_memory_MemTotal_bytes{cluster=~\"$cluster\"}/1024/1024/1024 > 8) and (node_memory_MemTotal_bytes{cluster=~\"$cluster\"}/1024/1024/1024 <= 16))",
+          "format": "time_series",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "8-16",
+          "refId": "D"
+        },
+        {
+          "exemplar": true,
+          "expr": "count((node_memory_MemTotal_bytes{cluster=~\"$cluster\"}/1024/1024/1024 > 16) and (node_memory_MemTotal_bytes{cluster=~\"$cluster\"}/1024/1024/1024 <= 32))",
+          "format": "time_series",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "16-32",
+          "refId": "E"
+        },
+        {
+          "exemplar": true,
+          "expr": "count(node_memory_MemTotal_bytes{cluster=~\"$cluster\"}/1024/1024/1024 > 32)",
+          "format": "time_series",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "32+",
+          "refId": "F"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "# Of Nodes (Memory)",
+      "type": "piechart"
+    },
+    {
+      "datasource": "${datasource}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 0,
+        "y": 9
+      },
+      "id": 38,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
           ],
           "fields": "",
           "values": false
         },
         "text": {
-          "valueSize": 40
+          "valueSize": 30
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_requests_memory_bytes{cluster=~\"$cluster\"}) / sum(kube_node_status_allocatable_memory_bytes{cluster=~\"$cluster\"})",
-          "format": "time_series",
-          "instant": true,
+          "exemplar": true,
+          "expr": "sum(node_memory_MemTotal_bytes{cluster=~\"$cluster\"})",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Total Memory (GB)",
+      "type": "stat"
+    },
+    {
+      "datasource": "${datasource}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "max": 1,
+          "noValue": "0",
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 80
+              },
+              {
+                "color": "dark-red",
+                "value": 95
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 3,
+        "y": 9
+      },
+      "id": 40,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {
+          "valueSize": 20
+        }
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "1 - ((sum(node_memory_MemFree_bytes{cluster=~\"$cluster\"}) + sum(node_memory_Cached_bytes{cluster=~\"$cluster\"}) + sum(node_memory_Buffers_bytes{cluster=~\"$cluster\"})) / sum(node_memory_MemTotal_bytes{cluster=~\"$cluster\"}))",
+          "instant": false,
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Memory Requests Commitment",
-      "type": "stat"
+      "title": "Memory Utilisation (%)",
+      "type": "gauge"
     },
     {
       "cacheTimeout": null,
@@ -457,18 +926,23 @@
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
+          "decimals": 2,
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
+          "max": 1,
+          "min": 0,
+          "noValue": "0",
           "thresholds": {
-            "mode": "absolute",
+            "mode": "percentage",
             "steps": [
               {
                 "color": "semi-dark-green",
@@ -489,17 +963,181 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 20,
-        "y": 1
+        "h": 5,
+        "w": 3,
+        "x": 6,
+        "y": 9
       },
-      "id": 6,
+      "id": 42,
       "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
-        "colorMode": "value",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {
+          "valueSize": 20
+        }
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(kube_pod_container_resource_requests{cluster=~\"$cluster\",unit=\"byte\"}) / sum(node_memory_MemTotal_bytes{cluster=~\"$cluster\"})",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Memory Request Commitment (%)",
+      "type": "gauge"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "$datasource",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "max": 1,
+          "min": 0,
+          "noValue": "0",
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              },
+              {
+                "color": "dark-orange",
+                "value": 80
+              },
+              {
+                "color": "dark-red",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 9,
+        "y": 9
+      },
+      "id": 44,
+      "interval": null,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {
+          "valueSize": 20
+        }
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(kube_pod_container_resource_limits{cluster=~\"$cluster\",unit=\"byte\"}) / sum(node_memory_MemTotal_bytes{cluster=~\"$cluster\"})",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Memory Limit Commitment (%)",
+      "type": "gauge"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "$datasource",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 13,
+        "y": 9
+      },
+      "id": 48,
+      "interval": null,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "none",
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "horizontal",
@@ -511,14 +1149,15 @@
           "values": false
         },
         "text": {
-          "valueSize": 40
+          "valueSize": 30
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_limits_memory_bytes{cluster=~\"$cluster\"}) / sum(kube_node_status_allocatable_memory_bytes{cluster=~\"$cluster\"})",
+          "exemplar": true,
+          "expr": "sum(kube_pod_info{cluster=~\"$cluster\"})",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -529,7 +1168,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Memory Limits Commitment",
+      "title": "# Of Pods",
       "type": "stat"
     },
     {
@@ -539,7 +1178,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 4
+        "y": 14
       },
       "id": 21,
       "panels": [],
@@ -554,19 +1193,13 @@
       "dashes": false,
       "datasource": "$datasource",
       "decimals": 3,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 10,
+      "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
-        "w": 24,
+        "h": 8,
+        "w": 20,
         "x": 0,
-        "y": 5
+        "y": 15
       },
       "hiddenSeries": false,
       "id": 7,
@@ -584,14 +1217,14 @@
         "values": true
       },
       "lines": true,
-      "linewidth": 0,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null as zero",
       "options": {
         "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "8.1.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -601,7 +1234,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",container!~\"\",container!~\"POD\",image!~\"\"}[$__rate_interval])) by (namespace)",
+          "exemplar": true,
+          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",container!~\"\",container!~\"POD\",image!~\"\"}[3m])) by (namespace)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -631,6 +1265,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:90",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -639,6 +1274,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:91",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -653,18 +1289,78 @@
       }
     },
     {
+      "datasource": "${datasource}",
+      "description": "It shows average CPU utilisation by each namespace within selected time range in dashboard",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": [],
+          "noValue": "0"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 20,
+        "y": 15
+      },
+      "id": 35,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "values": []
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",container!~\"\",container!~\"POD\",image!~\"\"}[3m])) by (namespace)",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{namespace}}",
+          "refId": "A"
+        }
+      ],
+      "title": "CPU Usage (Pie)",
+      "type": "piechart"
+    },
+    {
       "collapsed": true,
       "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 12
+        "y": 23
       },
       "id": 22,
       "panels": [
         {
-          "datasource": null,
+          "datasource": "${datasource}",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -672,6 +1368,7 @@
               },
               "custom": {
                 "align": null,
+                "displayMode": "auto",
                 "filterable": false
               },
               "decimals": 2,
@@ -684,10 +1381,6 @@
                   {
                     "color": "green",
                     "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
                   }
                 ]
               },
@@ -751,6 +1444,42 @@
                     "value": 0
                   }
                 ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "CPU Usage"
+                },
+                "properties": [
+                  {
+                    "id": "decimals",
+                    "value": 3
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "CPU Requests"
+                },
+                "properties": [
+                  {
+                    "id": "decimals",
+                    "value": 3
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "CPU Limits"
+                },
+                "properties": [
+                  {
+                    "id": "decimals",
+                    "value": 3
+                  }
+                ]
               }
             ]
           },
@@ -758,14 +1487,20 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 13
+            "y": 24
           },
           "id": 8,
           "links": [],
           "options": {
-            "showHeader": true
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": false,
+                "displayName": "Namespace"
+              }
+            ]
           },
-          "pluginVersion": "7.4.2",
+          "pluginVersion": "8.1.0",
           "targets": [
             {
               "expr": "sum(kube_pod_owner{cluster=~\"$cluster\"}) by (namespace)",
@@ -779,7 +1514,8 @@
               "step": 10
             },
             {
-              "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace!~\"\"}[1m])) by (namespace)",
+              "exemplar": true,
+              "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace!~\"\"}[3m])) by (namespace)",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -790,7 +1526,8 @@
               "step": 10
             },
             {
-              "expr": "sum(kube_pod_container_resource_requests_cpu_cores{cluster=~\"$cluster\"}) by (namespace)",
+              "exemplar": true,
+              "expr": "sum(kube_pod_container_resource_requests{cluster=~\"$cluster\",unit=\"core\"}) by (namespace)",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -801,7 +1538,8 @@
               "step": 10
             },
             {
-              "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",container!~\"\",container!~\"POD\",image!~\"\"}[1m])) by (namespace) / sum(kube_pod_container_resource_requests_cpu_cores{cluster=~\"$cluster\"}) by (namespace)",
+              "exemplar": true,
+              "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",container!~\"\",container!~\"POD\",image!~\"\"}[3m])) by (namespace) / sum(kube_pod_container_resource_requests{cluster=~\"$cluster\",unit=\"core\"}) by (namespace)",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -812,7 +1550,8 @@
               "step": 10
             },
             {
-              "expr": "sum(kube_pod_container_resource_limits_cpu_cores{cluster=~\"$cluster\"}) by (namespace)",
+              "exemplar": true,
+              "expr": "sum(kube_pod_container_resource_limits{cluster=~\"$cluster\",unit=\"core\"}) by (namespace)",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -823,7 +1562,8 @@
               "step": 10
             },
             {
-              "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",container!~\"\",container!~\"POD\",image!~\"\"}[1m])) by (namespace) / sum(kube_pod_container_resource_limits_cpu_cores{cluster=~\"$cluster\"}) by (namespace)",
+              "exemplar": true,
+              "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",container!~\"\",container!~\"POD\",image!~\"\"}[3m])) by (namespace) / sum(kube_pod_container_resource_limits{cluster=~\"$cluster\",unit=\"core\"}) by (namespace)",
               "format": "table",
               "hide": false,
               "instant": true,
@@ -836,7 +1576,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "CPU By Namespace",
+          "title": "CPU Quotas By Namespace",
           "transformations": [
             {
               "id": "merge",
@@ -877,7 +1617,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 13
+        "y": 24
       },
       "id": 23,
       "panels": [],
@@ -892,19 +1632,13 @@
       "dashes": false,
       "datasource": "$datasource",
       "decimals": 2,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 0,
+      "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
-        "w": 24,
+        "h": 8,
+        "w": 20,
         "x": 0,
-        "y": 14
+        "y": 25
       },
       "hiddenSeries": false,
       "id": 9,
@@ -922,14 +1656,14 @@
         "values": true
       },
       "lines": true,
-      "linewidth": 2,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null as zero",
       "options": {
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "8.1.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -969,6 +1703,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:61",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -977,6 +1712,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:62",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -991,18 +1727,77 @@
       }
     },
     {
+      "datasource": "${datasource}",
+      "description": "It shows average Memory utilisation by each namespace within selected time range in dashboard ",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": [],
+          "noValue": "0",
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 20,
+        "y": 25
+      },
+      "id": 53,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(container_memory_rss{cluster=~\"$cluster\", container!=\"\"}) by (namespace)",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{namespace}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Memory Usage (Pie)",
+      "type": "piechart"
+    },
+    {
       "collapsed": true,
       "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 21
+        "y": 33
       },
       "id": 24,
       "panels": [
         {
-          "datasource": null,
+          "datasource": "${datasource}",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1010,6 +1805,7 @@
               },
               "custom": {
                 "align": null,
+                "displayMode": "auto",
                 "filterable": false
               },
               "decimals": 2,
@@ -1128,7 +1924,7 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 22
+            "y": 34
           },
           "id": 10,
           "links": [],
@@ -1141,7 +1937,7 @@
               }
             ]
           },
-          "pluginVersion": "7.4.2",
+          "pluginVersion": "8.1.0",
           "targets": [
             {
               "expr": "sum(kube_pod_owner{cluster=~\"$cluster\"}) by (namespace)",
@@ -1164,7 +1960,8 @@
               "step": 10
             },
             {
-              "expr": "sum(kube_pod_container_resource_requests_memory_bytes{cluster=~\"$cluster\"}) by (namespace)",
+              "exemplar": true,
+              "expr": "sum(kube_pod_container_resource_requests{cluster=~\"$cluster\",unit=\"byte\"}) by (namespace)",
               "format": "table",
               "instant": true,
               "interval": "",
@@ -1174,7 +1971,8 @@
               "step": 10
             },
             {
-              "expr": "sum(container_memory_rss{cluster=~\"$cluster\", container!=\"\"}) by (namespace) / sum(kube_pod_container_resource_requests_memory_bytes{cluster=~\"$cluster\"}) by (namespace)",
+              "exemplar": true,
+              "expr": "sum(container_memory_rss{cluster=~\"$cluster\", container!=\"\"}) by (namespace) / sum(kube_pod_container_resource_requests{cluster=~\"$cluster\",unit=\"byte\"}) by (namespace)",
               "format": "table",
               "instant": true,
               "interval": "",
@@ -1184,7 +1982,8 @@
               "step": 10
             },
             {
-              "expr": "sum(kube_pod_container_resource_limits_memory_bytes{cluster=~\"$cluster\"}) by (namespace)",
+              "exemplar": true,
+              "expr": "sum(kube_pod_container_resource_limits{cluster=~\"$cluster\",unit=\"byte\"}) by (namespace)",
               "format": "table",
               "instant": true,
               "interval": "",
@@ -1194,7 +1993,8 @@
               "step": 10
             },
             {
-              "expr": "sum(container_memory_rss{cluster=~\"$cluster\", container!=\"\"}) by (namespace) / sum(kube_pod_container_resource_limits_memory_bytes{cluster=~\"$cluster\"}) by (namespace)",
+              "exemplar": true,
+              "expr": "sum(container_memory_rss{cluster=~\"$cluster\", container!=\"\"}) by (namespace) / sum(kube_pod_container_resource_limits{cluster=~\"$cluster\",unit=\"byte\"}) by (namespace)",
               "format": "table",
               "instant": true,
               "interval": "",
@@ -1247,12 +2047,12 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 22
+        "y": 34
       },
       "id": 25,
       "panels": [
         {
-          "datasource": null,
+          "datasource": "${datasource}",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1260,6 +2060,7 @@
               },
               "custom": {
                 "align": null,
+                "displayMode": "auto",
                 "filterable": false
               },
               "decimals": 2,
@@ -1377,7 +2178,7 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 23
+            "y": 35
           },
           "id": 11,
           "interval": "1m",
@@ -1385,7 +2186,7 @@
           "options": {
             "showHeader": true
           },
-          "pluginVersion": "7.4.2",
+          "pluginVersion": "8.1.0",
           "targets": [
             {
               "expr": "sum(irate(container_network_receive_bytes_total{cluster=~\"$cluster\", namespace=~\".+\"}[$__rate_interval])) by (namespace)",
@@ -1491,7 +2292,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 23
+        "y": 35
       },
       "id": 26,
       "panels": [],
@@ -1505,19 +2306,13 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 10,
+      "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 24
+        "y": 36
       },
       "hiddenSeries": false,
       "id": 12,
@@ -1531,14 +2326,14 @@
         "values": false
       },
       "lines": true,
-      "linewidth": 0,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null as zero",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "8.1.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1578,6 +2373,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:288",
           "format": "Bps",
           "label": null,
           "logBase": 1,
@@ -1586,6 +2382,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:289",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1606,7 +2403,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 31
+        "y": 43
       },
       "id": 27,
       "panels": [],
@@ -1619,20 +2416,14 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 10,
+      "datasource": "${datasource}",
+      "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 32
+        "y": 44
       },
       "hiddenSeries": false,
       "id": 13,
@@ -1646,14 +2437,14 @@
         "values": false
       },
       "lines": true,
-      "linewidth": 0,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null as zero",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "8.1.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1693,6 +2484,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:364",
           "format": "Bps",
           "label": null,
           "logBase": 1,
@@ -1701,6 +2493,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:365",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1721,7 +2514,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 39
+        "y": 51
       },
       "id": 28,
       "panels": [],
@@ -1734,20 +2527,14 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 10,
+      "datasource": "${datasource}",
+      "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 40
+        "y": 52
       },
       "hiddenSeries": false,
       "id": 14,
@@ -1761,14 +2548,14 @@
         "values": false
       },
       "lines": true,
-      "linewidth": 0,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null as zero",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "8.1.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1808,6 +2595,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:510",
           "format": "Bps",
           "label": null,
           "logBase": 1,
@@ -1816,6 +2604,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:511",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1836,7 +2625,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 47
+        "y": 59
       },
       "id": 29,
       "panels": [],
@@ -1849,20 +2638,14 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 10,
+      "datasource": "${datasource}",
+      "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 48
+        "y": 60
       },
       "hiddenSeries": false,
       "id": 15,
@@ -1876,14 +2659,14 @@
         "values": false
       },
       "lines": true,
-      "linewidth": 0,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null as zero",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "8.1.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1923,6 +2706,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:656",
           "format": "Bps",
           "label": null,
           "logBase": 1,
@@ -1931,6 +2715,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:657",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1951,7 +2736,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 55
+        "y": 67
       },
       "id": 30,
       "panels": [],
@@ -1964,20 +2749,14 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 10,
+      "datasource": "${datasource}",
+      "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 56
+        "y": 68
       },
       "hiddenSeries": false,
       "id": 16,
@@ -1991,14 +2770,14 @@
         "values": false
       },
       "lines": true,
-      "linewidth": 0,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null as zero",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "8.1.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2038,6 +2817,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:802",
           "format": "Bps",
           "label": null,
           "logBase": 1,
@@ -2046,6 +2826,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:803",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -2066,7 +2847,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 63
+        "y": 75
       },
       "id": 31,
       "panels": [],
@@ -2079,20 +2860,14 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 10,
+      "datasource": "${datasource}",
+      "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 64
+        "y": 76
       },
       "hiddenSeries": false,
       "id": 17,
@@ -2106,14 +2881,14 @@
         "values": false
       },
       "lines": true,
-      "linewidth": 0,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null as zero",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "8.1.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2153,6 +2928,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:878",
           "format": "Bps",
           "label": null,
           "logBase": 1,
@@ -2161,6 +2937,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:879",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -2181,7 +2958,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 71
+        "y": 83
       },
       "id": 32,
       "panels": [],
@@ -2194,20 +2971,14 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 10,
+      "datasource": "${datasource}",
+      "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 72
+        "y": 84
       },
       "hiddenSeries": false,
       "id": 18,
@@ -2221,14 +2992,14 @@
         "values": false
       },
       "lines": true,
-      "linewidth": 0,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null as zero",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "8.1.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2268,6 +3039,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:950",
           "format": "Bps",
           "label": null,
           "logBase": 1,
@@ -2276,6 +3048,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:951",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -2296,7 +3069,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 79
+        "y": 91
       },
       "id": 33,
       "panels": [],
@@ -2309,20 +3082,14 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 10,
+      "datasource": "${datasource}",
+      "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 80
+        "y": 92
       },
       "hiddenSeries": false,
       "id": 19,
@@ -2336,14 +3103,14 @@
         "values": false
       },
       "lines": true,
-      "linewidth": 0,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null as zero",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "8.1.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2383,6 +3150,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:1022",
           "format": "Bps",
           "label": null,
           "logBase": 1,
@@ -2391,6 +3159,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:1023",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -2406,7 +3175,7 @@
     }
   ],
   "refresh": "1m",
-  "schemaVersion": 27,
+  "schemaVersion": 30,
   "style": "dark",
   "tags": [
     "kubernetes",
@@ -2439,7 +3208,7 @@
         "allValue": null,
         "current": {
           "isNone": true,
-          "selected": false,
+          "selected": true,
           "text": "None",
           "value": ""
         },
@@ -2462,7 +3231,6 @@
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -2470,13 +3238,14 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
       "5s",
       "10s",
+      "15s",
       "30s",
       "1m",
       "5m",
@@ -2501,5 +3270,5 @@
   "timezone": "browser",
   "title": "kubernetes / cluster",
   "uid": "kubernetes-cluster",
-  "version": 2
+  "version": 29
 }

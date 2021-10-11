@@ -8,6 +8,12 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
@@ -15,13 +21,17 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 24,
-  "iteration": 1633091588086,
+  "id": 41,
+  "iteration": 1633952344737,
   "links": [],
   "panels": [
     {
       "collapsed": false,
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -34,13 +44,12 @@
       "type": "row"
     },
     {
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -82,10 +91,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
+          "exemplar": true,
           "expr": "sum(kube_cronjob_info{cluster=~\"$cluster\"})",
+          "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -97,13 +108,12 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -145,10 +155,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
+          "exemplar": true,
           "expr": "sum(kube_cronjob_status_active{cluster=~\"$cluster\"})",
+          "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -160,13 +172,12 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -208,10 +219,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
+          "exemplar": true,
           "expr": "sum(kube_cronjob_spec_suspend{cluster=~\"$cluster\"})",
+          "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -223,13 +236,12 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -291,17 +303,21 @@
           "valueSize": 25
         }
       },
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "8.1.0",
       "targets": [
         {
+          "exemplar": true,
           "expr": "count(kube_job_status_succeeded{cluster=~\"$cluster\"} == 1) OR on() vector(0)",
+          "instant": true,
           "interval": "",
           "legendFormat": "Successful Jobs",
           "refId": "A"
         },
         {
+          "exemplar": true,
           "expr": "count(kube_job_failed{cluster=~\"$cluster\"} == 1) OR on() vector(0)",
           "hide": false,
+          "instant": true,
           "interval": "",
           "legendFormat": "Failed Jobs",
           "refId": "B"
@@ -315,6 +331,10 @@
     {
       "collapsed": false,
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -324,19 +344,12 @@
       "id": 11,
       "panels": [],
       "repeat": "cronjob",
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-kafka-backup-tool",
-          "value": "aaltoprod1-kafka-backup-tool"
-        }
-      },
       "title": "Cronjob details : ${cronjob}",
       "type": "row"
     },
     {
       "cacheTimeout": null,
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -344,6 +357,7 @@
           },
           "custom": {
             "align": null,
+            "displayMode": "auto",
             "filterable": false
           },
           "mappings": [],
@@ -375,14 +389,7 @@
       "options": {
         "showHeader": true
       },
-      "pluginVersion": "7.4.2",
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-kafka-backup-tool",
-          "value": "aaltoprod1-kafka-backup-tool"
-        }
-      },
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "expr": "sum(kube_cronjob_info{cluster=~\"$cluster\",namespace=~\"$namespace\",cronjob=~\"$cronjob\"}) by (cronjob,namespace,schedule,concurrency_policy)",
@@ -455,13 +462,12 @@
       "type": "table"
     },
     {
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -523,24 +529,21 @@
           "valueSize": 25
         }
       },
-      "pluginVersion": "7.4.2",
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-kafka-backup-tool",
-          "value": "aaltoprod1-kafka-backup-tool"
-        }
-      },
+      "pluginVersion": "8.1.0",
       "targets": [
         {
+          "exemplar": true,
           "expr": "sum by (owner_name)(kube_job_complete{cluster=~\"$cluster\",condition=\"true\",namespace=\"$namespace\"} * on (job_name) group_left(owner_name) (group by (job_name,owner_name) (kube_job_owner{owner_name=\"$cronjob\"}))) OR on() vector(0)",
+          "instant": true,
           "interval": "",
           "legendFormat": "Successful Jobs",
           "refId": "A"
         },
         {
+          "exemplar": true,
           "expr": "sum by (owner_name)\n(\n  kube_job_failed{cluster=~\"$cluster\",condition=\"true\",namespace=\"$namespace\"} * on (job_name)\n\n  group_left(owner_name)\n\n  (group by (job_name,owner_name) (kube_job_owner{owner_name=\"$cronjob\"}))\n  \n) OR on() vector(0) ",
           "hide": false,
+          "instant": true,
           "interval": "",
           "legendFormat": "Failed Jobs",
           "refId": "B"
@@ -553,14 +556,13 @@
       "type": "bargauge"
     },
     {
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
             "fixedColor": "rgb(232, 232, 232)",
             "mode": "fixed"
           },
-          "custom": {},
           "mappings": [],
           "noValue": "--",
           "thresholds": {
@@ -600,14 +602,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-kafka-backup-tool",
-          "value": "aaltoprod1-kafka-backup-tool"
-        }
-      },
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "expr": "max by (owner_name)\n(\n  max by(job_name )\n   (\n     kube_job_status_completion_time{cluster=~\"$cluster\",namespace=\"$namespace\"} - on (job_name)\n       kube_job_status_start_time{cluster=~\"$cluster\",namespace=\"$namespace\"} \n   ) * on (job_name)\n    group_left(owner_name)\n  (group by (job_name,owner_name) (kube_job_owner{owner_name=\"$cronjob\"}))\n)",
@@ -622,14 +617,13 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
             "fixedColor": "rgb(232, 232, 232)",
             "mode": "fixed"
           },
-          "custom": {},
           "mappings": [],
           "noValue": "--",
           "thresholds": {
@@ -669,14 +663,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-kafka-backup-tool",
-          "value": "aaltoprod1-kafka-backup-tool"
-        }
-      },
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "expr": "avg by (owner_name)\n(\n  max by(job_name )\n   (\n     kube_job_status_completion_time{cluster=~\"$cluster\",namespace=\"$namespace\"} - on (job_name)\n       kube_job_status_start_time{cluster=~\"$cluster\",namespace=\"$namespace\"} \n   ) * on (job_name)\n    group_left(owner_name)\n  (group by (job_name,owner_name) (kube_job_owner{owner_name=\"$cronjob\"}))\n)",
@@ -691,14 +678,13 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
             "fixedColor": "rgb(232, 232, 232)",
             "mode": "fixed"
           },
-          "custom": {},
           "mappings": [],
           "noValue": "--",
           "thresholds": {
@@ -738,14 +724,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-kafka-backup-tool",
-          "value": "aaltoprod1-kafka-backup-tool"
-        }
-      },
+      "pluginVersion": "8.1.0",
       "targets": [
         {
           "expr": "min (\n  (kube_job_status_completion_time{cluster=~\"$cluster\",namespace=\"$namespace\"}\n  - on (job_name)\n    kube_job_status_start_time{cluster=~\"$cluster\",namespace=\"$namespace\"})\n  * on (job_name)\n    group_left(owner_name)\n      (group by (job_name,owner_name) (kube_job_owner{owner_name=\"$cronjob\"}))\n)",
@@ -760,29 +739,23 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "mappings": [
             {
-              "from": "",
-              "id": 1,
-              "text": "False",
-              "to": "",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "from": "",
-              "id": 2,
-              "text": "True",
-              "to": "",
-              "type": 1,
-              "value": "1"
+              "options": {
+                "0": {
+                  "text": "False"
+                },
+                "1": {
+                  "text": "True"
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -822,17 +795,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-kafka-backup-tool",
-          "value": "aaltoprod1-kafka-backup-tool"
-        }
-      },
+      "pluginVersion": "8.1.0",
       "targets": [
         {
+          "exemplar": true,
           "expr": "sum by (owner_name)\n(\n  kube_job_status_active{cluster=~\"$cluster\",namespace=\"$namespace\"} * on (job_name)\n\n  group_left(owner_name)\n\n  (group by (job_name,owner_name) (kube_job_owner{owner_name=\"$cronjob\"}))\n  \n) or on() vector(0)",
+          "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -844,29 +812,23 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "custom": {},
           "mappings": [
             {
-              "from": "",
-              "id": 1,
-              "text": "False",
-              "to": "",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "from": "",
-              "id": 2,
-              "text": "True",
-              "to": "",
-              "type": 1,
-              "value": "1"
+              "options": {
+                "0": {
+                  "text": "False"
+                },
+                "1": {
+                  "text": "True"
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -906,1297 +868,13 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.4.2",
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-kafka-backup-tool",
-          "value": "aaltoprod1-kafka-backup-tool"
-        }
-      },
+      "pluginVersion": "8.1.0",
       "targets": [
         {
+          "exemplar": true,
           "expr": "sum(kube_cronjob_spec_suspend{cluster=~\"$cluster\",namespace=~\"$namespace\",cronjob=~\"$cronjob\"})",
           "format": "time_series",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Suspended",
-      "type": "stat"
-    },
-    {
-      "collapsed": false,
-      "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 13
-      },
-      "id": 20,
-      "panels": [],
-      "repeatIteration": 1633091588086,
-      "repeatPanelId": 11,
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-liferay-backup-tool",
-          "value": "aaltoprod1-liferay-backup-tool"
-        }
-      },
-      "title": "Cronjob details : ${cronjob}",
-      "type": "row"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": null,
-            "filterable": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 15,
-        "x": 0,
-        "y": 14
-      },
-      "id": 21,
-      "links": [],
-      "options": {
-        "showHeader": true
-      },
-      "pluginVersion": "7.4.2",
-      "repeatIteration": 1633091588086,
-      "repeatPanelId": 13,
-      "repeatedByRow": true,
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-liferay-backup-tool",
-          "value": "aaltoprod1-liferay-backup-tool"
-        }
-      },
-      "targets": [
-        {
-          "expr": "sum(kube_cronjob_info{cluster=~\"$cluster\",namespace=~\"$namespace\",cronjob=~\"$cronjob\"}) by (cronjob,namespace,schedule,concurrency_policy)",
-          "format": "table",
           "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        },
-        {
-          "expr": "sum(kube_cronjob_spec_starting_deadline_seconds{cluster=~\"$cluster\",namespace=~\"$namespace\",cronjob=~\"$cronjob\"}) by (cronjob,namespace)",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "B"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Schedule",
-      "transformations": [
-        {
-          "id": "merge",
-          "options": {}
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "Value": true,
-              "Value #A": true,
-              "__name__": true,
-              "container": true,
-              "endpoint": true,
-              "instance": true,
-              "job": true,
-              "pod": true,
-              "service": true
-            },
-            "indexByName": {
-              "Time": 0,
-              "Value": 12,
-              "__name__": 1,
-              "concurrency_policy": 4,
-              "container": 5,
-              "cronjob": 2,
-              "endpoint": 6,
-              "instance": 7,
-              "job": 8,
-              "namespace": 3,
-              "pod": 9,
-              "schedule": 10,
-              "service": 11
-            },
-            "renameByName": {
-              "Value #B": "StartDeadlineSeconds",
-              "concurrency_policy": "Concurrency Policy",
-              "container": "",
-              "cronjob": "Name",
-              "endpoint": "",
-              "namespace": "Namespace",
-              "schedule": "Schedule (UTC)"
-            }
-          }
-        }
-      ],
-      "type": "table"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": []
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Successful Jobs"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-blue",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Failed Jobs"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-red",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 9,
-        "x": 15,
-        "y": 14
-      },
-      "id": 22,
-      "options": {
-        "displayMode": "gradient",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": true,
-        "text": {
-          "valueSize": 25
-        }
-      },
-      "pluginVersion": "7.4.2",
-      "repeatIteration": 1633091588086,
-      "repeatPanelId": 14,
-      "repeatedByRow": true,
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-liferay-backup-tool",
-          "value": "aaltoprod1-liferay-backup-tool"
-        }
-      },
-      "targets": [
-        {
-          "expr": "sum by (owner_name)(kube_job_complete{cluster=~\"$cluster\",condition=\"true\",namespace=\"$namespace\"} * on (job_name) group_left(owner_name) (group by (job_name,owner_name) (kube_job_owner{owner_name=\"$cronjob\"}))) OR on() vector(0)",
-          "interval": "",
-          "legendFormat": "Successful Jobs",
-          "refId": "A"
-        },
-        {
-          "expr": "sum by (owner_name)\n(\n  kube_job_failed{cluster=~\"$cluster\",condition=\"true\",namespace=\"$namespace\"} * on (job_name)\n\n  group_left(owner_name)\n\n  (group by (job_name,owner_name) (kube_job_owner{owner_name=\"$cronjob\"}))\n  \n) OR on() vector(0) ",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "Failed Jobs",
-          "refId": "B"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Successful vs Failed Jobs",
-      "transformations": [],
-      "type": "bargauge"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "rgb(232, 232, 232)",
-            "mode": "fixed"
-          },
-          "custom": {},
-          "mappings": [],
-          "noValue": "--",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "super-light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 5,
-        "x": 0,
-        "y": 17
-      },
-      "id": 23,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 25
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.2",
-      "repeatIteration": 1633091588086,
-      "repeatPanelId": 15,
-      "repeatedByRow": true,
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-liferay-backup-tool",
-          "value": "aaltoprod1-liferay-backup-tool"
-        }
-      },
-      "targets": [
-        {
-          "expr": "max by (owner_name)\n(\n  max by(job_name )\n   (\n     kube_job_status_completion_time{cluster=~\"$cluster\",namespace=\"$namespace\"} - on (job_name)\n       kube_job_status_start_time{cluster=~\"$cluster\",namespace=\"$namespace\"} \n   ) * on (job_name)\n    group_left(owner_name)\n  (group by (job_name,owner_name) (kube_job_owner{owner_name=\"$cronjob\"}))\n)",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Maximum Duration",
-      "type": "stat"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "rgb(232, 232, 232)",
-            "mode": "fixed"
-          },
-          "custom": {},
-          "mappings": [],
-          "noValue": "--",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 5,
-        "x": 5,
-        "y": 17
-      },
-      "id": 24,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 25
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.2",
-      "repeatIteration": 1633091588086,
-      "repeatPanelId": 16,
-      "repeatedByRow": true,
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-liferay-backup-tool",
-          "value": "aaltoprod1-liferay-backup-tool"
-        }
-      },
-      "targets": [
-        {
-          "expr": "avg by (owner_name)\n(\n  max by(job_name )\n   (\n     kube_job_status_completion_time{cluster=~\"$cluster\",namespace=\"$namespace\"} - on (job_name)\n       kube_job_status_start_time{cluster=~\"$cluster\",namespace=\"$namespace\"} \n   ) * on (job_name)\n    group_left(owner_name)\n  (group by (job_name,owner_name) (kube_job_owner{owner_name=\"$cronjob\"}))\n)",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Average Duration",
-      "type": "stat"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "rgb(232, 232, 232)",
-            "mode": "fixed"
-          },
-          "custom": {},
-          "mappings": [],
-          "noValue": "--",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 5,
-        "x": 10,
-        "y": 17
-      },
-      "id": 25,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 25
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.2",
-      "repeatIteration": 1633091588086,
-      "repeatPanelId": 17,
-      "repeatedByRow": true,
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-liferay-backup-tool",
-          "value": "aaltoprod1-liferay-backup-tool"
-        }
-      },
-      "targets": [
-        {
-          "expr": "min (\n  (kube_job_status_completion_time{cluster=~\"$cluster\",namespace=\"$namespace\"}\n  - on (job_name)\n    kube_job_status_start_time{cluster=~\"$cluster\",namespace=\"$namespace\"})\n  * on (job_name)\n    group_left(owner_name)\n      (group by (job_name,owner_name) (kube_job_owner{owner_name=\"$cronjob\"}))\n)",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Minimum Duration",
-      "type": "stat"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 1,
-              "text": "False",
-              "to": "",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "from": "",
-              "id": 2,
-              "text": "True",
-              "to": "",
-              "type": 1,
-              "value": "1"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 15,
-        "y": 18
-      },
-      "id": 26,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 20
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.2",
-      "repeatIteration": 1633091588086,
-      "repeatPanelId": 18,
-      "repeatedByRow": true,
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-liferay-backup-tool",
-          "value": "aaltoprod1-liferay-backup-tool"
-        }
-      },
-      "targets": [
-        {
-          "expr": "sum by (owner_name)\n(\n  kube_job_status_active{cluster=~\"$cluster\",namespace=\"$namespace\"} * on (job_name)\n\n  group_left(owner_name)\n\n  (group by (job_name,owner_name) (kube_job_owner{owner_name=\"$cronjob\"}))\n  \n) or on() vector(0)",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Running",
-      "type": "stat"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 1,
-              "text": "False",
-              "to": "",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "from": "",
-              "id": 2,
-              "text": "True",
-              "to": "",
-              "type": 1,
-              "value": "1"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 5,
-        "x": 19,
-        "y": 18
-      },
-      "id": 27,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 20
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.2",
-      "repeatIteration": 1633091588086,
-      "repeatPanelId": 19,
-      "repeatedByRow": true,
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-liferay-backup-tool",
-          "value": "aaltoprod1-liferay-backup-tool"
-        }
-      },
-      "targets": [
-        {
-          "expr": "sum(kube_cronjob_spec_suspend{cluster=~\"$cluster\",namespace=~\"$namespace\",cronjob=~\"$cronjob\"})",
-          "format": "time_series",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Suspended",
-      "type": "stat"
-    },
-    {
-      "collapsed": false,
-      "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 21
-      },
-      "id": 28,
-      "panels": [],
-      "repeatIteration": 1633091588086,
-      "repeatPanelId": 11,
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-postgresql-backup-tool",
-          "value": "aaltoprod1-postgresql-backup-tool"
-        }
-      },
-      "title": "Cronjob details : ${cronjob}",
-      "type": "row"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": null,
-            "filterable": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 15,
-        "x": 0,
-        "y": 22
-      },
-      "id": 29,
-      "links": [],
-      "options": {
-        "showHeader": true
-      },
-      "pluginVersion": "7.4.2",
-      "repeatIteration": 1633091588086,
-      "repeatPanelId": 13,
-      "repeatedByRow": true,
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-postgresql-backup-tool",
-          "value": "aaltoprod1-postgresql-backup-tool"
-        }
-      },
-      "targets": [
-        {
-          "expr": "sum(kube_cronjob_info{cluster=~\"$cluster\",namespace=~\"$namespace\",cronjob=~\"$cronjob\"}) by (cronjob,namespace,schedule,concurrency_policy)",
-          "format": "table",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        },
-        {
-          "expr": "sum(kube_cronjob_spec_starting_deadline_seconds{cluster=~\"$cluster\",namespace=~\"$namespace\",cronjob=~\"$cronjob\"}) by (cronjob,namespace)",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "B"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Schedule",
-      "transformations": [
-        {
-          "id": "merge",
-          "options": {}
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "Value": true,
-              "Value #A": true,
-              "__name__": true,
-              "container": true,
-              "endpoint": true,
-              "instance": true,
-              "job": true,
-              "pod": true,
-              "service": true
-            },
-            "indexByName": {
-              "Time": 0,
-              "Value": 12,
-              "__name__": 1,
-              "concurrency_policy": 4,
-              "container": 5,
-              "cronjob": 2,
-              "endpoint": 6,
-              "instance": 7,
-              "job": 8,
-              "namespace": 3,
-              "pod": 9,
-              "schedule": 10,
-              "service": 11
-            },
-            "renameByName": {
-              "Value #B": "StartDeadlineSeconds",
-              "concurrency_policy": "Concurrency Policy",
-              "container": "",
-              "cronjob": "Name",
-              "endpoint": "",
-              "namespace": "Namespace",
-              "schedule": "Schedule (UTC)"
-            }
-          }
-        }
-      ],
-      "type": "table"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": []
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Successful Jobs"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-blue",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Failed Jobs"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-red",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 9,
-        "x": 15,
-        "y": 22
-      },
-      "id": 30,
-      "options": {
-        "displayMode": "gradient",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": true,
-        "text": {
-          "valueSize": 25
-        }
-      },
-      "pluginVersion": "7.4.2",
-      "repeatIteration": 1633091588086,
-      "repeatPanelId": 14,
-      "repeatedByRow": true,
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-postgresql-backup-tool",
-          "value": "aaltoprod1-postgresql-backup-tool"
-        }
-      },
-      "targets": [
-        {
-          "expr": "sum by (owner_name)(kube_job_complete{cluster=~\"$cluster\",condition=\"true\",namespace=\"$namespace\"} * on (job_name) group_left(owner_name) (group by (job_name,owner_name) (kube_job_owner{owner_name=\"$cronjob\"}))) OR on() vector(0)",
-          "interval": "",
-          "legendFormat": "Successful Jobs",
-          "refId": "A"
-        },
-        {
-          "expr": "sum by (owner_name)\n(\n  kube_job_failed{cluster=~\"$cluster\",condition=\"true\",namespace=\"$namespace\"} * on (job_name)\n\n  group_left(owner_name)\n\n  (group by (job_name,owner_name) (kube_job_owner{owner_name=\"$cronjob\"}))\n  \n) OR on() vector(0) ",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "Failed Jobs",
-          "refId": "B"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Successful vs Failed Jobs",
-      "transformations": [],
-      "type": "bargauge"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "rgb(232, 232, 232)",
-            "mode": "fixed"
-          },
-          "custom": {},
-          "mappings": [],
-          "noValue": "--",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "super-light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 5,
-        "x": 0,
-        "y": 25
-      },
-      "id": 31,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 25
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.2",
-      "repeatIteration": 1633091588086,
-      "repeatPanelId": 15,
-      "repeatedByRow": true,
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-postgresql-backup-tool",
-          "value": "aaltoprod1-postgresql-backup-tool"
-        }
-      },
-      "targets": [
-        {
-          "expr": "max by (owner_name)\n(\n  max by(job_name )\n   (\n     kube_job_status_completion_time{cluster=~\"$cluster\",namespace=\"$namespace\"} - on (job_name)\n       kube_job_status_start_time{cluster=~\"$cluster\",namespace=\"$namespace\"} \n   ) * on (job_name)\n    group_left(owner_name)\n  (group by (job_name,owner_name) (kube_job_owner{owner_name=\"$cronjob\"}))\n)",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Maximum Duration",
-      "type": "stat"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "rgb(232, 232, 232)",
-            "mode": "fixed"
-          },
-          "custom": {},
-          "mappings": [],
-          "noValue": "--",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 5,
-        "x": 5,
-        "y": 25
-      },
-      "id": 32,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 25
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.2",
-      "repeatIteration": 1633091588086,
-      "repeatPanelId": 16,
-      "repeatedByRow": true,
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-postgresql-backup-tool",
-          "value": "aaltoprod1-postgresql-backup-tool"
-        }
-      },
-      "targets": [
-        {
-          "expr": "avg by (owner_name)\n(\n  max by(job_name )\n   (\n     kube_job_status_completion_time{cluster=~\"$cluster\",namespace=\"$namespace\"} - on (job_name)\n       kube_job_status_start_time{cluster=~\"$cluster\",namespace=\"$namespace\"} \n   ) * on (job_name)\n    group_left(owner_name)\n  (group by (job_name,owner_name) (kube_job_owner{owner_name=\"$cronjob\"}))\n)",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Average Duration",
-      "type": "stat"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "rgb(232, 232, 232)",
-            "mode": "fixed"
-          },
-          "custom": {},
-          "mappings": [],
-          "noValue": "--",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 5,
-        "x": 10,
-        "y": 25
-      },
-      "id": 33,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 25
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.2",
-      "repeatIteration": 1633091588086,
-      "repeatPanelId": 17,
-      "repeatedByRow": true,
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-postgresql-backup-tool",
-          "value": "aaltoprod1-postgresql-backup-tool"
-        }
-      },
-      "targets": [
-        {
-          "expr": "min (\n  (kube_job_status_completion_time{cluster=~\"$cluster\",namespace=\"$namespace\"}\n  - on (job_name)\n    kube_job_status_start_time{cluster=~\"$cluster\",namespace=\"$namespace\"})\n  * on (job_name)\n    group_left(owner_name)\n      (group by (job_name,owner_name) (kube_job_owner{owner_name=\"$cronjob\"}))\n)",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Minimum Duration",
-      "type": "stat"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 1,
-              "text": "False",
-              "to": "",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "from": "",
-              "id": 2,
-              "text": "True",
-              "to": "",
-              "type": 1,
-              "value": "1"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 15,
-        "y": 26
-      },
-      "id": 34,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 20
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.2",
-      "repeatIteration": 1633091588086,
-      "repeatPanelId": 18,
-      "repeatedByRow": true,
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-postgresql-backup-tool",
-          "value": "aaltoprod1-postgresql-backup-tool"
-        }
-      },
-      "targets": [
-        {
-          "expr": "sum by (owner_name)\n(\n  kube_job_status_active{cluster=~\"$cluster\",namespace=\"$namespace\"} * on (job_name)\n\n  group_left(owner_name)\n\n  (group by (job_name,owner_name) (kube_job_owner{owner_name=\"$cronjob\"}))\n  \n) or on() vector(0)",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Running",
-      "type": "stat"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 1,
-              "text": "False",
-              "to": "",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "from": "",
-              "id": 2,
-              "text": "True",
-              "to": "",
-              "type": 1,
-              "value": "1"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 5,
-        "x": 19,
-        "y": 26
-      },
-      "id": 35,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {
-          "valueSize": 20
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.4.2",
-      "repeatIteration": 1633091588086,
-      "repeatPanelId": 19,
-      "repeatedByRow": true,
-      "scopedVars": {
-        "cronjob": {
-          "selected": false,
-          "text": "aaltoprod1-postgresql-backup-tool",
-          "value": "aaltoprod1-postgresql-backup-tool"
-        }
-      },
-      "targets": [
-        {
-          "expr": "sum(kube_cronjob_spec_suspend{cluster=~\"$cluster\",namespace=~\"$namespace\",cronjob=~\"$cronjob\"})",
-          "format": "time_series",
-          "instant": false,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -2209,7 +887,7 @@
     }
   ],
   "refresh": "5m",
-  "schemaVersion": 27,
+  "schemaVersion": 30,
   "style": "dark",
   "tags": [
     "kubernetes",
@@ -2241,7 +919,7 @@
         "allValue": null,
         "current": {
           "isNone": true,
-          "selected": false,
+          "selected": true,
           "text": "None",
           "value": ""
         },
@@ -2264,7 +942,6 @@
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -2272,9 +949,9 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
-          "text": "aalto",
-          "value": "aalto"
+          "selected": true,
+          "text": "kube-node-lease",
+          "value": "kube-node-lease"
         },
         "datasource": null,
         "definition": "label_values(kube_namespace_created{cluster=\"$cluster\"}, namespace)",
@@ -2295,7 +972,6 @@
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -2326,7 +1002,6 @@
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -2341,5 +1016,5 @@
   "timezone": "browser",
   "title": "kubernetes / cronjob",
   "uid": "kubernetes-cronjob",
-  "version": 26
+  "version": 2
 }
