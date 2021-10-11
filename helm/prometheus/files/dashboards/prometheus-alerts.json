@@ -1,0 +1,1994 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 71,
+  "iteration": 1633952794724,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": true,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 25,
+      "panels": [
+        {
+          "datasource": "${datasource}",
+          "description": "Currently deployed service versions.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": null,
+                "displayMode": "auto",
+                "filterable": false
+              },
+              "mappings": [],
+              "min": 0,
+              "noValue": "--",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "dark-red",
+                    "value": null
+                  },
+                  {
+                    "color": "semi-dark-green",
+                    "value": 0.0001
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Pod"
+                },
+                "properties": [
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Drill down",
+                        "url": "./d/kubernetes-pods/kubernetes-pods?var-datasource=$datasource&var-cluster=$cluster&var-namespace=${__data.fields.namespace}&var-pod=${__data.fields.pod}"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 346
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Namespace"
+                },
+                "properties": [
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "Drill down ",
+                        "url": "./d/kubernetes-pods-by-namespace/kubernetes-pods-by-namespace?var-datasource=$datasource&var-cluster=$cluster&var-namespace=${__data.fields.namespace}"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "GoVersion"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 130
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Version"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 108
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Service"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 209
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 15,
+            "x": 0,
+            "y": 1
+          },
+          "id": 32,
+          "options": {
+            "frameIndex": 0,
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "8.1.0",
+          "targets": [
+            {
+              "exemplar": true,
+              "expr": "sum(prometheus_build_info{cluster=~\"$cluster\"}) by (container,version,goversion,pod,namespace) or sum(alertmanager_build_info{cluster=~\"$cluster\"}) by (container,version,goversion,pod,namespace) or sum(grafana_build_info{cluster=~\"$cluster\"}) by (container,version,goversion,pod,namespace) or sum(prometheus_operator_build_info{cluster=~\"$cluster\"}) by (container,version,goversion,pod,namespace) or sum(node_exporter_build_info{cluster=~\"$cluster\"}) by (container,version,goversion,namespace)",
+              "format": "table",
+              "instant": true,
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "title": "Version Matrix",
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Time": true,
+                  "Value": true
+                },
+                "indexByName": {
+                  "Time": 0,
+                  "Value": 7,
+                  "container": 1,
+                  "goversion": 3,
+                  "instance": 5,
+                  "namespace": 6,
+                  "pod": 4,
+                  "version": 2
+                },
+                "renameByName": {
+                  "container": "Service",
+                  "goversion": "GoVersion",
+                  "instance": "Instance",
+                  "namespace": "Namespace",
+                  "pod": "Pod",
+                  "version": "Version"
+                }
+              }
+            }
+          ],
+          "type": "table"
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${datasource}",
+          "description": "No. of notifications sent in specified time range.",
+          "fill": 1,
+          "fillGradient": 0,
+          "gridPos": {
+            "h": 13,
+            "w": 9,
+            "x": 15,
+            "y": 1
+          },
+          "hiddenSeries": false,
+          "id": 14,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
+          "percentage": false,
+          "pluginVersion": "8.1.0",
+          "pointradius": 2,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": true,
+          "targets": [
+            {
+              "expr": "sum(increase(alertmanager_notifications_total{cluster=~\"$cluster\",integration=~\"email|slack|webhook|pagerduty\"}[${timeRange}])) by (integration)",
+              "format": "time_series",
+              "instant": false,
+              "interval": "",
+              "legendFormat": "{{integration}}",
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "Total Notification Sent [Time Range]",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "$$hashKey": "object:160",
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "$$hashKey": "object:161",
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "datasource": "${datasource}",
+          "description": "Status:\n\nActive == (❤️)\n\nDown  == (💔)",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "dark-red",
+                    "value": null
+                  },
+                  {
+                    "color": "semi-dark-green",
+                    "value": 0.0001
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byFrameRefID",
+                  "options": "A"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "from": 0,
+                          "result": {
+                            "text": "💔"
+                          },
+                          "to": 0
+                        },
+                        "type": "range"
+                      },
+                      {
+                        "options": {
+                          "from": 1,
+                          "result": {
+                            "text": "❤️"
+                          },
+                          "to": 100
+                        },
+                        "type": "range"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 3,
+            "x": 0,
+            "y": 8
+          },
+          "id": 39,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {
+              "titleSize": 30,
+              "valueSize": 30
+            },
+            "textMode": "value"
+          },
+          "pluginVersion": "8.1.0",
+          "targets": [
+            {
+              "expr": "up{cluster=~\"$cluster\",job=~\".*-prometheus\"}",
+              "format": "time_series",
+              "instant": true,
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "title": "Prometheus",
+          "type": "stat"
+        },
+        {
+          "datasource": "${datasource}",
+          "description": "Status:\n\nActive == (❤️)\n\nDown  == (💔)",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "dark-red",
+                    "value": null
+                  },
+                  {
+                    "color": "semi-dark-green",
+                    "value": 0.0001
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byFrameRefID",
+                  "options": "A"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "from": 0,
+                          "result": {
+                            "text": "💔"
+                          },
+                          "to": 0
+                        },
+                        "type": "range"
+                      },
+                      {
+                        "options": {
+                          "from": 1,
+                          "result": {
+                            "text": "❤️"
+                          },
+                          "to": 100
+                        },
+                        "type": "range"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 3,
+            "x": 3,
+            "y": 8
+          },
+          "id": 35,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {
+              "titleSize": 30,
+              "valueSize": 30
+            },
+            "textMode": "value"
+          },
+          "pluginVersion": "8.1.0",
+          "targets": [
+            {
+              "expr": "up{cluster=~\"$cluster\",job=~\".*-alertmanager\"}",
+              "format": "time_series",
+              "instant": true,
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "title": "Alertmanager",
+          "type": "stat"
+        },
+        {
+          "datasource": "${datasource}",
+          "description": "Connection between Prometheus and Alertmanager.\n\nActive == (👍)\n\nDown  == (👎)",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "dark-red",
+                    "value": null
+                  },
+                  {
+                    "color": "semi-dark-green",
+                    "value": 0.0001
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byFrameRefID",
+                  "options": "A"
+                },
+                "properties": [
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "from": 0,
+                          "result": {
+                            "text": "👎"
+                          },
+                          "to": 0
+                        },
+                        "type": "range"
+                      },
+                      {
+                        "options": {
+                          "from": 1,
+                          "result": {
+                            "text": "👍"
+                          },
+                          "to": 500
+                        },
+                        "type": "range"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 3,
+            "x": 6,
+            "y": 8
+          },
+          "id": 34,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {
+              "titleSize": 30,
+              "valueSize": 30
+            },
+            "textMode": "value"
+          },
+          "pluginVersion": "8.1.0",
+          "targets": [
+            {
+              "expr": "prometheus_notifications_alertmanagers_discovered{cluster=~\"$cluster\"}",
+              "format": "time_series",
+              "instant": true,
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "title": "Prometheus <--> Alertmanager",
+          "type": "stat"
+        },
+        {
+          "datasource": "${datasource}",
+          "description": "Prometheus - Number of times rule evaluation failed in last 5m.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "semi-dark-green",
+                    "value": null
+                  },
+                  {
+                    "color": "dark-red",
+                    "value": 0.0001
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 3,
+            "x": 9,
+            "y": 8
+          },
+          "id": 36,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {
+              "titleSize": 30,
+              "valueSize": 30
+            },
+            "textMode": "value"
+          },
+          "pluginVersion": "8.1.0",
+          "targets": [
+            {
+              "expr": "sum(increase(prometheus_rule_evaluation_failures_total{cluster=~\"$cluster\"}[5m]))",
+              "format": "time_series",
+              "instant": true,
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "title": "Rule evaluation failures [5m]",
+          "type": "stat"
+        },
+        {
+          "datasource": "${datasource}",
+          "description": "Alertmanager - Failed email notifications in last 24h.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "semi-dark-green",
+                    "value": null
+                  },
+                  {
+                    "color": "dark-red",
+                    "value": 0.0001
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 3,
+            "x": 12,
+            "y": 8
+          },
+          "id": 38,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {
+              "titleSize": 30,
+              "valueSize": 30
+            },
+            "textMode": "value"
+          },
+          "pluginVersion": "8.1.0",
+          "targets": [
+            {
+              "expr": "sum(increase(alertmanager_notifications_failed_total{cluster=~\"$cluster\",integration=\"email\"}[24h]))",
+              "format": "time_series",
+              "instant": true,
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "title": "Failed notification [24h]",
+          "type": "stat"
+        },
+        {
+          "datasource": "${datasource}",
+          "description": "Total targets from which Prometheus is scraping metrics.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "semi-dark-red",
+                    "value": null
+                  },
+                  {
+                    "color": "semi-dark-green",
+                    "value": 0.0001
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 3,
+            "x": 0,
+            "y": 11
+          },
+          "id": 29,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {
+              "titleSize": 30,
+              "valueSize": 30
+            },
+            "textMode": "value"
+          },
+          "pluginVersion": "8.1.0",
+          "targets": [
+            {
+              "expr": "count(up{cluster=~\"$cluster\"})",
+              "format": "time_series",
+              "instant": true,
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "title": "Targets - Total",
+          "type": "stat"
+        },
+        {
+          "datasource": "${datasource}",
+          "description": "Targets which are up and actively monitored.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "semi-dark-orange",
+                    "value": null
+                  },
+                  {
+                    "color": "semi-dark-green",
+                    "value": 0.0001
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 3,
+            "x": 3,
+            "y": 11
+          },
+          "id": 30,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {
+              "titleSize": 30,
+              "valueSize": 30
+            },
+            "textMode": "value"
+          },
+          "pluginVersion": "8.1.0",
+          "targets": [
+            {
+              "expr": "count(up{cluster=~\"$cluster\"} == 1)",
+              "format": "time_series",
+              "instant": true,
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "title": "Targets - Up",
+          "type": "stat"
+        },
+        {
+          "datasource": "${datasource}",
+          "description": "Targets which are not reachable.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "semi-dark-green",
+                    "value": null
+                  },
+                  {
+                    "color": "dark-orange",
+                    "value": 0.0001
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 3,
+            "x": 6,
+            "y": 11
+          },
+          "id": 12,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {
+              "titleSize": 30,
+              "valueSize": 30
+            },
+            "textMode": "value"
+          },
+          "pluginVersion": "8.1.0",
+          "targets": [
+            {
+              "expr": "count(up{cluster=~\"$cluster\"} == 0) OR on() vector(0)",
+              "format": "time_series",
+              "instant": true,
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "title": "Targets - Down",
+          "type": "stat"
+        },
+        {
+          "datasource": "${datasource}",
+          "description": "Prometheus - notifications queue size",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "semi-dark-green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 3,
+            "x": 9,
+            "y": 11
+          },
+          "id": 42,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {
+              "titleSize": 30,
+              "valueSize": 30
+            },
+            "textMode": "value"
+          },
+          "pluginVersion": "8.1.0",
+          "targets": [
+            {
+              "expr": "prometheus_notifications_queue_capacity{cluster=~\"$cluster\"}",
+              "format": "time_series",
+              "instant": true,
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "title": "Queue capacity",
+          "type": "stat"
+        },
+        {
+          "datasource": "${datasource}",
+          "description": "Prometheus - no. of notifications currently in queue.\n\nHigher queue length == Higher notification latency (Not Good)",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "semi-dark-green",
+                    "value": null
+                  },
+                  {
+                    "color": "dark-red",
+                    "value": 0.0001
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 3,
+            "x": 12,
+            "y": 11
+          },
+          "id": 37,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {
+              "titleSize": 30,
+              "valueSize": 30
+            },
+            "textMode": "value"
+          },
+          "pluginVersion": "8.1.0",
+          "targets": [
+            {
+              "expr": "prometheus_notifications_queue_length{cluster=~\"$cluster\"}",
+              "format": "time_series",
+              "instant": true,
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "title": "Queue length",
+          "type": "stat"
+        }
+      ],
+      "title": "Monitoring Application Status",
+      "type": "row"
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 21,
+      "panels": [],
+      "title": "Alerts Snapshot",
+      "type": "row"
+    },
+    {
+      "datasource": "${datasource}",
+      "description": "All active alerts detected by monitoring system.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "dark-red",
+                "value": 0.0001
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 8,
+        "x": 0,
+        "y": 2
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "titleSize": 30,
+          "valueSize": 30
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "expr": "count(ALERTS{cluster=~\"$cluster\"}) or vector(0)",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Total",
+      "type": "stat"
+    },
+    {
+      "datasource": "${datasource}",
+      "description": "All alerts for which notification has been already sent or will be sent in next few seconds. ",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              },
+              {
+                "color": "dark-red",
+                "value": 0.0001
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 7,
+        "x": 8,
+        "y": 2
+      },
+      "id": 40,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "titleSize": 30,
+          "valueSize": 30
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "expr": "count(ALERTS{cluster=~\"$cluster\",alertstate=\"firing\"}) or vector(0)",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Firing",
+      "type": "stat"
+    },
+    {
+      "datasource": "${datasource}",
+      "description": "All alerts which are active but still in evaluation state.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              },
+              {
+                "color": "dark-red",
+                "value": 0.0001
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 9,
+        "x": 15,
+        "y": 2
+      },
+      "id": 41,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "titleSize": 30,
+          "valueSize": 30
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "expr": "count(ALERTS{cluster=~\"$cluster\",alertstate=\"pending\"}) or vector(0)",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Pending",
+      "type": "stat"
+    },
+    {
+      "datasource": "${datasource}",
+      "description": "All alerts with severity == Critical. These alerts have high priority and require quick response.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              },
+              {
+                "color": "dark-red",
+                "value": 0.0001
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 0,
+        "y": 5
+      },
+      "id": 9,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "titleSize": 30,
+          "valueSize": 30
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "expr": "count(ALERTS{cluster=~\"$cluster\",severity=\"critical\"}) or vector(0)",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Critical",
+      "type": "stat"
+    },
+    {
+      "datasource": "${datasource}",
+      "description": "All alerts with severity == Warning. Such alerts detect issues in their early stages and sometimes only for information purpose.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              },
+              {
+                "color": "dark-red",
+                "value": 0.0001
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 6,
+        "y": 5
+      },
+      "id": 10,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "titleSize": 30,
+          "valueSize": 30
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "expr": "count(ALERTS{cluster=~\"$cluster\",severity=\"warning\"}) or vector(0)",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Warning",
+      "type": "stat"
+    },
+    {
+      "datasource": "${datasource}",
+      "description": "All alerts with severity == Info. Such alerts are only for information purpose and generally dont require any manual intervention",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              },
+              {
+                "color": "dark-red",
+                "value": 0.0001
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 12,
+        "y": 5
+      },
+      "id": 47,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "titleSize": 30,
+          "valueSize": 30
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "count(ALERTS{cluster=~\"$cluster\",severity=\"info\"}) or vector(0)",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Info",
+      "type": "stat"
+    },
+    {
+      "datasource": "${datasource}",
+      "description": "All active alerts for which notification has been disabled by someone manually. May be for maintenance purposes.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-green",
+                "value": null
+              },
+              {
+                "color": "dark-orange",
+                "value": 0.0001
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 18,
+        "y": 5
+      },
+      "id": 11,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "titleSize": 30,
+          "valueSize": 30
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "expr": "alertmanager_silences{cluster=~\"$cluster\",state=\"active\"}",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Silenced",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "id": 23,
+      "panels": [],
+      "title": "Alerts (Category)",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${datasource}",
+      "decimals": 0,
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "hiddenSeries": false,
+      "id": 44,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": true,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": false
+      },
+      "percentage": false,
+      "pluginVersion": "8.1.0",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "count(ALERTS{cluster=~\"$cluster\"}) by (alertname) OR on() vector(0)",
+          "interval": "",
+          "legendFormat": "{{ alertname }}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Alerts By Category",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:67",
+          "decimals": 0,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:68",
+          "decimals": 0,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 18
+      },
+      "id": 46,
+      "panels": [],
+      "title": "Alerts - Active / Firing",
+      "type": "row"
+    },
+    {
+      "datasource": "${datasource}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": null,
+            "displayMode": "color-text",
+            "filterable": false
+          },
+          "mappings": [],
+          "noValue": "--",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-orange",
+                "value": null
+              },
+              {
+                "color": "semi-dark-green",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 19
+      },
+      "id": 4,
+      "options": {
+        "showHeader": false,
+        "sortBy": [
+          {
+            "desc": false,
+            "displayName": "ALERTS{alertname=\"KafkaConsumerLag\", alertstate=\"firing\", consumergroup=\"aalto-valamis.gradebook.group-members-to-course-result-statistics.streaming-1.0\", severity=\"warning\"}"
+          }
+        ]
+      },
+      "pluginVersion": "8.1.0",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sort(ALERTS{cluster=~\"$cluster\",alertstate=\"firing\"})",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Firing alerts",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": false,
+              "Value": true,
+              "__name__": true,
+              "alertstate": false
+            },
+            "indexByName": {
+              "Time": 0,
+              "Value": 7,
+              "__name__": 1,
+              "alertname": 2,
+              "alertstate": 6,
+              "consumergroup": 3,
+              "severity": 5,
+              "topic": 4
+            },
+            "renameByName": {
+              "Value": "Status",
+              "alertname": "Alertname",
+              "alertstate": "State",
+              "severity": "Severity"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "collapsed": true,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 29
+      },
+      "id": 49,
+      "panels": [
+        {
+          "datasource": "${datasource}",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": null,
+                "displayMode": "color-text",
+                "filterable": false
+              },
+              "mappings": [],
+              "noValue": "--",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "dark-orange",
+                    "value": null
+                  },
+                  {
+                    "color": "semi-dark-green",
+                    "value": 0
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 24,
+            "x": 0,
+            "y": 30
+          },
+          "id": 50,
+          "options": {
+            "showHeader": false,
+            "sortBy": [
+              {
+                "desc": false,
+                "displayName": "ALERTS{alertname=\"KafkaConsumerLag\", alertstate=\"firing\", consumergroup=\"aalto-valamis.gradebook.group-members-to-course-result-statistics.streaming-1.0\", severity=\"warning\"}"
+              }
+            ]
+          },
+          "pluginVersion": "8.1.0",
+          "targets": [
+            {
+              "exemplar": true,
+              "expr": "sort(ALERTS{cluster=~\"$cluster\",alertstate=\"pending\"})",
+              "format": "table",
+              "instant": true,
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Pending alerts",
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Time": false,
+                  "Value": true,
+                  "__name__": true,
+                  "alertstate": false
+                },
+                "indexByName": {
+                  "Time": 0,
+                  "Value": 7,
+                  "__name__": 1,
+                  "alertname": 2,
+                  "alertstate": 6,
+                  "consumergroup": 3,
+                  "severity": 5,
+                  "topic": 4
+                },
+                "renameByName": {
+                  "Value": "Status",
+                  "alertname": "Alertname",
+                  "alertstate": "State",
+                  "severity": "Severity"
+                }
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "title": "Alerts - Pending",
+      "type": "row"
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 30,
+  "style": "dark",
+  "tags": [
+    "alerts",
+    "kubernetes",
+    "prometheus"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "Prometheus",
+          "value": "Prometheus"
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "Datasource",
+        "multi": false,
+        "name": "datasource",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "isNone": true,
+          "selected": true,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": null,
+        "definition": "label_values(kube_pod_info, cluster)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "Cluster",
+        "multi": false,
+        "name": "cluster",
+        "options": [],
+        "query": {
+          "query": "label_values(kube_pod_info, cluster)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "auto": true,
+        "auto_count": 1,
+        "auto_min": "1m",
+        "current": {
+          "selected": false,
+          "text": "auto",
+          "value": "$__auto_interval_timeRange"
+        },
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "label": "Time Range",
+        "name": "timeRange",
+        "options": [
+          {
+            "selected": true,
+            "text": "auto",
+            "value": "$__auto_interval_timeRange"
+          },
+          {
+            "selected": false,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          },
+          {
+            "selected": false,
+            "text": "1h",
+            "value": "1h"
+          },
+          {
+            "selected": false,
+            "text": "6h",
+            "value": "6h"
+          },
+          {
+            "selected": false,
+            "text": "12h",
+            "value": "12h"
+          },
+          {
+            "selected": false,
+            "text": "1d",
+            "value": "1d"
+          },
+          {
+            "selected": false,
+            "text": "7d",
+            "value": "7d"
+          },
+          {
+            "selected": false,
+            "text": "14d",
+            "value": "14d"
+          },
+          {
+            "selected": false,
+            "text": "30d",
+            "value": "30d"
+          }
+        ],
+        "query": "1m,10m,30m,1h,6h,12h,1d,7d,14d,30d",
+        "queryValue": "",
+        "refresh": 2,
+        "skipUrlSync": false,
+        "type": "interval"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "prometheus / alerts",
+  "uid": "prometheus-alerts",
+  "version": 2
+}

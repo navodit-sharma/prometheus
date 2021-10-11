@@ -1,0 +1,32 @@
+groups:
+- name: k8s-statefulset.rules
+  rules:
+
+  - alert: KubernetesStatefulsetReplicaDown
+    # expr: (kube_statefulset_status_replicas_ready / kube_statefulset_status_replicas_current) != 1
+    expr: group by (namespace,statefulset) ((kube_statefulset_replicas > 0) and ((kube_statefulset_status_replicas_ready / kube_statefulset_replicas) != 1))
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: Kubernetes StatefulSet down
+      description: One or more replicas of statefulSet {{ $labels.statefulset }} in {{ $labels.namespace }} namespace are down for 5m. Check dashboard - {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kubernetes-statefulsets/kubernetes-statefulsets?var-datasource=Prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-statefulset={{ $labels.statefulset }}
+
+  - alert: KubernetesStatefulsetReplicasMismatch
+    # expr: kube_statefulset_status_replicas_ready != kube_statefulset_status_replicas
+    expr: group by (namespace,statefulset) (kube_statefulset_status_replicas_ready != kube_statefulset_status_replicas)
+    for: 10m
+    labels:
+      severity: critical
+    annotations:
+      summary: Kubernetes StatefulSet replicas mismatch
+      description: Number of READY replicas for statefulSet {{ $labels.statefulset }} does not match the DESIRED number of replicas for last 10m. Check dashboard - {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kubernetes-statefulsets/kubernetes-statefulsets?var-datasource=Prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-statefulset={{ $labels.statefulset }}
+
+  - alert: KubernetesStatefulsetUpdateNotRolledOut
+    expr: group by (namespace,statefulset) (max without (revision) (kube_statefulset_status_current_revision unless kube_statefulset_status_update_revision) * (kube_statefulset_replicas != kube_statefulset_status_replicas_updated))
+    for: 20m
+    labels:
+      severity: warning
+    annotations:
+      summary: Kubernetes StatefulSet update not rolled out
+      description: StatefulSet update roll-out has not completed in last 20m. Please check if its stuck. Check dashboard - {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kubernetes-statefulsets/kubernetes-statefulsets?var-datasource=Prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-statefulset={{ $labels.statefulset }}

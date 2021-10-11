@@ -1,0 +1,22 @@
+{{- if $.Values.customResources.prometheusCustomAlertRules.create -}}
+{{ $releasename := .Release.Name }}
+{{ $releasenamespace := .Release.Namespace }}
+{{ range $path, $_ := .Files.Glob "files/alert-rules/*.yaml" }}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  annotations:
+    meta.helm.sh/release-name: "{{ $releasename }}"
+    meta.helm.sh/release-namespace: "{{ $releasenamespace }}"
+  labels:
+    app: prometheus
+    app.kubernetes.io/managed-by: Helm
+    role: prometheus-alerting-rules
+    release: "{{ $releasename }}"
+  name: "{{ $releasename }}-alert-rules-{{ $path | base | trimSuffix ".yaml" }}"
+  namespace: "{{ $releasenamespace }}"
+spec:
+{{ $.Files.Get $path | indent 2 }}
+---
+{{- end -}}
+{{- end -}}

@@ -1,0 +1,166 @@
+groups:
+- name: k8s-node.rules
+  rules:
+  - alert: KubernetesNodeReady
+    expr: kube_node_status_condition{condition="Ready",status="true"} == 0
+    for: 15m
+    labels:
+      severity: critical
+    annotations:
+      summary: Kubernetes Node ready
+      description: "Node {{ $labels.node }} has been unready for last 15m"
+  - alert: KubernetesMemoryPressure
+    expr: kube_node_status_condition{condition="MemoryPressure",status="true"} == 1
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: Kubernetes memory pressure
+      description: "{{ $labels.node }} has MemoryPressure condition for last 5m."
+  - alert: KubernetesDiskPressure
+    expr: kube_node_status_condition{condition="DiskPressure",status="true"} == 1
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: Kubernetes disk pressure
+      description: "{{ $labels.node }} has DiskPressure condition for last 5m."
+  - alert: KubernetesOutOfDisk
+    expr: kube_node_status_condition{condition="OutOfDisk",status="true"} == 1
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: Kubernetes out of disk
+      description: "{{ $labels.node }} has OutOfDisk condition for last 5m."
+  - alert: KubernetesOutOfCapacity
+    expr: sum by (node) ((kube_pod_status_phase{phase="Running"} == 1) + on(pod, namespace) group_left(node) (0 * kube_pod_info)) / sum(kube_node_status_allocatable_pods) by (node) * 100 > 90
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: Kubernetes out of capacity soon
+      description: "{{ $labels.node }} will soon be out of capacity."
+  - alert: HostOutOfMemory
+    expr: node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 10
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: Host out of memory
+      description: "Node memory is filling up (< 10% left)."
+  - alert: HostMemoryUnderMemoryPressure
+    expr: rate(node_vmstat_pgmajfault[1m]) > 1000
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: Host under memory pressure
+      description: "The node is under heavy memory pressure. High rate of major page faults."
+  - alert: HostUnusualNetworkThroughputIn
+    expr: sum by (instance) (rate(node_network_receive_bytes_total[2m])) / 1024 / 1024 > 100
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: Host unusual network throughput (Incoming)
+      description: "Host network interfaces are probably receiving too much data (> 100 MB/s)."
+  - alert: HostUnusualNetworkThroughputOut
+    expr: sum by (instance) (rate(node_network_transmit_bytes_total[2m])) / 1024 / 1024 > 100
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: Host unusual network throughput (Outgoing)
+      description: "Host network interfaces are probably sending too much data (> 100 MB/s)."
+  - alert: HostUnusualDiskReadRate
+    expr: sum by (instance) (rate(node_disk_read_bytes_total[2m])) / 1024 / 1024 > 50
+    for: 3m
+    labels:
+      severity: warning
+    annotations:
+      summary: Host unusual disk read rate
+      description: "Disk is probably reading too much data (> 50 MB/s)."
+  - alert: HostUnusualDiskWriteRate
+    expr: sum by (instance) (rate(node_disk_written_bytes_total[2m])) / 1024 / 1024 > 50
+    for: 3m
+    labels:
+      severity: warning
+    annotations:
+      summary: Host unusual disk write rate
+      description: "Disk is probably writing too much data (> 50 MB/s)."
+  # Please add ignored mountpoints in node_exporter parameters like
+  # "--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|run)($|/)".
+  # Same rule using "node_filesystem_free_bytes" will fire when disk fills for non-root users.
+  - alert: HostOutOfDiskSpace
+    expr: (node_filesystem_avail_bytes * 100) / node_filesystem_size_bytes < 10 and ON (instance, device, mountpoint) node_filesystem_readonly == 0
+    for: 3m
+    labels:
+      severity: warning
+    annotations:
+      summary: Host out of disk space
+      description: "Disk is almost full (< 10% left)."
+  - alert: HostOutOfInodes
+    expr: node_filesystem_files_free{mountpoint ="/rootfs"} / node_filesystem_files{mountpoint="/rootfs"} * 100 < 10 and ON (instance, device, mountpoint) node_filesystem_readonly{mountpoint="/rootfs"} == 0
+    for: 3m
+    labels:
+      severity: warning
+    annotations:
+      summary: Host out of inodes
+      description: "Disk is almost running out of available inodes (< 10% left)."
+  - alert: HostUnusualDiskReadLatency
+    expr: rate(node_disk_read_time_seconds_total[1m]) / rate(node_disk_reads_completed_total[1m]) > 0.1 and rate(node_disk_reads_completed_total[1m]) > 0
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: Host unusual disk read latency
+      description: "Disk latency is growing (read operations > 100ms)."
+  - alert: HostUnusualDiskWriteLatency
+    expr: rate(node_disk_write_time_seconds_total[1m]) / rate(node_disk_writes_completed_total[1m]) > 0.1 and rate(node_disk_writes_completed_total[1m]) > 0
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: Host unusual disk write latency
+      description: "Disk latency is growing (write operations > 100ms)."
+  - alert: HostHighCpuLoad
+    expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100) > 80
+    for: 0m
+    labels:
+      severity: warning
+    annotations:
+      summary: Host high CPU load
+      description: "CPU load is > 80%."
+  - alert: HostCpuStealNoisyNeighbor
+    expr: avg by(instance) (rate(node_cpu_seconds_total{mode="steal"}[5m])) * 100 > 10
+    for: 0m
+    labels:
+      severity: warning
+    annotations:
+      summary: Host CPU steal noisy neighbor
+      description: "CPU steal is > 10%. A noisy neighbor is killing VM performances or a spot instance may be out of credit."
+  - alert: HostOomKillDetected
+    expr: increase(node_vmstat_oom_kill[1m]) > 0
+    for: 0m
+    labels:
+      severity: warning
+    annotations:
+      summary: Host OOM kill detected
+      description: "OOM kill detected"
+  - alert: HostNetworkReceiveErrors
+    expr: rate(node_network_receive_errs_total[2m]) / rate(node_network_receive_packets_total[2m]) > 0.01
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: Host Network Receive Errors
+      description: "Host {{ $labels.instance }} interface {{ $labels.device }} has encountered {{ printf \"%.0f\" $value }} receive errors in the last five minutes."
+  - alert: HostNetworkTransmitErrors
+    expr: rate(node_network_transmit_errs_total[2m]) / rate(node_network_transmit_packets_total[2m]) > 0.01
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: Host Network Transmit Errors
+      description: "Host {{ $labels.instance }} interface {{ $labels.device }} has encountered {{ printf \"%.0f\" $value }} transmit errors in the last five minutes."

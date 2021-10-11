@@ -1,0 +1,11 @@
+groups:
+- name: k8s-deployment.rules
+  rules:
+  - alert: KubernetesDeploymentReplicasMismatch
+    expr: kube_deployment_spec_replicas != kube_deployment_status_replicas_available
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      summary: Kubernetes Deployment replicas mismatch
+      description: Number of READY replicas for deployment {{ $labels.deployment }} does not match the DESIRED number of replicas for last 10m. Check dashboard - {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kubernetes-deployments/kubernetes-deployments?var-datasource=Prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-deployment={{ $labels.deployment }}

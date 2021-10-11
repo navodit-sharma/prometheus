@@ -1,0 +1,115 @@
+groups:
+- name: app-elasticsearch.rules
+  rules:
+  - alert: ElasticsearchHeapUsageTooHigh
+    expr: (elasticsearch_jvm_memory_used_bytes{area="heap"} / elasticsearch_jvm_memory_max_bytes{area="heap"}) * 100 > 90
+    for: 2m
+    labels:
+      severity: critical
+    annotations:
+      summary: Elasticsearch Heap Usage Too High
+      description: "The heap usage is over 90%."
+  - alert: ElasticsearchHeapUsageWarning
+    expr: (elasticsearch_jvm_memory_used_bytes{area="heap"} / elasticsearch_jvm_memory_max_bytes{area="heap"}) * 100 > 80
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: Elasticsearch Heap Usage warning
+      description: "The heap usage is over 80%."
+  - alert: ElasticsearchDiskOutOfSpace
+    expr: elasticsearch_filesystem_data_available_bytes / elasticsearch_filesystem_data_size_bytes * 100 < 10
+    for: 0m
+    labels:
+      severity: critical
+    annotations:
+      summary: Elasticsearch disk out of space
+      description: "The disk usage is over 90%."
+  - alert: ElasticsearchDiskSpaceLow
+    expr: elasticsearch_filesystem_data_available_bytes / elasticsearch_filesystem_data_size_bytes * 100 < 20
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: Elasticsearch disk space low
+      description: "The disk usage is over 80%."
+  - alert: ElasticsearchClusterRed
+    expr: elasticsearch_cluster_health_status{color="red"} == 1
+    for: 0m
+    labels:
+      severity: critical
+    annotations:
+      summary: Elasticsearch Cluster Red
+      description: "Elastic Cluster Red status."
+  - alert: ElasticsearchClusterYellow
+    expr: elasticsearch_cluster_health_status{color="yellow"} == 1
+    for: 0m
+    labels:
+      severity: warning
+    annotations:
+      summary: Elasticsearch Cluster Yellow
+      description: "Elastic Cluster Yellow status"
+  - alert: ElasticsearchHealthyNodes
+    expr: elasticsearch_cluster_health_number_of_nodes < 3
+    for: 0m
+    labels:
+      severity: critical
+    annotations:
+      summary: Elasticsearch Healthy Nodes
+      description: "Missing node in Elasticsearch cluster."
+  - alert: ElasticsearchHealthyDataNodes
+    expr: elasticsearch_cluster_health_number_of_data_nodes < 3
+    for: 0m
+    labels:
+      severity: critical
+    annotations:
+      summary: Elasticsearch Healthy Data Nodes
+      description: "Missing data node in Elasticsearch cluster."
+  - alert: ElasticsearchRelocatingShards
+    expr: elasticsearch_cluster_health_relocating_shards > 0
+    for: 0m
+    labels:
+      severity: info
+    annotations:
+      summary: Elasticsearch relocating shards
+      description: "Elasticsearch is relocating shards."
+  - alert: ElasticsearchRelocatingShardsTooLong
+    expr: elasticsearch_cluster_health_relocating_shards > 0
+    for: 15m
+    labels:
+      severity: warning
+    annotations:
+      summary: Elasticsearch relocating shards too long
+      description: "Elasticsearch has been relocating shards for 15min."
+  - alert: ElasticsearchInitializingShards
+    expr: elasticsearch_cluster_health_initializing_shards > 0
+    for: 0m
+    labels:
+      severity: info
+    annotations:
+      summary: Elasticsearch initializing shards
+      description: "Elasticsearch is initializing shards."
+  - alert: ElasticsearchInitializingShardsTooLong
+    expr: elasticsearch_cluster_health_initializing_shards > 0
+    for: 15m
+    labels:
+      severity: warning
+    annotations:
+      summary: Elasticsearch initializing shards too long
+      description: "Elasticsearch has been initializing shards for 15 min."
+  - alert: ElasticsearchUnassignedShards
+    expr: elasticsearch_cluster_health_unassigned_shards > 0
+    for: 0m
+    labels:
+      severity: critical
+    annotations:
+      summary: Elasticsearch unassigned shards
+      description: "Elasticsearch has unassigned shards."
+  - alert: ElasticsearchPendingTasks
+    expr: elasticsearch_cluster_health_number_of_pending_tasks > 0
+    for: 15m
+    labels:
+      severity: warning
+    annotations:
+      summary: Elasticsearch pending tasks
+      description: "Elasticsearch has pending tasks. Cluster works slowly."
