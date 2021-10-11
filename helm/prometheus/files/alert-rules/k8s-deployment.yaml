@@ -8,4 +8,4 @@ groups:
       severity: warning
     annotations:
       summary: Kubernetes Deployment replicas mismatch
-      description: "Number of READY replicas for deployment {{ $labels.deployment }} does not match the DESIRED number of replicas for last 10m."
+      description: Number of READY replicas for deployment {{ $labels.deployment }} does not match the DESIRED number of replicas for last 10m. Check dashboard - {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kubernetes-deployments/kubernetes-deployments?var-datasource=Prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-deployment={{ $labels.deployment }}
