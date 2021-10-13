@@ -21,8 +21,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 71,
-  "iteration": 1633952794724,
+  "id": 101,
+  "iteration": 1634037205952,
   "links": [],
   "panels": [
     {
@@ -1455,7 +1455,7 @@
     },
     {
       "datasource": "${datasource}",
-      "description": "All active alerts for which notification has been disabled by someone manually. May be for maintenance purposes.",
+      "description": "All active alerts for which notification has been disabled by someone manually in alertmanager, may be for maintenance purposes.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1515,7 +1515,7 @@
           "refId": "A"
         }
       ],
-      "title": "Silenced",
+      "title": "Silences - AlertManager",
       "type": "stat"
     },
     {
@@ -1557,6 +1557,8 @@
         "min": false,
         "rightSide": true,
         "show": true,
+        "sort": "current",
+        "sortDesc": true,
         "total": false,
         "values": true
       },
@@ -1670,7 +1672,20 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Alertname"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 250
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 10,
@@ -1680,13 +1695,8 @@
       },
       "id": 4,
       "options": {
-        "showHeader": false,
-        "sortBy": [
-          {
-            "desc": false,
-            "displayName": "ALERTS{alertname=\"KafkaConsumerLag\", alertstate=\"firing\", consumergroup=\"aalto-valamis.gradebook.group-members-to-course-result-statistics.streaming-1.0\", severity=\"warning\"}"
-          }
-        ]
+        "showHeader": true,
+        "sortBy": []
       },
       "pluginVersion": "8.1.0",
       "targets": [
@@ -1779,7 +1789,7 @@
             "h": 6,
             "w": 24,
             "x": 0,
-            "y": 30
+            "y": 43
           },
           "id": 50,
           "options": {
@@ -1990,5 +2000,5 @@
   "timezone": "browser",
   "title": "prometheus / alerts",
   "uid": "prometheus-alerts",
-  "version": 2
+  "version": 4
 }

@@ -21,8 +21,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 35,
-  "iteration": 1633938965597,
+  "id": 100,
+  "iteration": 1634036671026,
   "links": [],
   "panels": [
     {
@@ -735,6 +735,7 @@
               "color": {
                 "mode": "thresholds"
               },
+              "decimals": 0,
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
@@ -776,6 +777,7 @@
           "pluginVersion": "8.1.0",
           "targets": [
             {
+              "exemplar": true,
               "expr": "container_processes{cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\",container=~\"$container\"}",
               "format": "time_series",
               "instant": true,
@@ -798,6 +800,7 @@
               "color": {
                 "mode": "thresholds"
               },
+              "decimals": 0,
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
@@ -865,6 +868,7 @@
               "color": {
                 "mode": "thresholds"
               },
+              "decimals": 0,
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
@@ -932,6 +936,7 @@
               "color": {
                 "mode": "thresholds"
               },
+              "decimals": 0,
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
@@ -993,7 +998,7 @@
         }
       ],
       "repeat": "container",
-      "title": "Container - $container",
+      "title": "Container State - $container",
       "type": "row"
     },
     {
@@ -1003,7 +1008,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 5
       },
       "id": 13,
       "panels": [],
@@ -1024,7 +1029,7 @@
         "h": 9,
         "w": 15,
         "x": 0,
-        "y": 10
+        "y": 6
       },
       "hiddenSeries": false,
       "id": 1,
@@ -1173,7 +1178,7 @@
         "h": 9,
         "w": 9,
         "x": 15,
-        "y": 10
+        "y": 6
       },
       "hiddenSeries": false,
       "id": 2,
@@ -1276,7 +1281,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 19
+        "y": 15
       },
       "id": 56,
       "panels": [
@@ -1292,7 +1297,7 @@
                 "displayMode": "auto",
                 "filterable": false
               },
-              "decimals": 2,
+              "decimals": 3,
               "displayName": "",
               "mappings": [],
               "noValue": "--",
@@ -1328,7 +1333,7 @@
                   },
                   {
                     "id": "decimals",
-                    "value": 2
+                    "value": 3
                   },
                   {
                     "id": "custom.align",
@@ -1467,18 +1472,6 @@
                     "value": "Container"
                   }
                 ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Pod"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 355
-                  }
-                ]
               }
             ]
           },
@@ -1591,7 +1584,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 20
+        "y": 16
       },
       "id": 15,
       "panels": [],
@@ -1612,7 +1605,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 21
+        "y": 17
       },
       "hiddenSeries": false,
       "id": 4,
@@ -1751,7 +1744,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 28
+        "y": 24
       },
       "id": 16,
       "panels": [
@@ -2164,7 +2157,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 29
+        "y": 25
       },
       "id": 17,
       "panels": [],
@@ -2184,7 +2177,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 30
+        "y": 26
       },
       "hiddenSeries": false,
       "id": 6,
@@ -2283,7 +2276,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 30
+        "y": 26
       },
       "hiddenSeries": false,
       "id": 7,
@@ -2376,7 +2369,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 37
+        "y": 33
       },
       "id": 19,
       "panels": [],
@@ -2396,7 +2389,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 38
+        "y": 34
       },
       "hiddenSeries": false,
       "id": 8,
@@ -2493,7 +2486,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 38
+        "y": 34
       },
       "hiddenSeries": false,
       "id": 9,
@@ -2585,7 +2578,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 45
+        "y": 41
       },
       "id": 20,
       "panels": [],
@@ -2605,7 +2598,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 46
+        "y": 42
       },
       "hiddenSeries": false,
       "id": 10,
@@ -2703,7 +2696,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 46
+        "y": 42
       },
       "hiddenSeries": false,
       "id": 11,
@@ -2801,7 +2794,7 @@
     "list": [
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "Prometheus",
           "value": "Prometheus"
         },
@@ -2855,8 +2848,8 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "cert-manager",
-          "value": "cert-manager"
+          "text": "logging",
+          "value": "logging"
         },
         "datasource": "${datasource}",
         "definition": "label_values(kube_pod_info{cluster=\"$cluster\"}, namespace)",
@@ -2885,8 +2878,8 @@
         "allValue": ".*",
         "current": {
           "selected": false,
-          "text": "cert-manager-cainjector-85c6bcc6b-fwtm2",
-          "value": "cert-manager-cainjector-85c6bcc6b-fwtm2"
+          "text": "logging-fluent-bit-khnzr",
+          "value": "logging-fluent-bit-khnzr"
         },
         "datasource": "${datasource}",
         "definition": "label_values(kube_pod_info{cluster=\"$cluster\", namespace=\"$namespace\"}, pod)",
@@ -2915,8 +2908,8 @@
         "allValue": ".*",
         "current": {
           "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "text": "fluent-bit",
+          "value": "fluent-bit"
         },
         "datasource": "${datasource}",
         "definition": "label_values(kube_pod_container_info{cluster=\"$cluster\", namespace=\"$namespace\",pod=\"$pod\"}, container)",
@@ -2975,5 +2968,5 @@
   "timezone": "browser",
   "title": "kubernetes / pods",
   "uid": "kubernetes-pods",
-  "version": 4
+  "version": 5
 }
