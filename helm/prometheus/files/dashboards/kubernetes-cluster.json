@@ -21,8 +21,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 58,
-  "iteration": 1633936964296,
+  "id": 103,
+  "iteration": 1634649686014,
   "links": [],
   "panels": [
     {
@@ -590,7 +590,7 @@
           "instant": true,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "0-2",
+          "legendFormat": "0-2 (Cores)",
           "refId": "A"
         },
         {
@@ -601,7 +601,7 @@
           "instant": true,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "2-4",
+          "legendFormat": "2-4 (Cores)",
           "refId": "B"
         },
         {
@@ -612,7 +612,7 @@
           "instant": true,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "4-8",
+          "legendFormat": "4-8 (Cores)",
           "refId": "C"
         },
         {
@@ -623,7 +623,7 @@
           "instant": true,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "8-16",
+          "legendFormat": "8-16 (Cores)",
           "refId": "D"
         },
         {
@@ -634,7 +634,7 @@
           "instant": true,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "16-32",
+          "legendFormat": "16-32 (Cores)",
           "refId": "E"
         },
         {
@@ -645,7 +645,7 @@
           "instant": true,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "32+",
+          "legendFormat": "32+ (Cores)",
           "refId": "F"
         }
       ],
@@ -725,7 +725,7 @@
           "instant": true,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "0-2",
+          "legendFormat": "0-2 (GB)",
           "refId": "A"
         },
         {
@@ -736,7 +736,7 @@
           "instant": true,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "2-4",
+          "legendFormat": "2-4 (GB)",
           "refId": "B"
         },
         {
@@ -747,7 +747,7 @@
           "instant": true,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "4-8",
+          "legendFormat": "4-8 (GB)",
           "refId": "C"
         },
         {
@@ -758,7 +758,7 @@
           "instant": true,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "8-16",
+          "legendFormat": "8-16 (GB)",
           "refId": "D"
         },
         {
@@ -769,7 +769,7 @@
           "instant": true,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "16-32",
+          "legendFormat": "16-32 (GB)",
           "refId": "E"
         },
         {
@@ -780,7 +780,7 @@
           "instant": true,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "32+",
+          "legendFormat": "32+ (GB)",
           "refId": "F"
         }
       ],
@@ -3270,5 +3270,5 @@
   "timezone": "browser",
   "title": "kubernetes / cluster",
   "uid": "kubernetes-cluster",
-  "version": 29
+  "version": 4
 }

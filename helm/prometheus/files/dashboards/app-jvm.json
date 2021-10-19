@@ -23,7 +23,7 @@
   "gnetId": 8878,
   "graphTooltip": 0,
   "id": 95,
-  "iteration": 1634547982663,
+  "iteration": 1634648702952,
   "links": [],
   "panels": [
     {
@@ -1393,8 +1393,8 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "lrs",
-          "value": "lrs"
+          "text": "shared",
+          "value": "shared"
         },
         "datasource": "$datasource",
         "definition": "label_values(jvm_info, namespace)",
@@ -1423,8 +1423,8 @@
         "allValue": ".*",
         "current": {
           "selected": false,
-          "text": "vcloud-lrs-statements-rdbms",
-          "value": "vcloud-lrs-statements-rdbms"
+          "text": "vcloud-messaging-service",
+          "value": "vcloud-messaging-service"
         },
         "datasource": "${datasource}",
         "definition": "label_values(jvm_info{namespace=\"$namespace\"}, service)",
@@ -1453,8 +1453,8 @@
         "allValue": ".*",
         "current": {
           "selected": false,
-          "text": "vcloud-lrs-statements-rdbms-86c99558f4-fcxww",
-          "value": "vcloud-lrs-statements-rdbms-86c99558f4-fcxww"
+          "text": "vcloud-messaging-service-7ddc85c445-rs7rx",
+          "value": "vcloud-messaging-service-7ddc85c445-rs7rx"
         },
         "datasource": "$datasource",
         "definition": "label_values(jvm_info{namespace=\"$namespace\", service=\"$service\"}, pod)",
@@ -1572,8 +1572,8 @@
       "30d"
     ]
   },
-  "timezone": "browser",
+  "timezone": "",
   "title": "app / jvm",
   "uid": "app-jvm",
-  "version": 20
+  "version": 21
 }
