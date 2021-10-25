@@ -1,474 +1,485 @@
-prometheus:
-  kube-prometheus-stack:
-    prometheus:
-      additionalServiceMonitors:
-      - name: "bookmarks-service"
-        additionalLabels:
+kube-prometheus-stack:
+  prometheus:
+    additionalServiceMonitors:
+    - name: "bookmarks-service"
+      additionalLabels:
+        "app.kubernetes.io/name": bookmarks-service
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": bookmarks-service
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": bookmarks-service
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "bookmarks-ui"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "bookmarks-ui"
+      additionalLabels:
+        "app.kubernetes.io/name": bookmarks-ui
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": bookmarks-ui
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": bookmarks-ui
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "certificates-ui"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "certificates-ui"
+      additionalLabels:
+        "app.kubernetes.io/name": certificates-ui
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": certificates-ui
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": certificates-ui
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "course-result"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "course-result"
+      additionalLabels:
+        "app.kubernetes.io/name": course-result
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": course-result
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": course-result
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "courses-ui"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "courses-ui"
+      additionalLabels:
+        "app.kubernetes.io/name": courses-ui
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": courses-ui
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": courses-ui
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "ecommerce-service"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "ecommerce-service"
+      additionalLabels:
+        "app.kubernetes.io/name": ecommerce-service
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": ecommerce-service
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": ecommerce-service
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "ecommerce-ui"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "ecommerce-ui"
+      additionalLabels:
+        "app.kubernetes.io/name": ecommerce-ui
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": ecommerce-ui
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": ecommerce-ui
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "ecommerce-mediator"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "ecommerce-mediator"
+      additionalLabels:
+        "app.kubernetes.io/name": ecommerce-mediator
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": ecommerce-mediator
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": ecommerce-mediator
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "etherpad"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "etherpad"
+      additionalLabels:
+        "app.kubernetes.io/name": etherpad
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": etherpad
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": etherpad
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "gradebook-overview-result"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "gradebook-overview-result"
+      additionalLabels:
+        "app.kubernetes.io/name": gradebook-overview-result
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": gradebook-overview-result
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": gradebook-overview-result
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "gradebook-notifier"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "gradebook-notifier"
+      additionalLabels:
+        "app.kubernetes.io/name": gradebook-notifier
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": gradebook-notifier
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": gradebook-notifier
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics/http
-      - name: "grading-service"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics/http
+    - name: "grading-service"
+      additionalLabels:
+        "app.kubernetes.io/name": grading-service
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": grading-service
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": grading-service
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "grading-ui"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "grading-ui"
+      additionalLabels:
+        "app.kubernetes.io/name": grading-ui
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": grading-ui
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": grading-ui
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "gradebook-ui"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "gradebook-ui"
+      additionalLabels:
+        "app.kubernetes.io/name": gradebook-ui
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": gradebook-ui
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": gradebook-ui
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      # - name: "integrations-ui"
-      #   additionalLabels:
-      #     "app.kubernetes.io/name": integrations-ui
-      #   selector:
-      #     matchLabels:
-      #       "app.kubernetes.io/name": integrations-ui
-      #   namespaceSelector:
-      #     any: true
-      #   endpoints:
-      #     - port: "http"
-      #       interval: 30s
-      #       path: /metrics
-      - name: "invitation-links-service"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    # - name: "integrations-ui"
+    #   additionalLabels:
+    #     "app.kubernetes.io/name": integrations-ui
+    #   selector:
+    #     matchLabels:
+    #       "app.kubernetes.io/name": integrations-ui
+    #   namespaceSelector:
+    #     any: true
+    #   endpoints:
+    #     - port: "http"
+    #       interval: 30s
+    #       path: /metrics
+    - name: "invitation-links-service"
+      additionalLabels:
+        "app.kubernetes.io/name": invitation-links-service
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": invitation-links-service
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": invitation-links-service
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "invitation-links-ui"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "invitation-links-ui"
+      additionalLabels:
+        "app.kubernetes.io/name": invitation-links-ui
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": invitation-links-ui
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": invitation-links-ui
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "kafka-exporter"
-        additionalLabels:
-          "app.kubernetes.io/name": kafka-exporter
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": kafka
-            "app.kubernetes.io/component": metrics
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http-metrics"
-            interval: 180s
-            scrapeTimeout: 90s
-            path: /metrics
-      - name: "learning-paths-ui"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "kafka-exporter"
+      additionalLabels:
+        "app.kubernetes.io/name": kafka-exporter
+      selector:
+        matchLabels:
+          "app.kubernetes.io/name": kafka
+          "app.kubernetes.io/component": metrics
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http-metrics"
+          interval: 180s
+          scrapeTimeout: 90s
+          path: /metrics
+    - name: "learning-paths-ui"
+      additionalLabels:
+        "app.kubernetes.io/name": learning-paths-ui
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": learning-paths-ui
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": learning-paths-ui
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "lesson-studio-content"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "lesson-studio-content"
+      additionalLabels:
+        "app.kubernetes.io/name": lesson-studio-content
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": lesson-studio-content
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": lesson-studio-content
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "lesson-studio-document-importer"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "lesson-studio-document-importer"
+      additionalLabels:
+        "app.kubernetes.io/name": lesson-studio-document-importer
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": lesson-studio-document-importer
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": lesson-studio-document-importer
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "lesson-studio-lesson-importer"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "lesson-studio-lesson-importer"
+      additionalLabels:
+        "app.kubernetes.io/name": lesson-studio-lesson-importer
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": lesson-studio-lesson-importer
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": lesson-studio-lesson-importer
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "lesson-studio-slides"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "lesson-studio-slides"
+      additionalLabels:
+        "app.kubernetes.io/name": lesson-studio-slides
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": lesson-studio-slides
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": lesson-studio-slides
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "lesson-studio-theme"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "lesson-studio-theme"
+      additionalLabels:
+        "app.kubernetes.io/name": lesson-studio-theme
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": lesson-studio-theme
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": lesson-studio-theme
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "lessons-ui"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "lessons-ui"
+      additionalLabels:
+        "app.kubernetes.io/name": lessons-ui
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": lessons-ui
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": lessons-ui
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "lessons-service"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "lessons-service"
+      additionalLabels:
+        "app.kubernetes.io/name": lessons-service
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": lessons-service
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": lessons-service
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "lrs"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "lrs"
+      additionalLabels:
+        "app.kubernetes.io/name": lrs
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": lrs
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": lrs
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "monitoring"
-            interval: 30s
-            path: /metrics
-      - name: "lrs-jdbc-statement-id-storage"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "monitoring"
+          interval: 30s
+          path: /metrics
+    - name: "lrs-jdbc-statement-id-storage"
+      additionalLabels:
+        "app.kubernetes.io/name": lrs-jdbc-statement-id-storage
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": lrs-jdbc-statement-id-storage
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": lrs-jdbc-statement-id-storage
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "monitoring"
-            interval: 30s
-            path: /metrics
-      - name: "lrs-main"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "monitoring"
+          interval: 30s
+          path: /metrics
+    - name: "lrs-main"
+      additionalLabels:
+        "app.kubernetes.io/name": lrs-main
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": lrs-main
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": lrs-main
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "monitoring"
-            interval: 30s
-            path: /metrics
-      - name: "lrs-statements-rdbms"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "monitoring"
+          interval: 30s
+          path: /metrics
+    - name: "lrs-statements-rdbms"
+      additionalLabels:
+        "app.kubernetes.io/name": lrs-statements-rdbms
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": lrs-statements-rdbms
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": lrs-statements-rdbms
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "monitoring"
-            interval: 30s
-            path: /metrics
-      - name: "messaging-tool-service"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "monitoring"
+          interval: 30s
+          path: /metrics
+    - name: "messaging-tool-service"
+      additionalLabels:
+        "app.kubernetes.io/name": messaging-service
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": messaging-service
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": messaging-service
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "messaging-ui"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "messaging-ui"
+      additionalLabels:
+        "app.kubernetes.io/name": messaging-ui
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": messaging-ui
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": messaging-ui
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "profile-ui"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "profile-ui"
+      additionalLabels:
+        "app.kubernetes.io/name": profile-ui
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": profile-ui
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": profile-ui
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "ribbons-ui"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "ribbons-ui"
+      additionalLabels:
+        "app.kubernetes.io/name": recommendations-ui
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": recommendations-ui
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": recommendations-ui
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "reports-kibana-proxy"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "reports-kibana-proxy"
+      additionalLabels:
+        "app.kubernetes.io/name": reports-kibana-proxy
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": reports-kibana-proxy
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": reports-kibana-proxy
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "study-summary-ui"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "study-summary-ui"
+      additionalLabels:
+        "app.kubernetes.io/name": study-summary-ui
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": study-summary-ui
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": study-summary-ui
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "training-events-ui"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "training-events-ui"
+      additionalLabels:
+        "app.kubernetes.io/name": training-events-ui
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": training-events-ui
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": training-events-ui
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "valbo-admin"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "valbo-admin"
+      additionalLabels:
+        "app.kubernetes.io/name": valbo-admin
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": valbo-admin
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": valbo-admin
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
-      - name: "valbo-chat"
-        additionalLabels:
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: "valbo-chat"
+      additionalLabels:
+        "app.kubernetes.io/name": valbo-chat
+      selector:
+        matchLabels:
           "app.kubernetes.io/name": valbo-chat
-        selector:
-          matchLabels:
-            "app.kubernetes.io/name": valbo-chat
-        namespaceSelector:
-          any: true
-        endpoints:
-          - port: "http"
-            interval: 30s
-            path: /metrics
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: "http"
+          interval: 30s
+          path: /metrics
+    - name: logging-fluent-bit
+      additionalLabels:
+        "app.kubernetes.io/name": fluent-bit
+      selector:
+        matchLabels:
+          "app.kubernetes.io/name": fluent-bit
+      namespaceSelector:
+        any: true
+      endpoints:
+        - port: http
+          interval: 30s
+          path: /api/v1/metrics/prometheus
