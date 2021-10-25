@@ -10,20 +10,20 @@ groups:
       summary: Kafka topics in-sync-replicas < 3
       description: "Kafka topic partition has less than 3 in-sync replicas."
   - alert: KafkaConsumerLag
-    expr: sum by(consumergroup, topic) (kafka_consumergroup_lag{consumergroup!~".*migration-(tool|validation)-backup.*|.*-gradebook-notifier-.*|.*topics.status.*|.*-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|.*linkedin.integration.persistence.*|.*integration-course-results.*|.*linkedin-results.*|valamis.learningpath|valamis.learning-paths.competence-level|valamis.learning-paths.invitation-links|valamis.ecommerce.learningpaths|valamis.learning-path-waitlist-notification-group|learning-path-statement-event-group"}) > 0
+    expr: sum by(consumergroup, topic) (kafka_consumergroup_lag{consumergroup!~".*migration-(tool|validation)-backup.*|.*-gradebook-notifier-.*|.*topics.status.*|.*-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|.*linkedin.integration.persistence.*|.*integration-course-results.*|.*linkedin-results.*|valamis.learningpath|valamis.learning-paths.competence-level|valamis.learning-paths.invitation-links|valamis.ecommerce.learningpaths|valamis.learning-path-waitlist-notification-group|learning-path-statement-event-group|.*-valamis-lrs-statements-merger-streaming"}) > 0
     for: 3m
     labels:
       severity: critical
     annotations:
       summary: "Kafka consumer lag > 0 for atleast 3m"
-      description: "Kafka consumer lag for certain topic(s) is exceeding warning threshold. Please find more details on Monitoring dashboard."
+      description: Kafka consumer lag for certain topic(s) is exceeding warning threshold. Please find more details on Monitoring dashboard. Check dashboard - {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kafka-consumer-group-lag-and-throughput/app-kafka-consumer-group-lag-and-throughput?var-datasource=Prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-consumergroup={{ $labels.consumergroup }}&var-topic={{ $labels.topic }}
       value: '{{ printf "%.2f" $value }}'
   - alert: KafkaConsumerLag
-    expr: sum by(consumergroup, topic) (kafka_consumergroup_lag{consumergroup=~".*integration-course-results.*|.*linkedin-results.*"}) > 10
+    expr: sum by(consumergroup, topic) (kafka_consumergroup_lag{consumergroup=~".*integration-course-results.*|.*linkedin-results.*|.*-valamis-lrs-statements-merger-streaming"}) > 10
     for: 3m
     labels:
       severity: critical
     annotations:
       summary: "Kafka consumer lag > 10 for atleast 3m"
-      description: "Kafka consumer lag for certain topic(s) is exceeding warning threshold. Please find more details on Monitoring dashboard."
+      description: Kafka consumer lag for certain topic(s) is exceeding warning threshold. Please find more details on Monitoring dashboard. Check dashboard - {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kafka-consumer-group-lag-and-throughput/app-kafka-consumer-group-lag-and-throughput?var-datasource=Prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-consumergroup={{ $labels.consumergroup }}&var-topic={{ $labels.topic }}
       value: '{{ printf "%.2f" $value }}'
