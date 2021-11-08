@@ -5,12 +5,12 @@ metadata:
   labels:
     app.kubernetes.io/managed-by: Helm
   name: "ambassador"
-  namespace: "{{ .Release.Namespace }}" 
+  namespace: "{{ .Release.Namespace }}"
 spec:
   #ambassador_id: [ "ambassador1" ]
   config:
   {{- .Values.ambassador.module.config.custom | nindent 4 }}
-  {{- if not .Values.global.web.ssl.letsencrypt.enabled -}}
+  {{- if .Values.ambassador.module.ipWhitelist.enabled -}}
   {{- .Values.ambassador.module.config.ipWhitelist | nindent 4 }}
   {{- end -}}
 {{- end -}}
