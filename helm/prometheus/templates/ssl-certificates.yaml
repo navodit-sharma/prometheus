@@ -1,28 +1,54 @@
-
-{{- if $.Values.global.ambassador.enabled -}}
+{{- if (index $.Values.global "emissary-ingress" "enabled") -}}
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Listener
+metadata:
+  name: {{ $.Release.Name }}-http-listener
+spec:
+  port: 8080
+  protocol: HTTP
+  securityModel: XFP
+  hostBinding:
+    namespace:
+      from: SELF
 {{- if $.Values.global.web.ssl.enabled -}}
-{{- $secretName := printf "%s-secret" ($.Values.global.externalUrl | adler32sum) }}
+{{- $secretName := printf "%s-secret" ($.Values.global.externalDomain | adler32sum) }}
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Listener
+metadata:
+  name: {{ $.Release.Name }}-https-listener
+spec:
+  port: 8443
+  protocol: HTTPS
+  securityModel: XFP
+  hostBinding:
+    namespace:
+      from: SELF
 ---
 apiVersion: getambassador.io/v2
-kind: TLSContext
+kind: Host
 metadata:
-  name: {{ $.Values.global.externalUrl }}-context
+  name: {{ $.Values.global.externalDomain }}-host
 spec:
-  hosts:
-    - {{ $.Values.global.externalUrl }}
-  secret: {{ $secretName }}
-  alpn_protocols: h2,http/1.1
-  min_tls_version: v1.2
-  max_tls_version: v1.3
-  redirect_cleartext_from: 8080
-{{- if $.Values.global.web.ssl.letsencrypt.enabled -}}
-{{- $issuer := printf "%s-issuer" ($.Values.global.externalUrl | adler32sum) }}
+  hostname: {{ $.Values.global.externalDomain }}
+  tlsSecret:
+    name: {{ $secretName }}
+  ssl:
+    alpn_protocols: h2,http/1.1
+    min_tls_version: v1.2
+    max_tls_version: v1.3
 ---
-{{- if not $.Values.global.web.ssl.letsencrypt.certManagerApiMigration }}
-apiVersion: certmanager.k8s.io/v1alpha1
-{{- else }}
+apiVersion: getambassador.io/v2
+kind: Host
+metadata:
+  name: {{ $.Values.global.externalDomain }}-host-acme
+spec:
+  hostname: {{ $.Values.global.externalDomain }}
+{{- if $.Values.global.web.ssl.letsencrypt.enabled -}}
+{{- $issuer := printf "%s-issuer" ($.Values.global.externalDomain | adler32sum) }}
+---
 apiVersion: cert-manager.io/v1
-{{- end }}
 kind: Issuer
 metadata:
   name: {{ $issuer }}
@@ -34,45 +60,33 @@ spec:
     email: {{ tpl $.Values.global.web.ssl.letsencrypt.issuerEmail . }}
     privateKeySecretRef:
       name: {{ $issuer }}
-    {{- if not $.Values.global.web.ssl.letsencrypt.certManagerApiMigration }}
-    http01: {}
-    {{- else }}
     solvers:
       - http01:
           ingress:
             class: nginx
-    {{- end }}
 ---
 apiVersion: getambassador.io/v2
 kind: Mapping
 metadata:
-  name: {{ $.Release.Name }}-{{ $.Chart.Name }}-{{ $.Values.global.externalUrl | adler32sum }}-crt-svc
+  name: {{ $.Release.Name }}-{{ $.Chart.Name }}-{{ $.Values.global.externalDomain | adler32sum }}-crt-svc
 spec:
-  host: {{ $.Values.global.externalUrl }}
+  host: {{ $.Values.global.externalDomain }}
   prefix: "/.well-known/acme-challenge/"
   rewrite: ""
-  service: {{ $.Release.Name }}-{{ $.Chart.Name }}-{{ $.Values.global.externalUrl | adler32sum }}-crt-svc
+  service: {{ $.Release.Name }}-{{ $.Chart.Name }}-{{ $.Values.global.externalDomain | adler32sum }}-crt-svc
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ $.Release.Name }}-{{ $.Chart.Name }}-{{ $.Values.global.externalUrl | adler32sum }}-crt-svc
+  name: {{ $.Release.Name }}-{{ $.Chart.Name }}-{{ $.Values.global.externalDomain | adler32sum }}-crt-svc
 spec:
   ports:
     - port: 80
       targetPort: 8089
   selector:
-    {{- if not $.Values.global.web.ssl.letsencrypt.certManagerApiMigration }}
-    certmanager.k8s.io/acme-http-domain: "{{ $.Values.global.externalUrl | adler32sum }}"
-    {{- else }}
-    acme.cert-manager.io/http-domain: "{{ $.Values.global.externalUrl | adler32sum }}"
-    {{- end }}
+    acme.cert-manager.io/http-domain: "{{ $.Values.global.externalDomain | adler32sum }}"
 ---
-{{- if not $.Values.global.web.ssl.letsencrypt.certManagerApiMigration }}
-apiVersion: certmanager.k8s.io/v1alpha1
-{{- else }}
 apiVersion: cert-manager.io/v1
-{{- end }}
 kind: Certificate
 metadata:
   name: {{ $secretName }}
@@ -82,17 +96,9 @@ spec:
   issuerRef:
     name: {{ $issuer }}
     kind: Issuer
-  commonName: {{ $.Values.global.externalUrl }}
+  commonName: {{ $.Values.global.externalDomain }}
   dnsNames:
-    - {{ $.Values.global.externalUrl }}
-  {{- if not $.Values.global.web.ssl.letsencrypt.certManagerApiMigration }}
-  acme:
-    config:
-    - http01:
-        ingressClass: nginx
-      domains:
-        - {{ $.Values.global.externalUrl }}
-  {{- end }}
+    - {{ $.Values.global.externalDomain }}
 {{- else if and .Values.global.web.ssl.externalSecret.enabled (eq .Values.global.web.ssl.externalSecret.backendType "azureKeyVault") }}
 ---
 # Adding cert and key into secret from Key vault. 
@@ -107,10 +113,10 @@ spec:
   keyVaultName: {{ .Values.global.web.ssl.externalSecret.keyVaultName }}
   data:
     - name: tls.crt
-      key: {{ .Values.global.externalUrl | replace "." "-" }}-crt
+      key: {{ .Values.global.externalDomain | replace "." "-" }}-crt
       isBinary: false
     - name: tls.key
-      key: {{ .Values.global.externalUrl | replace "." "-" }}-key
+      key: {{ .Values.global.externalDomain | replace "." "-" }}-key
       isBinary: false
 {{- else }}
 ---

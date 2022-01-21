@@ -2,14 +2,14 @@
 
 global:
   platform: "azure"
-  ambassador:
+  emissary-ingress:
     enabled: true
   kube-prometheus-stack:
     enabled: true
   prometheus-elasticsearch-exporter:
     enabled: true
   grafanaAdminPassword: change-me-length-min-12
-  externalUrl: "xyz.abc.com"
+  externalDomain: "xyz.abc.com"
   smtpApiKey: change-me
   smtpDestinationAddress: "change-me"
   web:
@@ -17,12 +17,11 @@ global:
       enabled: true
       letsencrypt:
         enabled: false
-        certManagerApiMigration: true
       externalSecret:
         enabled: false
         keyVaultName: "change-me"
 
-ambassador:
+emissary-ingress:
   service:
     type: "LoadBalancer"
     loadBalancerIP: "0.0.0.0"

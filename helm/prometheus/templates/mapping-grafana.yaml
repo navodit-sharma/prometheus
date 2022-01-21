@@ -1,4 +1,4 @@
-{{- if $.Values.global.ambassador.enabled -}}
+{{- if (index $.Values.global "emissary-ingress" "enabled") -}}
 apiVersion: getambassador.io/v2
 kind: Mapping
 metadata:
@@ -12,7 +12,7 @@ spec:
     Strict-Transport-Security: max-age=31536000; includeSubDomains
     X-Content-Type-Options: nosniff
     X-XSS-Protection: 1; mode=block
-  host: {{ .Values.global.externalUrl }}
+  host: {{ .Values.global.externalDomain }}
   prefix: "/"
   service: "http://{{ .Release.Name }}-grafana:80"
   timeout_ms: 90000
