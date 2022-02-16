@@ -157,18 +157,18 @@ kube-prometheus-stack:
         - port: "http"
           interval: 30s
           path: /metrics
-    - name: "gradebook-ui"
-      additionalLabels:
-        "app.kubernetes.io/name": gradebook-ui
-      selector:
-        matchLabels:
-          "app.kubernetes.io/name": gradebook-ui
-      namespaceSelector:
-        any: true
-      endpoints:
-        - port: "http"
-          interval: 30s
-          path: /metrics
+    # - name: "gradebook-ui"
+    #   additionalLabels:
+    #     "app.kubernetes.io/name": gradebook-ui
+    #   selector:
+    #     matchLabels:
+    #       "app.kubernetes.io/name": gradebook-ui
+    #   namespaceSelector:
+    #     any: true
+    #   endpoints:
+    #     - port: "http"
+    #       interval: 30s
+    #       path: /metrics
     # - name: "integrations-ui"
     #   additionalLabels:
     #     "app.kubernetes.io/name": integrations-ui

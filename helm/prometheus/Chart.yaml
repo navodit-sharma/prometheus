@@ -1,17 +1,17 @@
 apiVersion: v2
-appVersion: "2.0.0"
+appVersion: "2.1.0"
 description: "Prometheus - Monitoring tool for Kubernetes"
 name: prometheus
-version: 2.0.0
+version: 2.1.0
 dependencies:
   - name: kube-prometheus-stack
     version: 18.0.1
     repository: "https://prometheus-community.github.io/helm-charts"
     condition: global.kube-prometheus-stack.enabled
-  - name: ambassador
-    version: ~6.5.0
+  - name: emissary-ingress
+    version: 7.2.0
     repository: "https://www.getambassador.io"
-    condition: global.ambassador.enabled
+    condition: global.emissary-ingress.enabled
   - name: prometheus-elasticsearch-exporter
     version: 4.3.0
     repository: "https://prometheus-community.github.io/helm-charts"

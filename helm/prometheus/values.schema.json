@@ -6,7 +6,7 @@
   "type": "object",
   "required": [
     "global",
-    "ambassador",
+    "emissary-ingress",
     "prometheus-elasticsearch-exporter",
     "customResources",
     "kube-prometheus-stack"
@@ -21,7 +21,7 @@
             }
           }
         },
-        "ambassador": {
+        "emissary-ingress": {
           "properties": {
             "service": {
               "properties": {
@@ -47,7 +47,7 @@
             }
           }
         },
-        "ambassador": {
+        "emissary-ingress": {
           "properties": {
             "service": {
               "properties": {
@@ -75,7 +75,7 @@
             }
           }
         },
-        "ambassador": {
+        "emissary-ingress": {
           "properties": {
             "service": {
               "properties": {
@@ -97,7 +97,7 @@
       "required": [
         "platform",
         "grafanaAdminPassword",
-        "externalUrl"
+        "externalDomain"
       ],
       "properties": {
         "platform": {
@@ -113,16 +113,16 @@
           ],
           "pattern": "^.*$"
         },
-        "ambassador": {
-          "$id": "#root/global/ambassador",
-          "title": "Ambassador",
+        "emissary-ingress": {
+          "$id": "#root/global/emissary-ingress",
+          "title": "emissary-ingress",
           "type": "object",
           "required": [
             "enabled"
           ],
           "properties": {
             "enabled": {
-              "$id": "#root/global/ambassador/enabled",
+              "$id": "#root/global/emissary-ingress/enabled",
               "title": "Enabled",
               "type": "boolean",
               "examples": [
@@ -184,9 +184,9 @@
           "title": "Smtpapikey",
           "type": "string"
         },
-        "externalUrl": {
-          "$id": "#root/global/externalUrl",
-          "title": "Externalurl",
+        "externalDomain": {
+          "$id": "#root/global/externalDomain",
+          "title": "externalDomain",
           "type": "string",
           "pattern": "^[a-z0-9-]+.[a-z0-9-]+.[a-z0-9]+$"
         },
@@ -340,18 +340,18 @@
         }
       }
     },
-    "ambassador": {
-      "$id": "#root/ambassador",
-      "title": "Ambassador",
+    "emissary-ingress": {
+      "$id": "#root/emissary-ingress",
+      "title": "emissary-ingress",
       "type": "object",
       "properties": {
         "crds": {
-          "$id": "#root/ambassador/crds",
+          "$id": "#root/emissary-ingress/crds",
           "title": "Crds",
           "type": "object",
           "properties": {
             "create": {
-              "$id": "#root/ambassador/crds/create",
+              "$id": "#root/emissary-ingress/crds/create",
               "title": "Create",
               "type": "boolean",
               "examples": [
@@ -360,7 +360,7 @@
               ]
             },
             "enabled": {
-              "$id": "#root/ambassador/crds/enabled",
+              "$id": "#root/emissary-ingress/crds/enabled",
               "title": "Enabled",
               "type": "boolean",
               "examples": [
@@ -369,7 +369,7 @@
               ]
             },
             "keep": {
-              "$id": "#root/ambassador/crds/keep",
+              "$id": "#root/emissary-ingress/crds/keep",
               "title": "Keep",
               "type": "boolean",
               "examples": [
@@ -380,7 +380,7 @@
           }
         },
         "service": {
-          "$id": "#root/ambassador/service",
+          "$id": "#root/emissary-ingress/service",
           "title": "Service",
           "type": "object",
           "required": [
@@ -388,7 +388,7 @@
           ],
           "properties": {
             "type": {
-              "$id": "#root/ambassador/service/type",
+              "$id": "#root/emissary-ingress/service/type",
               "title": "Type",
               "type": "string",
               "enum": [
@@ -398,12 +398,12 @@
               ]
             },
             "loadBalancerIP": {
-              "$id": "#root/ambassador/service/loadBalancerIP",
+              "$id": "#root/emissary-ingress/service/loadBalancerIP",
               "title": "Loadbalancerip",
               "type": "string"
             },
             "externalTrafficPolicy": {
-              "$id": "#root/ambassador/service/externalTrafficPolicy",
+              "$id": "#root/emissary-ingress/service/externalTrafficPolicy",
               "title": "Externaltrafficpolicy",
               "type": "string",
               "enum": [
@@ -586,7 +586,7 @@
                 "properties": {
                   "externalUrl": {
                     "pattern": "^http://[a-z0-9.-]+/alertmanager$",
-                    "$comment": "Ex. http://{{ .Values.global.externalUrl }}/alertmanager"
+                    "$comment": "Ex. http://{{ .Values.global.externalDomain }}/alertmanager"
                   }
                 }
               }
@@ -718,7 +718,7 @@
                   "title": "Externalurl",
                   "type": "string",
                   "examples": [
-                    "https://{{ .Values.global.externalUrl }}/prometheus"
+                    "https://{{ .Values.global.externalDomain }}/prometheus"
                   ]
                 }
               }
