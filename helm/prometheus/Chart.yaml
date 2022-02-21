@@ -2,7 +2,7 @@ apiVersion: v2
 appVersion: "2.1.0"
 description: "Prometheus - Monitoring tool for Kubernetes"
 name: prometheus
-version: 2.1.0
+version: 2.1.1
 dependencies:
   - name: kube-prometheus-stack
     version: 18.0.1
