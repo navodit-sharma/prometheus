@@ -19,15 +19,15 @@
     ]
   },
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 101,
-  "iteration": 1634649996291,
+  "id": 147,
+  "iteration": 1645613612275,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
       "collapsed": true,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -37,7 +37,9 @@
       "id": 25,
       "panels": [
         {
-          "datasource": "${datasource}",
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "description": "Currently deployed service versions.",
           "fieldConfig": {
             "defaults": {
@@ -45,7 +47,6 @@
                 "mode": "thresholds"
               },
               "custom": {
-                "align": null,
                 "displayMode": "auto",
                 "filterable": false
               },
@@ -153,11 +154,18 @@
           },
           "id": 32,
           "options": {
+            "footer": {
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
             "frameIndex": 0,
             "showHeader": true,
             "sortBy": []
           },
-          "pluginVersion": "8.1.0",
+          "pluginVersion": "8.3.5",
           "targets": [
             {
               "exemplar": true,
@@ -206,7 +214,9 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${datasource}",
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "description": "No. of notifications sent in specified time range.",
           "fill": 1,
           "fillGradient": 0,
@@ -235,7 +245,7 @@
             "alertThreshold": true
           },
           "percentage": false,
-          "pluginVersion": "8.1.0",
+          "pluginVersion": "8.3.5",
           "pointradius": 2,
           "points": false,
           "renderer": "flot",
@@ -254,9 +264,7 @@
             }
           ],
           "thresholds": [],
-          "timeFrom": null,
           "timeRegions": [],
-          "timeShift": null,
           "title": "Total Notification Sent [Time Range]",
           "tooltip": {
             "shared": true,
@@ -265,9 +273,7 @@
           },
           "type": "graph",
           "xaxis": {
-            "buckets": null,
             "mode": "time",
-            "name": null,
             "show": true,
             "values": []
           },
@@ -275,29 +281,24 @@
             {
               "$$hashKey": "object:160",
               "format": "short",
-              "label": null,
               "logBase": 1,
-              "max": null,
-              "min": null,
               "show": true
             },
             {
               "$$hashKey": "object:161",
               "format": "short",
-              "label": null,
               "logBase": 1,
-              "max": null,
-              "min": null,
               "show": true
             }
           ],
           "yaxis": {
-            "align": false,
-            "alignLevel": null
+            "align": false
           }
         },
         {
-          "datasource": "${datasource}",
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "description": "Status:\n\nActive == (❤️)\n\nDown  == (💔)",
           "fieldConfig": {
             "defaults": {
@@ -381,7 +382,7 @@
             },
             "textMode": "value"
           },
-          "pluginVersion": "8.1.0",
+          "pluginVersion": "8.3.5",
           "targets": [
             {
               "expr": "up{cluster=~\"$cluster\",job=~\".*-prometheus\"}",
@@ -396,7 +397,9 @@
           "type": "stat"
         },
         {
-          "datasource": "${datasource}",
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "description": "Status:\n\nActive == (❤️)\n\nDown  == (💔)",
           "fieldConfig": {
             "defaults": {
@@ -480,7 +483,7 @@
             },
             "textMode": "value"
           },
-          "pluginVersion": "8.1.0",
+          "pluginVersion": "8.3.5",
           "targets": [
             {
               "expr": "up{cluster=~\"$cluster\",job=~\".*-alertmanager\"}",
@@ -495,7 +498,9 @@
           "type": "stat"
         },
         {
-          "datasource": "${datasource}",
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "description": "Connection between Prometheus and Alertmanager.\n\nActive == (👍)\n\nDown  == (👎)",
           "fieldConfig": {
             "defaults": {
@@ -579,7 +584,7 @@
             },
             "textMode": "value"
           },
-          "pluginVersion": "8.1.0",
+          "pluginVersion": "8.3.5",
           "targets": [
             {
               "expr": "prometheus_notifications_alertmanagers_discovered{cluster=~\"$cluster\"}",
@@ -594,7 +599,9 @@
           "type": "stat"
         },
         {
-          "datasource": "${datasource}",
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "description": "Prometheus - Number of times rule evaluation failed in last 5m.",
           "fieldConfig": {
             "defaults": {
@@ -644,7 +651,7 @@
             },
             "textMode": "value"
           },
-          "pluginVersion": "8.1.0",
+          "pluginVersion": "8.3.5",
           "targets": [
             {
               "expr": "sum(increase(prometheus_rule_evaluation_failures_total{cluster=~\"$cluster\"}[5m]))",
@@ -659,7 +666,9 @@
           "type": "stat"
         },
         {
-          "datasource": "${datasource}",
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "description": "Alertmanager - Failed email notifications in last 24h.",
           "fieldConfig": {
             "defaults": {
@@ -709,7 +718,7 @@
             },
             "textMode": "value"
           },
-          "pluginVersion": "8.1.0",
+          "pluginVersion": "8.3.5",
           "targets": [
             {
               "expr": "sum(increase(alertmanager_notifications_failed_total{cluster=~\"$cluster\",integration=\"email\"}[24h]))",
@@ -724,7 +733,9 @@
           "type": "stat"
         },
         {
-          "datasource": "${datasource}",
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "description": "Total targets from which Prometheus is scraping metrics.",
           "fieldConfig": {
             "defaults": {
@@ -774,7 +785,7 @@
             },
             "textMode": "value"
           },
-          "pluginVersion": "8.1.0",
+          "pluginVersion": "8.3.5",
           "targets": [
             {
               "expr": "count(up{cluster=~\"$cluster\"})",
@@ -789,7 +800,9 @@
           "type": "stat"
         },
         {
-          "datasource": "${datasource}",
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "description": "Targets which are up and actively monitored.",
           "fieldConfig": {
             "defaults": {
@@ -839,7 +852,7 @@
             },
             "textMode": "value"
           },
-          "pluginVersion": "8.1.0",
+          "pluginVersion": "8.3.5",
           "targets": [
             {
               "expr": "count(up{cluster=~\"$cluster\"} == 1)",
@@ -854,7 +867,9 @@
           "type": "stat"
         },
         {
-          "datasource": "${datasource}",
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "description": "Targets which are not reachable.",
           "fieldConfig": {
             "defaults": {
@@ -904,7 +919,7 @@
             },
             "textMode": "value"
           },
-          "pluginVersion": "8.1.0",
+          "pluginVersion": "8.3.5",
           "targets": [
             {
               "expr": "count(up{cluster=~\"$cluster\"} == 0) OR on() vector(0)",
@@ -919,7 +934,9 @@
           "type": "stat"
         },
         {
-          "datasource": "${datasource}",
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "description": "Prometheus - notifications queue size",
           "fieldConfig": {
             "defaults": {
@@ -965,7 +982,7 @@
             },
             "textMode": "value"
           },
-          "pluginVersion": "8.1.0",
+          "pluginVersion": "8.3.5",
           "targets": [
             {
               "expr": "prometheus_notifications_queue_capacity{cluster=~\"$cluster\"}",
@@ -980,7 +997,9 @@
           "type": "stat"
         },
         {
-          "datasource": "${datasource}",
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "description": "Prometheus - no. of notifications currently in queue.\n\nHigher queue length == Higher notification latency (Not Good)",
           "fieldConfig": {
             "defaults": {
@@ -1030,7 +1049,7 @@
             },
             "textMode": "value"
           },
-          "pluginVersion": "8.1.0",
+          "pluginVersion": "8.3.5",
           "targets": [
             {
               "expr": "prometheus_notifications_queue_length{cluster=~\"$cluster\"}",
@@ -1050,7 +1069,6 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1063,7 +1081,9 @@
       "type": "row"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "description": "All active alerts detected by monitoring system.",
       "fieldConfig": {
         "defaults": {
@@ -1113,7 +1133,7 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "8.3.5",
       "targets": [
         {
           "expr": "count(ALERTS{cluster=~\"$cluster\"}) or vector(0)",
@@ -1128,7 +1148,9 @@
       "type": "stat"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "description": "All alerts for which notification has been already sent or will be sent in next few seconds. ",
       "fieldConfig": {
         "defaults": {
@@ -1178,7 +1200,7 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "8.3.5",
       "targets": [
         {
           "expr": "count(ALERTS{cluster=~\"$cluster\",alertstate=\"firing\"}) or vector(0)",
@@ -1193,7 +1215,9 @@
       "type": "stat"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "description": "All alerts which are active but still in evaluation state.",
       "fieldConfig": {
         "defaults": {
@@ -1243,7 +1267,7 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "8.3.5",
       "targets": [
         {
           "expr": "count(ALERTS{cluster=~\"$cluster\",alertstate=\"pending\"}) or vector(0)",
@@ -1258,7 +1282,9 @@
       "type": "stat"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "description": "All alerts with severity == Critical. These alerts have high priority and require quick response.",
       "fieldConfig": {
         "defaults": {
@@ -1308,7 +1334,7 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "8.3.5",
       "targets": [
         {
           "expr": "count(ALERTS{cluster=~\"$cluster\",severity=\"critical\"}) or vector(0)",
@@ -1323,7 +1349,9 @@
       "type": "stat"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "description": "All alerts with severity == Warning. Such alerts detect issues in their early stages and sometimes only for information purpose.",
       "fieldConfig": {
         "defaults": {
@@ -1373,7 +1401,7 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "8.3.5",
       "targets": [
         {
           "expr": "count(ALERTS{cluster=~\"$cluster\",severity=\"warning\"}) or vector(0)",
@@ -1388,7 +1416,9 @@
       "type": "stat"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "description": "All alerts with severity == Info. Such alerts are only for information purpose and generally dont require any manual intervention",
       "fieldConfig": {
         "defaults": {
@@ -1438,7 +1468,7 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "8.3.5",
       "targets": [
         {
           "exemplar": true,
@@ -1454,7 +1484,9 @@
       "type": "stat"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "description": "All active alerts for which notification has been disabled by someone manually in alertmanager, may be for maintenance purposes.",
       "fieldConfig": {
         "defaults": {
@@ -1504,7 +1536,7 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "8.3.5",
       "targets": [
         {
           "expr": "alertmanager_silences{cluster=~\"$cluster\",state=\"active\"}",
@@ -1520,7 +1552,6 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1537,7 +1568,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "decimals": 0,
       "fill": 1,
       "fillGradient": 0,
@@ -1569,7 +1602,7 @@
         "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "8.3.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1586,9 +1619,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Alerts By Category",
       "tooltip": {
         "shared": true,
@@ -1597,9 +1628,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1608,31 +1637,23 @@
           "$$hashKey": "object:67",
           "decimals": 0,
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:68",
           "decimals": 0,
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
       "collapsed": false,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1641,18 +1662,20 @@
       },
       "id": 46,
       "panels": [],
-      "title": "Alerts - Active / Firing",
+      "title": "Alerts - Active / Firing (Selected)",
       "type": "row"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
             "displayMode": "color-text",
             "filterable": false
           },
@@ -1695,14 +1718,25 @@
       },
       "id": 4,
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "8.3.5",
       "targets": [
         {
-          "exemplar": true,
-          "expr": "sort(ALERTS{cluster=~\"$cluster\",alertstate=\"firing\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "9sTdJHvnk"
+          },
+          "exemplar": false,
+          "expr": "sort(ALERTS{cluster=~\"$cluster\",alertstate=\"firing\",alertname=~\"KubernetesClientCertificateExpiresSoon|KubernetesContainerOomKilled|PersistentVolume.*|KubernetesPodCrashLooping|KafkaConsumerLag|DeadManSwitch\"})",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -1710,9 +1744,7 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Firing alerts",
+      "title": "Firing alerts (Selected)",
       "transformations": [
         {
           "id": "organize",
@@ -1746,24 +1778,149 @@
     },
     {
       "collapsed": true,
-      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
         "y": 29
       },
-      "id": 49,
+      "id": 53,
       "panels": [
         {
-          "datasource": "${datasource}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
                 "mode": "thresholds"
               },
               "custom": {
-                "align": null,
+                "displayMode": "color-text",
+                "filterable": false
+              },
+              "mappings": [],
+              "noValue": "--",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "dark-orange",
+                    "value": null
+                  },
+                  {
+                    "color": "semi-dark-green",
+                    "value": 0
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Alertname"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 250
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 30
+          },
+          "id": 51,
+          "options": {
+            "footer": {
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "8.3.5",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "9sTdJHvnk"
+              },
+              "exemplar": false,
+              "expr": "sort(ALERTS{cluster=~\"$cluster\",alertstate=\"firing\"})",
+              "format": "table",
+              "instant": true,
+              "interval": "",
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "title": "Firing alerts (All)",
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Time": false,
+                  "Value": true,
+                  "__name__": true,
+                  "alertstate": false
+                },
+                "indexByName": {
+                  "Time": 0,
+                  "Value": 7,
+                  "__name__": 1,
+                  "alertname": 2,
+                  "alertstate": 6,
+                  "consumergroup": 3,
+                  "severity": 5,
+                  "topic": 4
+                },
+                "renameByName": {
+                  "Value": "Status",
+                  "alertname": "Alertname",
+                  "alertstate": "State",
+                  "severity": "Severity"
+                }
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "title": "Alerts - Active / Firing (All)",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 30
+      },
+      "id": 49,
+      "panels": [
+        {
+          "datasource": {
+            "uid": "${datasource}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
                 "displayMode": "color-text",
                 "filterable": false
               },
@@ -1789,10 +1946,17 @@
             "h": 6,
             "w": 24,
             "x": 0,
-            "y": 43
+            "y": 31
           },
           "id": 50,
           "options": {
+            "footer": {
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
             "showHeader": false,
             "sortBy": [
               {
@@ -1801,7 +1965,7 @@
               }
             ]
           },
-          "pluginVersion": "8.1.0",
+          "pluginVersion": "8.3.5",
           "targets": [
             {
               "exemplar": true,
@@ -1813,8 +1977,6 @@
               "refId": "A"
             }
           ],
-          "timeFrom": null,
-          "timeShift": null,
           "title": "Pending alerts",
           "transformations": [
             {
@@ -1853,7 +2015,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 30,
+  "schemaVersion": 34,
   "style": "dark",
   "tags": [
     "alerts",
@@ -1868,8 +2030,6 @@
           "text": "Prometheus",
           "value": "Prometheus"
         },
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Datasource",
@@ -1883,17 +2043,13 @@
         "type": "datasource"
       },
       {
-        "allValue": null,
         "current": {
           "isNone": true,
-          "selected": true,
+          "selected": false,
           "text": "None",
           "value": ""
         },
-        "datasource": null,
         "definition": "label_values(kube_pod_info, cluster)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Cluster",
@@ -1922,8 +2078,6 @@
           "text": "auto",
           "value": "$__auto_interval_timeRange"
         },
-        "description": null,
-        "error": null,
         "hide": 2,
         "label": "Time Range",
         "name": "timeRange",
@@ -2000,5 +2154,6 @@
   "timezone": "browser",
   "title": "prometheus / alerts",
   "uid": "prometheus-alerts",
-  "version": 4
+  "version": 1,
+  "weekStart": ""
 }
