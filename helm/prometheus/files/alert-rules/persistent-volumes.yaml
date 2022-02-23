@@ -11,7 +11,7 @@ groups:
       >= 80
     labels:
       severity: warning
-  - alert: PersistentVolumeUtilizationHigh
+  - alert: PersistentVolumeUtilizationCritical
     annotations:
       description: Disk space utilization of persistent volume claim is at CRITICAL
         level.
@@ -21,7 +21,7 @@ groups:
       >= 90
     labels:
       severity: critical
-  - alert: PersistentVolumeUtilizationHigh
+  - alert: PersistentVolumeFull
     annotations:
       description: Disk space utilization of persistent volume claim is at CRITICAL
         level.
