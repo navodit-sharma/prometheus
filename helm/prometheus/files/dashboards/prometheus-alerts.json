@@ -21,8 +21,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 147,
-  "iteration": 1645613612275,
+  "id": 181,
+  "iteration": 1645790320790,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -47,6 +47,7 @@
                 "mode": "thresholds"
               },
               "custom": {
+                "align": "auto",
                 "displayMode": "auto",
                 "filterable": false
               },
@@ -57,8 +58,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "dark-red",
-                    "value": null
+                    "color": "dark-red"
                   },
                   {
                     "color": "semi-dark-green",
@@ -311,8 +311,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "dark-red",
-                    "value": null
+                    "color": "dark-red"
                   },
                   {
                     "color": "semi-dark-green",
@@ -412,8 +411,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "dark-red",
-                    "value": null
+                    "color": "dark-red"
                   },
                   {
                     "color": "semi-dark-green",
@@ -513,8 +511,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "dark-red",
-                    "value": null
+                    "color": "dark-red"
                   },
                   {
                     "color": "semi-dark-green",
@@ -614,8 +611,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "semi-dark-green",
-                    "value": null
+                    "color": "semi-dark-green"
                   },
                   {
                     "color": "dark-red",
@@ -681,8 +677,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "semi-dark-green",
-                    "value": null
+                    "color": "semi-dark-green"
                   },
                   {
                     "color": "dark-red",
@@ -748,8 +743,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "semi-dark-red",
-                    "value": null
+                    "color": "semi-dark-red"
                   },
                   {
                     "color": "semi-dark-green",
@@ -815,8 +809,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "semi-dark-orange",
-                    "value": null
+                    "color": "semi-dark-orange"
                   },
                   {
                     "color": "semi-dark-green",
@@ -882,8 +875,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "semi-dark-green",
-                    "value": null
+                    "color": "semi-dark-green"
                   },
                   {
                     "color": "dark-orange",
@@ -949,8 +941,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "semi-dark-green",
-                    "value": null
+                    "color": "semi-dark-green"
                   }
                 ]
               }
@@ -1012,8 +1003,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "semi-dark-green",
-                    "value": null
+                    "color": "semi-dark-green"
                   },
                   {
                     "color": "dark-red",
@@ -1676,6 +1666,7 @@
             "mode": "thresholds"
           },
           "custom": {
+            "align": "auto",
             "displayMode": "color-text",
             "filterable": false
           },
@@ -1797,6 +1788,7 @@
                 "mode": "thresholds"
               },
               "custom": {
+                "align": "auto",
                 "displayMode": "color-text",
                 "filterable": false
               },
@@ -1913,6 +1905,7 @@
       "panels": [
         {
           "datasource": {
+            "type": "prometheus",
             "uid": "${datasource}"
           },
           "fieldConfig": {
@@ -1921,6 +1914,7 @@
                 "mode": "thresholds"
               },
               "custom": {
+                "align": "auto",
                 "displayMode": "color-text",
                 "filterable": false
               },
@@ -1946,7 +1940,7 @@
             "h": 6,
             "w": 24,
             "x": 0,
-            "y": 31
+            "y": 41
           },
           "id": 50,
           "options": {
@@ -1968,7 +1962,11 @@
           "pluginVersion": "8.3.5",
           "targets": [
             {
-              "exemplar": true,
+              "datasource": {
+                "type": "prometheus",
+                "uid": "9sTdJHvnk"
+              },
+              "exemplar": false,
               "expr": "sort(ALERTS{cluster=~\"$cluster\",alertstate=\"pending\"})",
               "format": "table",
               "instant": true,
@@ -2037,6 +2035,7 @@
         "name": "datasource",
         "options": [],
         "query": "prometheus",
+        "queryValue": "",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -2154,6 +2153,6 @@
   "timezone": "browser",
   "title": "prometheus / alerts",
   "uid": "prometheus-alerts",
-  "version": 1,
+  "version": 10,
   "weekStart": ""
 }
