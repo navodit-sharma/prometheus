@@ -317,6 +317,16 @@
                       ],
                       "default": false
                     },
+                    "esoMigrated": {
+                      "$id": "#root/global/web/ssl/esoMigrated/enabled",
+                      "title": "esoMigrated",
+                      "type": "boolean",
+                      "examples": [
+                        true,
+                        false
+                      ],
+                      "default": false
+                    },
                     "backendType": {
                       "$id": "#root/global/web/ssl/externalSecret/backendType",
                       "title": "Backendtype",
@@ -329,6 +339,12 @@
                     "keyVaultName": {
                       "$id": "#root/global/web/ssl/externalSecret/keyVaultName",
                       "title": "Keyvaultname",
+                      "type": "string",
+                      "pattern": "^.*$"
+                    },
+                    "ClusterSecretStore": {
+                      "$id": "#root/global/web/ssl/externalSecret/ClusterSecretStore",
+                      "title": "ClusterSecretStore",
                       "type": "string",
                       "pattern": "^.*$"
                     }
