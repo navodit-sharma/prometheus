@@ -100,8 +100,33 @@ spec:
   dnsNames:
     - {{ $.Values.global.externalDomain }}
 {{- else if and .Values.global.web.ssl.externalSecret.enabled (eq .Values.global.web.ssl.externalSecret.backendType "azureKeyVault") }}
+{{- if .Values.global.web.ssl.externalSecret.esoMigrated }}
 ---
-# Adding cert and key into secret from Key vault. 
+# Adding cert and key into secret from Key vault. (ESO)
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: {{ $secretName }}-eso
+spec:
+  refreshInterval: "5m"
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: {{ default "default" .Values.global.web.ssl.externalSecret.ClusterSecretStore }}
+  target:
+    creationPolicy: Owner
+    name: {{ $secretName }}
+    template:
+      type: kubernetes.io/tls
+  data:
+    - remoteRef:
+        key: {{ .Values.global.externalDomain | replace "." "-" }}-crt
+      secretKey: tls.crt
+    - remoteRef:
+        key: {{ .Values.global.externalDomain | replace "." "-" }}-key
+      secretKey: tls.key
+{{- else }}
+---
+# Adding cert and key into secret from Key vault. (KES)
 apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret
 metadata:
@@ -118,6 +143,7 @@ spec:
     - name: tls.key
       key: {{ .Values.global.externalDomain | replace "." "-" }}-key
       isBinary: false
+{{- end }}
 {{- else }}
 ---
 # Secret with self-signed crt and key.
