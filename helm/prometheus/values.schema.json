@@ -96,9 +96,34 @@
       "type": "object",
       "required": [
         "platform",
-        "grafanaAdminPassword",
         "externalDomain"
       ],
+      "if": {
+        "properties": {
+          "web": {
+            "properties": {
+              "ssl": {
+                "properties": {
+                  "externalSecret": {
+                    "properties": {
+                      "enabled": {
+                        "enum": [
+                          false
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "grafanaAdminPassword"
+        ]
+      },
       "properties": {
         "platform": {
           "$id": "#root/global/platform",
