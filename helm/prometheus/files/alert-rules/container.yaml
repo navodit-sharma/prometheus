@@ -68,3 +68,23 @@ groups:
     annotations:
       summary: Container high throttle rate
       description: Container is being throttled for last 3m. Check dashboard - {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kubernetes-pods/kubernetes-pods?var-datasource=Prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-pod={{ $labels.pod }}&var-container={{ $labels.container }}
+
+  - alert: KubernetesContainersNotRunning
+    expr: group(kube_pod_container_status_running == 0) by (container,namespace,pod,uid)
+    for: 15m
+    labels:
+      severity: critical
+    annotations:
+      summary: Kubernetes container is not in Running state
+      description: Container has not transitioned to running state in last 15 minutes. The container might be in one of the non-ready state i.e ImagePullBackOff, ErrImagePull, CrashLoopBackOff or Pending.
+      dashboard: Check {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kubernetes-pods/kubernetes-pods?var-datasource=Prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-pod={{ $labels.pod }}
+
+  - alert: KubernetesContainersNotReady
+    expr: group(kube_pod_container_status_ready == 0) by (container,namespace,pod,uid) unless group(kube_pod_container_status_running == 0) by (container,namespace,pod,uid)
+    for: 15m
+    labels:
+      severity: critical
+    annotations:
+      summary: Kubernetes container is not in Ready state
+      description: Container is running but has not transitioned to ready state for last 15 minutes.
+      dashboard: Check {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kubernetes-pods/kubernetes-pods?var-datasource=Prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-pod={{ $labels.pod }}
