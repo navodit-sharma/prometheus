@@ -24,8 +24,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 20,
-  "iteration": 1657092895942,
+  "id": 51,
+  "iteration": 1657283667570,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -239,7 +239,7 @@
           "color": {
             "mode": "thresholds"
           },
-          "decimals": 2,
+          "decimals": 0,
           "mappings": [],
           "max": 1,
           "min": 0,
@@ -283,9 +283,7 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
-        "text": {
-          "valueSize": 20
-        }
+        "text": {}
       },
       "pluginVersion": "9.0.1",
       "targets": [
@@ -314,7 +312,7 @@
           "color": {
             "mode": "thresholds"
           },
-          "decimals": 2,
+          "decimals": 0,
           "mappings": [
             {
               "options": {
@@ -370,9 +368,7 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
-        "text": {
-          "valueSize": 20
-        }
+        "text": {}
       },
       "pluginVersion": "9.0.1",
       "targets": [
@@ -402,7 +398,7 @@
           "color": {
             "mode": "thresholds"
           },
-          "decimals": 2,
+          "decimals": 0,
           "mappings": [
             {
               "options": {
@@ -458,9 +454,7 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
-        "text": {
-          "valueSize": 20
-        }
+        "text": {}
       },
       "pluginVersion": "9.0.1",
       "targets": [
@@ -939,7 +933,7 @@
           "color": {
             "mode": "thresholds"
           },
-          "decimals": 2,
+          "decimals": 0,
           "mappings": [],
           "max": 1,
           "min": 0,
@@ -983,9 +977,7 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
-        "text": {
-          "valueSize": 20
-        }
+        "text": {}
       },
       "pluginVersion": "9.0.1",
       "targets": [
@@ -1014,7 +1006,7 @@
           "color": {
             "mode": "thresholds"
           },
-          "decimals": 2,
+          "decimals": 0,
           "mappings": [
             {
               "options": {
@@ -1070,9 +1062,7 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
-        "text": {
-          "valueSize": 20
-        }
+        "text": {}
       },
       "pluginVersion": "9.0.1",
       "targets": [
@@ -1102,7 +1092,7 @@
           "color": {
             "mode": "thresholds"
           },
-          "decimals": 2,
+          "decimals": 0,
           "mappings": [
             {
               "options": {
@@ -1158,9 +1148,7 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
-        "text": {
-          "valueSize": 20
-        }
+        "text": {}
       },
       "pluginVersion": "9.0.1",
       "targets": [
@@ -1473,8 +1461,10 @@
                 "mode": "thresholds"
               },
               "custom": {
+                "align": "auto",
                 "displayMode": "auto",
-                "filterable": false
+                "filterable": false,
+                "inspect": false
               },
               "decimals": 2,
               "displayName": "",
@@ -1484,7 +1474,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   }
                 ]
               },
@@ -1588,7 +1579,7 @@
             ]
           },
           "gridPos": {
-            "h": 7,
+            "h": 13,
             "w": 24,
             "x": 0,
             "y": 24
@@ -1596,6 +1587,14 @@
           "id": 8,
           "links": [],
           "options": {
+            "footer": {
+              "enablePagination": true,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
             "showHeader": true,
             "sortBy": [
               {
@@ -1604,7 +1603,7 @@
               }
             ]
           },
-          "pluginVersion": "8.1.0",
+          "pluginVersion": "9.0.1",
           "targets": [
             {
               "datasource": {
@@ -1948,8 +1947,10 @@
                 "mode": "thresholds"
               },
               "custom": {
+                "align": "auto",
                 "displayMode": "auto",
-                "filterable": false
+                "filterable": false,
+                "inspect": false
               },
               "decimals": 2,
               "displayName": "",
@@ -1959,7 +1960,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -2063,7 +2065,7 @@
             ]
           },
           "gridPos": {
-            "h": 7,
+            "h": 13,
             "w": 24,
             "x": 0,
             "y": 34
@@ -2071,6 +2073,14 @@
           "id": 10,
           "links": [],
           "options": {
+            "footer": {
+              "enablePagination": true,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
             "showHeader": true,
             "sortBy": [
               {
@@ -2079,7 +2089,7 @@
               }
             ]
           },
-          "pluginVersion": "8.1.0",
+          "pluginVersion": "9.0.1",
           "targets": [
             {
               "datasource": {
@@ -2230,8 +2240,10 @@
                 "mode": "thresholds"
               },
               "custom": {
+                "align": "auto",
                 "displayMode": "auto",
-                "filterable": false
+                "filterable": false,
+                "inspect": false
               },
               "decimals": 2,
               "displayName": "",
@@ -2240,7 +2252,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -2344,7 +2357,7 @@
             ]
           },
           "gridPos": {
-            "h": 7,
+            "h": 13,
             "w": 24,
             "x": 0,
             "y": 35
@@ -2353,9 +2366,17 @@
           "interval": "1m",
           "links": [],
           "options": {
+            "footer": {
+              "enablePagination": true,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
             "showHeader": true
           },
-          "pluginVersion": "8.1.0",
+          "pluginVersion": "9.0.1",
           "targets": [
             {
               "datasource": {

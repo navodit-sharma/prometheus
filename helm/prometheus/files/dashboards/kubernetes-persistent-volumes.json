@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -22,15 +25,20 @@
   },
   "description": "Monitors all persistent volumes that exists within a Kubernetes cluster. Prometheus is used as datasource. ",
   "editable": true,
+  "fiscalYearStartMonth": 0,
   "gnetId": 13646,
   "graphTooltip": 0,
-  "id": 54,
-  "iteration": 1633941752406,
+  "id": 53,
+  "iteration": 1657283841122,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -39,11 +47,22 @@
       },
       "id": 26,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Alerts",
       "type": "row"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -94,9 +113,12 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "expr": "count (max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_used_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"} ) and (max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_used_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"} )) / (max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_capacity_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"} )) >= (${warning_threshold} / 100)) or vector (0)",
           "instant": true,
           "interval": "",
@@ -104,13 +126,13 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "PVCs Above Warning Threshold",
       "type": "stat"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -162,9 +184,12 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "expr": "count((kube_persistentvolumeclaim_status_phase{cluster=~\"$cluster\",namespace=~\"${namespace}\",phase=\"Pending\"}==1)) or vector(0)",
           "instant": true,
           "interval": "",
@@ -172,8 +197,6 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "PVCs in Pending State",
       "transformations": [
         {
@@ -184,7 +207,9 @@
       "type": "stat"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -236,9 +261,12 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "expr": "count((kube_persistentvolumeclaim_status_phase{cluster=~\"$cluster\",namespace=~\"${namespace}\",phase=\"Lost\"}==1)) or vector(0)",
           "instant": true,
           "interval": "",
@@ -246,8 +274,6 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "PVCs in Lost State",
       "transformations": [
         {
@@ -258,7 +284,9 @@
       "type": "stat"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "description": "PVCs Full in 2 days based on Daily Usage",
       "fieldConfig": {
         "defaults": {
@@ -311,9 +339,12 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "expr": "(\n  count (\n    (kubelet_volume_stats_available_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"})\n    and\n    (predict_linear(kubelet_volume_stats_available_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"}[1d], 2 * 24 * 60 * 60) < 0)\n  )\n)\nor\nvector(0)",
           "instant": true,
           "interval": "",
@@ -321,8 +352,6 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "PVCs Full in 2 days",
       "transformations": [
         {
@@ -333,7 +362,9 @@
       "type": "stat"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "description": "PVCs Full in 5 days based on Daily Usage",
       "fieldConfig": {
         "defaults": {
@@ -386,9 +417,12 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "expr": "(\n  count (\n    (kubelet_volume_stats_available_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"})\n    and\n    (predict_linear(kubelet_volume_stats_available_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"}[1d], 5 * 24 * 60 * 60) < 0)\n  )\n)\nor\nvector(0)",
           "instant": true,
           "interval": "",
@@ -396,8 +430,6 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "PVCs Full in 5 days",
       "transformations": [
         {
@@ -408,7 +440,9 @@
       "type": "stat"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "description": "PVCs Full in 1 Week based on Daily Usage",
       "fieldConfig": {
         "defaults": {
@@ -461,9 +495,12 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "expr": "(\n  count (\n    (kubelet_volume_stats_available_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"})\n    and\n    (predict_linear(kubelet_volume_stats_available_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"}[1d], 7 * 24 * 60 * 60) < 0)\n  )\n)\nor\nvector(0)",
           "instant": true,
           "interval": "",
@@ -471,8 +508,6 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "PVCs Full in 1 Week",
       "transformations": [
         {
@@ -484,7 +519,10 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -493,20 +531,33 @@
       },
       "id": 17,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Usage statistics",
       "type": "row"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
+            "align": "auto",
             "displayMode": "auto",
-            "filterable": false
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "noValue": "--",
@@ -708,7 +759,7 @@
         ]
       },
       "gridPos": {
-        "h": 7,
+        "h": 13,
         "w": 24,
         "x": 0,
         "y": 5
@@ -716,6 +767,14 @@
       "id": 29,
       "interval": "",
       "options": {
+        "footer": {
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "frameIndex": 2,
         "showHeader": true,
         "sortBy": [
@@ -725,9 +784,12 @@
           }
         ]
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "expr": " sum by (persistentvolumeclaim,namespace,storageclass,volumename) (kube_persistentvolumeclaim_info{cluster=~\"$cluster\",namespace=~\"${namespace}\"})",
           "format": "table",
           "instant": true,
@@ -736,7 +798,10 @@
           "refId": "A"
         },
         {
-          "expr": "sum by (persistentvolumeclaim) (kubelet_volume_stats_capacity_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"}/1024/1024/1024)",
+          "datasource": {
+            "uid": "${datasource}"
+          },
+          "expr": "sum by (persistentvolumeclaim,namespace) (kubelet_volume_stats_capacity_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"}/1024/1024/1024)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -744,7 +809,10 @@
           "refId": "B"
         },
         {
-          "expr": "sum by (persistentvolumeclaim) (kubelet_volume_stats_used_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"}/1024/1024/1024)",
+          "datasource": {
+            "uid": "${datasource}"
+          },
+          "expr": "sum by (persistentvolumeclaim,namespace) (kubelet_volume_stats_used_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"}/1024/1024/1024)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -752,7 +820,10 @@
           "refId": "C"
         },
         {
-          "expr": "sum by (persistentvolumeclaim) (kubelet_volume_stats_available_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"}/1024/1024/1024)",
+          "datasource": {
+            "uid": "${datasource}"
+          },
+          "expr": "sum by (persistentvolumeclaim,namespace) (kubelet_volume_stats_available_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"}/1024/1024/1024)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -760,7 +831,10 @@
           "refId": "D"
         },
         {
-          "expr": "sum(kube_persistentvolumeclaim_status_phase{cluster=~\"$cluster\",namespace=~\"${namespace}\",phase=~\"(Pending|Lost)\"}) by (persistentvolumeclaim) + sum(kube_persistentvolumeclaim_status_phase{cluster=~\"$cluster\",namespace=~\"${namespace}\",phase=~\"(Lost)\"}) by (persistentvolumeclaim)",
+          "datasource": {
+            "uid": "${datasource}"
+          },
+          "expr": "sum(kube_persistentvolumeclaim_status_phase{cluster=~\"$cluster\",namespace=~\"${namespace}\",phase=~\"(Pending|Lost)\"}) by (persistentvolumeclaim) + sum(kube_persistentvolumeclaim_status_phase{cluster=~\"$cluster\",namespace=~\"${namespace}\",phase=~\"(Lost)\"}) by (persistentvolumeclaim,namespace)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -768,7 +842,10 @@
           "refId": "E"
         },
         {
-          "expr": "sum by (persistentvolumeclaim) (kubelet_volume_stats_used_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"}/kubelet_volume_stats_capacity_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"} * 100)",
+          "datasource": {
+            "uid": "${datasource}"
+          },
+          "expr": "sum by (persistentvolumeclaim,namespace) (kubelet_volume_stats_used_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"}/kubelet_volume_stats_capacity_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"} * 100)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -776,8 +853,6 @@
           "refId": "F"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Persistent Volume Claim",
       "transformations": [
         {
@@ -797,7 +872,11 @@
               "Time 4": true,
               "Time 5": true,
               "Time 6": true,
-              "Value #A": true
+              "Value #A": true,
+              "namespace 2": true,
+              "namespace 3": true,
+              "namespace 4": true,
+              "namespace 5": true
             },
             "indexByName": {},
             "renameByName": {
@@ -814,6 +893,7 @@
               "Value #E": "Status",
               "Value #F": "Used (%)",
               "namespace": "Namespace",
+              "namespace 1": "Namespace",
               "persistentvolumeclaim": "PersistentVolumeClaim",
               "storageclass": "StorageClass",
               "volumename": "PhysicalVolume"
@@ -824,13 +904,16 @@
       "type": "table"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": null,
+            "align": "auto",
             "displayMode": "auto",
-            "filterable": false
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -846,13 +929,21 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
+        "h": 8,
         "w": 24,
         "x": 0,
-        "y": 12
+        "y": 18
       },
       "id": 7,
       "options": {
+        "footer": {
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": [
           {
@@ -861,9 +952,12 @@
           }
         ]
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "kube_storageclass_info{cluster=~\"$cluster\"}",
           "format": "table",
@@ -873,8 +967,6 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Storage Class",
       "transformations": [
         {
@@ -921,15 +1013,27 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 17
+        "y": 26
       },
       "id": 15,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Graphical usage data ",
       "type": "row"
     },
@@ -938,14 +1042,16 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 27
       },
       "hiddenSeries": false,
       "id": 9,
@@ -969,7 +1075,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -979,6 +1085,9 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "expr": "(max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_used_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"}))",
           "interval": "",
           "legendFormat": "{{namespace}} ({{persistentvolumeclaim}})",
@@ -986,9 +1095,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "All Running PVCs Used Bytes",
       "tooltip": {
         "shared": false,
@@ -997,9 +1104,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1007,35 +1112,31 @@
         {
           "$$hashKey": "object:53",
           "format": "bytes",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:54",
           "format": "Date & time",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
       "collapsed": true,
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 30
+        "y": 39
       },
       "id": 19,
       "panels": [
@@ -1044,7 +1145,9 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${datasource}",
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -1083,6 +1186,9 @@
           "steppedLine": false,
           "targets": [
             {
+              "datasource": {
+                "uid": "${datasource}"
+              },
               "expr": "rate(kubelet_volume_stats_used_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"}[1h])",
               "instant": false,
               "interval": "",
@@ -1091,9 +1197,7 @@
             }
           ],
           "thresholds": [],
-          "timeFrom": null,
           "timeRegions": [],
-          "timeShift": null,
           "title": "Hourly Volume Usage Rate",
           "tooltip": {
             "shared": false,
@@ -1102,9 +1206,7 @@
           },
           "type": "graph",
           "xaxis": {
-            "buckets": null,
             "mode": "time",
-            "name": null,
             "show": true,
             "values": []
           },
@@ -1112,25 +1214,18 @@
             {
               "$$hashKey": "object:223",
               "format": "binBps",
-              "label": null,
               "logBase": 1,
-              "max": null,
-              "min": null,
               "show": true
             },
             {
               "$$hashKey": "object:224",
               "format": "Date & time",
-              "label": null,
               "logBase": 1,
-              "max": null,
-              "min": null,
               "show": true
             }
           ],
           "yaxis": {
-            "align": false,
-            "alignLevel": null
+            "align": false
           }
         },
         {
@@ -1138,7 +1233,9 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${datasource}",
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -1177,6 +1274,9 @@
           "steppedLine": false,
           "targets": [
             {
+              "datasource": {
+                "uid": "${datasource}"
+              },
               "expr": "rate(kubelet_volume_stats_used_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"}[1d])",
               "interval": "",
               "legendFormat": "{{namespace}} ({{persistentvolumeclaim}})",
@@ -1184,9 +1284,7 @@
             }
           ],
           "thresholds": [],
-          "timeFrom": null,
           "timeRegions": [],
-          "timeShift": null,
           "title": "Daily Volume Usage Rate",
           "tooltip": {
             "shared": false,
@@ -1195,9 +1293,7 @@
           },
           "type": "graph",
           "xaxis": {
-            "buckets": null,
             "mode": "time",
-            "name": null,
             "show": true,
             "values": []
           },
@@ -1205,25 +1301,18 @@
             {
               "$$hashKey": "object:376",
               "format": "binBps",
-              "label": null,
               "logBase": 1,
-              "max": null,
-              "min": null,
               "show": true
             },
             {
               "$$hashKey": "object:377",
               "format": "Date & time",
-              "label": null,
               "logBase": 1,
-              "max": null,
-              "min": null,
               "show": true
             }
           ],
           "yaxis": {
-            "align": false,
-            "alignLevel": null
+            "align": false
           }
         },
         {
@@ -1231,7 +1320,9 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${datasource}",
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -1270,6 +1361,9 @@
           "steppedLine": false,
           "targets": [
             {
+              "datasource": {
+                "uid": "${datasource}"
+              },
               "expr": "rate(kubelet_volume_stats_used_bytes{cluster=~\"$cluster\",namespace=~\"${namespace}\"}[1w])",
               "instant": false,
               "interval": "",
@@ -1278,9 +1372,7 @@
             }
           ],
           "thresholds": [],
-          "timeFrom": null,
           "timeRegions": [],
-          "timeShift": null,
           "title": "Weekly Volume Usage Rate",
           "tooltip": {
             "shared": false,
@@ -1289,9 +1381,7 @@
           },
           "type": "graph",
           "xaxis": {
-            "buckets": null,
             "mode": "time",
-            "name": null,
             "show": true,
             "values": []
           },
@@ -1299,26 +1389,28 @@
             {
               "$$hashKey": "object:454",
               "format": "binBps",
-              "label": null,
               "logBase": 1,
-              "max": null,
-              "min": null,
               "show": true
             },
             {
               "$$hashKey": "object:455",
               "format": "Date & time",
-              "label": null,
               "logBase": 1,
-              "max": null,
-              "min": null,
               "show": true
             }
           ],
           "yaxis": {
-            "align": false,
-            "alignLevel": null
+            "align": false
           }
+        }
+      ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
         }
       ],
       "title": "Usage Rate",
@@ -1326,7 +1418,7 @@
     }
   ],
   "refresh": "1m",
-  "schemaVersion": 30,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [
     "kubernetes",
@@ -1341,8 +1433,6 @@
           "text": "Prometheus",
           "value": "Prometheus"
         },
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Datasource",
@@ -1352,22 +1442,22 @@
         "query": "prometheus",
         "queryValue": "",
         "refresh": 1,
-        "regex": "",
+        "regex": "/^Prometheus/",
         "skipUrlSync": false,
         "type": "datasource"
       },
       {
-        "allValue": null,
         "current": {
           "isNone": true,
-          "selected": true,
+          "selected": false,
           "text": "None",
           "value": ""
         },
-        "datasource": null,
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
         "definition": "label_values(kube_pod_info, cluster)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Cluster",
@@ -1398,10 +1488,11 @@
             "$__all"
           ]
         },
-        "datasource": null,
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
         "definition": "label_values(namespace)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "Namespace",
@@ -1427,8 +1518,6 @@
           "text": "80",
           "value": "80"
         },
-        "description": null,
-        "error": null,
         "hide": 2,
         "label": "PVC % Used Warning Threshold",
         "name": "warning_threshold",
@@ -1442,16 +1531,28 @@
         "query": "80",
         "skipUrlSync": false,
         "type": "textbox"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "filters": [],
+        "hide": 0,
+        "name": "Filters",
+        "skipUrlSync": false,
+        "type": "adhoc"
       }
     ]
   },
   "time": {
-    "from": "now-7d",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "kubernetes / persistent-volumes",
   "uid": "kubernetes-persistent-volumes",
-  "version": 10
+  "version": 5,
+  "weekStart": ""
 }
