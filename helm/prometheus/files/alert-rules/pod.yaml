@@ -41,3 +41,13 @@ groups:
       summary: Kubernetes pod is in CrashLoop state
       description: Pod is crash looping. Pod has crashed more than 3 times in last 10m.
       dashboard: Check {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kubernetes-pods/kubernetes-pods?var-datasource=Prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-pod={{ $labels.pod }}
+
+  - alert: KubernetesPodNotReady
+    expr: group((kube_pod_container_status_ready == 0) unless (kube_pod_container_status_running == 0)) by (container,namespace,pod,uid)
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: Kubernetes pod is in notReady state
+      description: Pod has been in nonReady state for last 5 minutes. The Pod has been accepted by the Kubernetes cluster, but one or more of the containers are not ready to recieve requests.
+      dashboard: Check {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kubernetes-pods/kubernetes-pods?var-datasource=Prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-pod={{ $labels.pod }}
