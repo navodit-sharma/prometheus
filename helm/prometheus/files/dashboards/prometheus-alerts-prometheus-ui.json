@@ -24,7 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 34,
+  "id": 54,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -79,9 +79,9 @@
     "to": "now"
   },
   "timepicker": {},
-  "timezone": "browser",
+  "timezone": "",
   "title": "prometheus / alerts-prometheus-ui",
   "uid": "prometheus-alerts-prometheus-ui",
-  "version": 3,
+  "version": 2,
   "weekStart": ""
 }

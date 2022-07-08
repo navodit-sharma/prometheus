@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -20,17 +23,17 @@
   },
   "description": "",
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 37,
-  "iteration": 1633938863595,
+  "id": 61,
+  "iteration": 1657287044569,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
       },
       "gridPos": {
         "h": 1,
@@ -39,11 +42,22 @@
         "y": 0
       },
       "id": 13,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Headline",
       "type": "row"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -95,9 +109,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "expr": "sum(kube_deployment_created{cluster=~\"$cluster\",job=\"kube-state-metrics\",namespace=~\"$namespace\",deployment=~\"$deployment\"}) by (deployment) * 1000",
           "format": "table",
           "hide": false,
@@ -107,8 +124,6 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Created On",
       "transformations": [
         {
@@ -135,8 +150,9 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -174,7 +190,6 @@
         "y": 1
       },
       "id": 16,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -194,9 +209,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "kube_deployment_status_replicas{cluster=~\"$cluster\",job=\"kube-state-metrics\",namespace=~\"$namespace\",deployment=~\"$deployment\"}",
           "format": "time_series",
@@ -211,8 +229,9 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -250,7 +269,6 @@
         "y": 1
       },
       "id": 18,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -270,9 +288,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "kube_deployment_status_replicas_updated{cluster=~\"$cluster\",job=\"kube-state-metrics\",namespace=~\"$namespace\",deployment=~\"$deployment\"}",
           "format": "time_series",
@@ -287,8 +308,9 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -326,7 +348,6 @@
         "y": 1
       },
       "id": 17,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -346,9 +367,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "kube_deployment_status_replicas_available{cluster=~\"$cluster\",job=\"kube-state-metrics\",namespace=~\"$namespace\",deployment=~\"$deployment\"}",
           "format": "time_series",
@@ -364,10 +388,9 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
       },
       "gridPos": {
         "h": 1,
@@ -377,12 +400,22 @@
       },
       "id": 11,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Information",
       "type": "row"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -425,7 +458,6 @@
         "y": 5
       },
       "id": 2,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -445,9 +477,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "sum(rate(container_cpu_usage_seconds_total{job=\"kubelet\",metrics_path=\"/metrics/cadvisor\",cluster=~\"$cluster\",namespace=~\"$namespace\",container!~\"\",container!~\"POD\",image!~\"\",pod=~\"$deployment.*\"}[3m]))",
           "format": "time_series",
@@ -461,8 +496,9 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -500,7 +536,6 @@
         "y": 5
       },
       "id": 3,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -520,9 +555,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "sum(container_memory_usage_bytes{job=\"kubelet\",metrics_path=\"/metrics/cadvisor\",cluster=~\"$cluster\",namespace=~\"$namespace\",container!~\"\",container!~\"POD\",image!~\"\",pod=~\"$deployment.*\"})",
           "format": "time_series",
           "interval": "",
@@ -535,8 +573,9 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -574,7 +613,6 @@
         "y": 5
       },
       "id": 4,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -594,9 +632,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "sum(rate(container_network_transmit_bytes_total{job=\"kubelet\",metrics_path=\"/metrics/cadvisor\",cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$deployment.*\"}[3m])) + sum(rate(container_network_receive_bytes_total{job=\"kubelet\",metrics_path=\"/metrics/cadvisor\",cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$deployment.*\"}[3m]))",
           "format": "time_series",
           "instant": false,
@@ -610,8 +651,9 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -652,7 +694,6 @@
         "y": 9
       },
       "id": 7,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -670,9 +711,12 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "max(kube_deployment_status_observed_generation{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", deployment=\"$deployment\"}) without (instance, pod)",
           "format": "time_series",
@@ -687,8 +731,9 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -729,7 +774,6 @@
         "y": 9
       },
       "id": 8,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -747,9 +791,12 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "max(kube_deployment_metadata_generation{job=\"kube-state-metrics\", deployment=\"$deployment\", cluster=\"$cluster\", namespace=\"$namespace\"}) without (instance, pod)",
           "format": "time_series",
@@ -768,7 +815,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasource",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "fill": 0,
       "fillGradient": 0,
       "gridPos": {
@@ -787,7 +836,6 @@
         "min": true,
         "rightSide": true,
         "show": true,
-        "sideWidth": null,
         "total": false,
         "values": true
       },
@@ -799,17 +847,19 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "repeat": null,
       "seriesOverrides": [],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "max(kube_deployment_status_replicas{job=\"kube-state-metrics\", deployment=~\"$deployment\", cluster=~\"$cluster\", namespace=\"$namespace\"}) without (instance, pod)",
           "format": "time_series",
           "interval": "",
@@ -818,6 +868,9 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "min(kube_deployment_status_replicas_available{job=\"kube-state-metrics\", deployment=~\"$deployment\", cluster=~\"$cluster\", namespace=~\"$namespace\"}) without (instance, pod)",
           "format": "time_series",
           "interval": "",
@@ -826,6 +879,9 @@
           "refId": "C"
         },
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "min(kube_deployment_status_replicas_unavailable{job=\"kube-state-metrics\", deployment=~\"$deployment\", cluster=~\"$cluster\", namespace=~\"$namespace\"}) without (instance, pod)",
           "format": "time_series",
           "hide": false,
@@ -835,6 +891,9 @@
           "refId": "D"
         },
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "min(kube_deployment_status_replicas_updated{job=\"kube-state-metrics\", deployment=~\"$deployment\", cluster=~\"$cluster\", namespace=~\"$namespace\"}) without (instance, pod)",
           "format": "time_series",
           "interval": "",
@@ -844,9 +903,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Replicas",
       "tooltip": {
         "shared": false,
@@ -855,9 +912,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -865,36 +920,30 @@
         {
           "$$hashKey": "object:142",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:143",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
             "displayMode": "auto",
             "filterable": false
           },
@@ -903,8 +952,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -971,6 +1019,9 @@
       "pluginVersion": "8.1.0",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "expr": "kube_pod_info{cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$deployment.*\"}",
           "format": "table",
           "instant": true,
@@ -979,8 +1030,6 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Pods",
       "transformations": [
         {
@@ -1034,7 +1083,7 @@
     }
   ],
   "refresh": "1m",
-  "schemaVersion": 30,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [
     "kubernetes",
@@ -1048,8 +1097,6 @@
           "text": "Prometheus",
           "value": "Prometheus"
         },
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Datasource",
@@ -1059,22 +1106,22 @@
         "query": "prometheus",
         "queryValue": "",
         "refresh": 1,
-        "regex": "",
+        "regex": "/^Prometheus/",
         "skipUrlSync": false,
         "type": "datasource"
       },
       {
-        "allValue": null,
         "current": {
           "isNone": true,
-          "selected": true,
+          "selected": false,
           "text": "None",
           "value": ""
         },
-        "datasource": null,
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
         "definition": "label_values(kube_pod_info, cluster)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Cluster",
@@ -1095,16 +1142,16 @@
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {
           "selected": false,
           "text": "monitor",
           "value": "monitor"
         },
-        "datasource": null,
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
         "definition": "label_values(kube_deployment_metadata_generation{job=\"kube-state-metrics\", cluster=\"$cluster\"}, namespace)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Namespace",
@@ -1125,16 +1172,16 @@
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {
           "selected": false,
-          "text": "monitor-ambassador",
-          "value": "monitor-ambassador"
+          "text": "monitor-emissary-ingress",
+          "value": "monitor-emissary-ingress"
         },
-        "datasource": null,
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
         "definition": "label_values(kube_deployment_metadata_generation{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\"}, deployment)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Deployment",
@@ -1185,8 +1232,9 @@
       "30d"
     ]
   },
-  "timezone": "browser",
+  "timezone": "",
   "title": "kubernetes / deployments",
   "uid": "kubernetes-deployments",
-  "version": 2
+  "version": 2,
+  "weekStart": ""
 }

@@ -26,7 +26,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 65,
-  "iteration": 1657283749154,
+  "iteration": 1657287078075,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -1839,8 +1839,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2077,9 +2076,9 @@
       "30d"
     ]
   },
-  "timezone": "browser",
+  "timezone": "",
   "title": "kubernetes / nodes",
   "uid": "kubernetes-nodes",
-  "version": 4,
+  "version": 6,
   "weekStart": ""
 }

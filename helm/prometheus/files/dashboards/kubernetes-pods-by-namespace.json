@@ -25,7 +25,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 62,
-  "iteration": 1657283387227,
+  "iteration": 1657287178747,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -1405,8 +1405,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1912,8 +1911,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -2363,8 +2361,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -3533,9 +3530,9 @@
       "30d"
     ]
   },
-  "timezone": "browser",
+  "timezone": "",
   "title": "kubernetes / pods-by-namespace",
   "uid": "kubernetes-pods-by-namespace",
-  "version": 4,
+  "version": 6,
   "weekStart": ""
 }
