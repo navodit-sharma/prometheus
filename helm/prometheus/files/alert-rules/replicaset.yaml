@@ -2,8 +2,8 @@ groups:
 - name: k8s-replicaset.rules
   rules:
   - alert: KubernetesReplicassetMismatch
-    expr: kube_replicaset_spec_replicas != kube_replicaset_status_ready_replicas
-    for: 10m
+    expr: group(kube_replicaset_spec_replicas != kube_replicaset_status_ready_replicas) by (namespace,replicaset)
+    for: 15m
     labels:
       severity: warning
     annotations:

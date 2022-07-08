@@ -1,49 +1,52 @@
 groups:
 - name: k8s-persistent-volumes.rules
   rules:
+
   - alert: PersistentVolumeUtilizationHigh
     annotations:
       description: Disk space utilization of persistent volume claim is at WARNING
         level.
       summary: Persistent volume disk utilization >= 80
       value: '{{ printf "%.2f" $value }}%'
-    expr: 90 > (kubelet_volume_stats_used_bytes/kubelet_volume_stats_capacity_bytes)*100
-      >= 80
+    expr: group(90 > (kubelet_volume_stats_used_bytes/kubelet_volume_stats_capacity_bytes)*100 >= 80) by (namespace,node,persistentvolumeclaim)
     labels:
       severity: warning
+
   - alert: PersistentVolumeUtilizationCritical
     annotations:
       description: Disk space utilization of persistent volume claim is at CRITICAL
         level.
       summary: Persistent volume disk utilization >= 90
       value: '{{ printf "%.2f" $value }}%'
-    expr: 100 > (kubelet_volume_stats_used_bytes/kubelet_volume_stats_capacity_bytes)*100
-      >= 90
+    expr: group(100 > (kubelet_volume_stats_used_bytes/kubelet_volume_stats_capacity_bytes)*100 >= 90) by (namespace,node,persistentvolumeclaim)
     labels:
       severity: critical
+
   - alert: PersistentVolumeFull
     annotations:
       description: Disk space utilization of persistent volume claim is at CRITICAL
         level.
       summary: Persistent volume disk full
       value: '{{ printf "%.2f" $value }}%'
-    expr: (kubelet_volume_stats_used_bytes/kubelet_volume_stats_capacity_bytes)*100
-      == 100
+    expr: group((kubelet_volume_stats_used_bytes/kubelet_volume_stats_capacity_bytes)*100
+      == 100) by (namespace,node,persistentvolumeclaim)
     labels:
       severity: critical
+
   - alert: PersistentvolumeclaimPending
-    expr: kube_persistentvolumeclaim_status_phase{phase="Pending"} == 1
-    for: 3m
+    expr: group(kube_persistentvolumeclaim_status_phase{phase="Pending"} == 1) by (namespace,persistentvolumeclaim,phase)
+    for: 10m
     labels:
       severity: warning
     annotations:
       summary: PersistentVolumeClaim pending
       description: "PersistentVolumeClaim {{ $labels.namespace }}/{{ $labels.persistentvolumeclaim }} is pending."
+
   - alert: PersistentvolumeError
-    expr: kube_persistentvolume_status_phase{phase=~"Failed|Pending", job="kube-state-metrics"} > 0
-    for: 0m
+    expr: group(kube_persistentvolume_status_phase{phase=~"Failed|Pending", job="kube-state-metrics"} > 0) by (persistentvolume,phase)
+    for: 10m
     labels:
-      severity: critical
+      severity: warning
     annotations:
       summary: PersistentVolume error
       description: "Persistent volume is in Error state."

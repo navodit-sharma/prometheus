@@ -2,8 +2,8 @@ groups:
 - name: k8s-deployment.rules
   rules:
   - alert: KubernetesDeploymentReplicasMismatch
-    expr: kube_deployment_spec_replicas != kube_deployment_status_replicas_available
-    for: 10m
+    expr: group(kube_deployment_spec_replicas != kube_deployment_status_replicas_available) by (deployment,namespace)
+    for: 15m
     labels:
       severity: warning
     annotations:

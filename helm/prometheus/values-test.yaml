@@ -1,24 +1,14 @@
 ---
 
 global:
-  platform: "azure"
-  emissary-ingress:
-    enabled: true
-  kube-prometheus-stack:
-    enabled: true
-  prometheus-elasticsearch-exporter:
-    enabled: true
   grafanaAdminPassword: change-me-length-min-12
   externalDomain: "xyz.abc.com"
   smtpApiKey: change-me
   smtpDestinationAddress: "change-me"
   web:
     ssl:
-      enabled: true
-      letsencrypt:
-        enabled: false
       externalSecret:
-        enabled: false
+        enabled: true
         keyVaultName: "change-me"
 
 emissary-ingress:
@@ -26,38 +16,11 @@ emissary-ingress:
     type: "LoadBalancer"
     loadBalancerIP: "0.0.0.0"
 
-prometheus-elasticsearch-exporter:
-  es:
-    uri: 'http://aux-elasticsearch-master.shared.svc.cluster.local:9200'
-
 kube-prometheus-stack:
   alertmanager:
-    enabled: true
     alertmanagerSpec:
       externalUrl: "http://change-me/alertmanager"
-      storage:
-        volumeClaimTemplate:
-          spec:
-            storageClassName: "managed-premium"
-            accessModes: ["ReadWriteOnce"]
-            resources:
-              requests:
-                storage: 5Gi
-  grafana:
-    persistence:
-      size: 10Gi
-      storageClassName: "managed-premium"
-    env:
-      GF_SMTP_ENABLED: "true"
   prometheus:
     prometheusSpec:
       externalLabels:
         cluster: "change-me"
-      storageSpec:
-        volumeClaimTemplate:
-          spec:
-            storageClassName: "managed-premium"
-            accessModes: ["ReadWriteOnce"]
-            resources:
-              requests:
-                storage: 50Gi

@@ -5,7 +5,7 @@ helm/**/tmpcharts
 helm/**/Chart.lock
 helm/**/.helmignore
 helm/**/values-sandbox.yaml
-helm/**/*-local.yaml
+helm/**/*-local*.yaml
 .idea
 *.iml
 *.DS_Store

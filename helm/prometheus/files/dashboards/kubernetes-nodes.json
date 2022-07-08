@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -20,15 +23,19 @@
   },
   "description": "Information of individual kubernetes nodes",
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 38,
-  "iteration": 1633951537788,
+  "id": 65,
+  "iteration": 1657283749154,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -37,11 +44,22 @@
       },
       "id": 27,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Summary",
       "type": "row"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -87,9 +105,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "kube_node_status_capacity{cluster=~\"$cluster\",node=~\"$node\",resource=\"cpu\",unit=\"core\"}",
           "instant": true,
@@ -102,7 +123,9 @@
       "type": "stat"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -110,6 +133,8 @@
           },
           "decimals": 0,
           "mappings": [],
+          "max": 1,
+          "min": 0,
           "noValue": "0",
           "thresholds": {
             "mode": "percentage",
@@ -150,13 +175,14 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
-        "text": {
-          "valueSize": 20
-        }
+        "text": {}
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "sum(rate(node_cpu_seconds_total{cluster=~\"$cluster\",node=~\"$node\",mode!=\"idle\"}[3m])) / sum(kube_node_status_capacity{cluster=~\"$cluster\",node=~\"$node\",resource=\"cpu\",unit=\"core\"})",
           "instant": false,
@@ -170,7 +196,9 @@
       "type": "gauge"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -216,9 +244,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "kube_node_status_capacity{cluster=~\"$cluster\",node=~\"$node\",resource=\"memory\",unit=\"byte\"}",
           "instant": true,
@@ -231,13 +262,15 @@
       "type": "stat"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "decimals": 2,
+          "decimals": 0,
           "mappings": [],
           "max": 1,
           "min": 0,
@@ -281,13 +314,14 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
-        "text": {
-          "valueSize": 20
-        }
+        "text": {}
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "1 - ((node_memory_MemFree_bytes{cluster=~\"$cluster\",node=~\"$node\"} + node_memory_Cached_bytes{cluster=~\"$cluster\",node=~\"$node\"} + node_memory_Buffers_bytes{cluster=~\"$cluster\",node=~\"$node\"}) / node_memory_MemTotal_bytes{cluster=~\"$cluster\",node=~\"$node\"})",
           "instant": false,
@@ -300,7 +334,9 @@
       "type": "gauge"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "description": "Total storage (including external volumes attached to the node)",
       "fieldConfig": {
         "defaults": {
@@ -347,9 +383,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "sum (\nmax by (device) (\n    node_filesystem_size_bytes{job=\"node-exporter\",cluster=~\"$cluster\",node=~\"$node\",device!~\"(tmpfs|lxcfs|shm)\",fstype!=\"\"}\n  )\n)",
           "instant": true,
@@ -362,13 +401,15 @@
       "type": "stat"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "decimals": 2,
+          "decimals": 0,
           "mappings": [],
           "max": 1,
           "min": 0,
@@ -412,13 +453,14 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
-        "text": {
-          "valueSize": 20
-        }
+        "text": {}
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "(\nsum(\n  max by (device) (\n    node_filesystem_size_bytes{job=\"node-exporter\",cluster=~\"$cluster\",node=~\"$node\",device!~\"(tmpfs|lxcfs|shm)\",fstype!=\"\"}\n  -\n    node_filesystem_avail_bytes{job=\"node-exporter\",cluster=~\"$cluster\",node=~\"$node\",device!~\"(tmpfs|lxcfs|shm)\",fstype!=\"\"}\n  )\n) \n/ \nsum (\nmax by (device) (\n    node_filesystem_size_bytes{job=\"node-exporter\",cluster=~\"$cluster\",node=~\"$node\",device!~\"(tmpfs|lxcfs|shm)\",fstype!=\"\"}\n  )\n)\n)",
           "instant": false,
@@ -431,7 +473,9 @@
       "type": "gauge"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -477,9 +521,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "sum(kubelet_running_pods{cluster=~\"$cluster\", job=\"kubelet\", metrics_path=\"/metrics\", node=~\"$node\"}) OR sum(kubelet_running_pod_count{cluster=~\"$cluster\", job=\"kubelet\", metrics_path=\"/metrics\", node=~\"$node\"})",
           "instant": true,
@@ -492,7 +539,10 @@
       "type": "stat"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -538,11 +588,14 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "sum(sum by (pod,uid) (kube_pod_info{cluster=~\"$cluster\",node=~\"$node\"}) * on (pod) sum by (pod,uid) (kube_pod_container_info))",
+          "expr": "sum(sum by (pod,uid,namespace) (kube_pod_info) * on (pod,uid,namespace) sum by (pod,uid,namespace) (kube_pod_container_info))",
           "instant": true,
           "interval": "",
           "legendFormat": "containers",
@@ -553,7 +606,9 @@
       "type": "stat"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -603,9 +658,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "sum(volume_manager_total_volumes{cluster=\"$cluster\", job=\"kubelet\", metrics_path=\"/metrics\", node=~\"$node\", state=\"desired_state_of_world\"})",
           "instant": true,
@@ -618,7 +676,9 @@
       "type": "stat"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -668,9 +728,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "sum(volume_manager_total_volumes{cluster=\"$cluster\", job=\"kubelet\", metrics_path=\"/metrics\", node=~\"$node\", state=\"actual_state_of_world\"})",
           "instant": true,
@@ -684,7 +747,10 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -693,11 +759,22 @@
       },
       "id": 15,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Node Info",
       "type": "row"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "description": "General information about node",
       "fieldConfig": {
         "defaults": {
@@ -705,9 +782,10 @@
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
+            "align": "auto",
             "displayMode": "auto",
-            "filterable": false
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -734,11 +812,21 @@
       },
       "id": 11,
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "expr": "group by (node,container_runtime_version,kernel_version,kubelet_version,kubeproxy_version,os_image) (kube_node_info{job=\"kube-state-metrics\",cluster=~\"$cluster\",node=~\"$node\"})",
           "format": "table",
           "instant": true,
@@ -747,6 +835,9 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "expr": "group by (node,instance,version) (node_exporter_build_info{job=\"node-exporter\",cluster=~\"$cluster\",node=~\"$node\"})",
           "format": "table",
           "hide": false,
@@ -802,7 +893,10 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -811,6 +905,15 @@
       },
       "id": 17,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "CPU",
       "type": "row"
     },
@@ -819,7 +922,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "decimals": 3,
       "fill": 1,
       "fillGradient": 0,
@@ -839,7 +944,6 @@
         "min": true,
         "rightSide": false,
         "show": true,
-        "sideWidth": null,
         "total": false,
         "values": true
       },
@@ -851,17 +955,19 @@
         "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "repeat": null,
       "seriesOverrides": [],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "sum(rate(node_cpu_seconds_total{cluster=~\"$cluster\",node=~\"$node\",mode!=\"idle\"}[3m]))",
           "hide": false,
@@ -871,9 +977,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "CPU Usage",
       "tooltip": {
         "shared": true,
@@ -882,9 +986,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -893,26 +995,19 @@
           "$$hashKey": "object:2721",
           "decimals": 3,
           "format": "none",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:2722",
           "decimals": 3,
           "format": "none",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -920,7 +1015,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasource",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -939,7 +1036,6 @@
         "min": false,
         "rightSide": false,
         "show": true,
-        "sideWidth": null,
         "total": false,
         "values": false
       },
@@ -951,11 +1047,10 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "repeat": null,
       "seriesOverrides": [
         {
           "$$hashKey": "object:2888",
@@ -968,6 +1063,9 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "node_load1{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\"}",
           "format": "time_series",
           "interval": "",
@@ -976,6 +1074,9 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "node_load5{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\"}",
           "format": "time_series",
           "interval": "",
@@ -984,6 +1085,9 @@
           "refId": "B"
         },
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "node_load15{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\"}",
           "format": "time_series",
           "interval": "",
@@ -992,6 +1096,9 @@
           "refId": "C"
         },
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "count(node_cpu_seconds_total{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\", mode=\"idle\"})",
           "format": "time_series",
           "hide": false,
@@ -1002,9 +1109,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Load Average",
       "tooltip": {
         "shared": true,
@@ -1013,9 +1118,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1023,30 +1126,28 @@
         {
           "$$hashKey": "object:2895",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": 0,
           "show": true
         },
         {
           "$$hashKey": "object:2896",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": 0,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1055,6 +1156,15 @@
       },
       "id": 19,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Memory",
       "type": "row"
     },
@@ -1063,7 +1173,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasource",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1082,7 +1194,6 @@
         "min": false,
         "rightSide": false,
         "show": true,
-        "sideWidth": null,
         "total": false,
         "values": false
       },
@@ -1094,11 +1205,10 @@
         "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "repeat": null,
       "seriesOverrides": [
         {
           "$$hashKey": "object:2987",
@@ -1111,6 +1221,9 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "(\n  node_memory_MemTotal_bytes{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\"}\n-\n  node_memory_MemFree_bytes{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\"}\n-\n  node_memory_Buffers_bytes{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\"}\n-\n  node_memory_Cached_bytes{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\"}\n)\n",
           "format": "time_series",
           "interval": "",
@@ -1119,6 +1232,9 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "node_memory_Buffers_bytes{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\"}",
           "format": "time_series",
           "interval": "",
@@ -1127,6 +1243,9 @@
           "refId": "B"
         },
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "node_memory_Cached_bytes{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\"}",
           "format": "time_series",
           "interval": "",
@@ -1135,6 +1254,9 @@
           "refId": "C"
         },
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "node_memory_MemFree_bytes{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\"}",
           "format": "time_series",
           "interval": "",
@@ -1143,6 +1265,9 @@
           "refId": "D"
         },
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "node_memory_MemTotal_bytes{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\"}",
           "hide": false,
           "interval": "",
@@ -1152,9 +1277,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Memory Usage",
       "tooltip": {
         "shared": true,
@@ -1163,9 +1286,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1173,30 +1294,28 @@
         {
           "$$hashKey": "object:2994",
           "format": "bytes",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": 0,
           "show": true
         },
         {
           "$$hashKey": "object:2995",
           "format": "bytes",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": 0,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1205,6 +1324,15 @@
       },
       "id": 21,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Disk",
       "type": "row"
     },
@@ -1213,7 +1341,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasource",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "fill": 0,
       "fillGradient": 0,
       "gridPos": {
@@ -1232,7 +1362,6 @@
         "min": false,
         "rightSide": false,
         "show": true,
-        "sideWidth": null,
         "total": false,
         "values": false
       },
@@ -1244,11 +1373,10 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "repeat": null,
       "seriesOverrides": [
         {
           "$$hashKey": "object:3086",
@@ -1266,6 +1394,9 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "rate(node_disk_read_bytes_total{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\"}[$__interval])",
           "format": "time_series",
           "interval": "1m",
@@ -1274,6 +1405,9 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "rate(node_disk_written_bytes_total{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\"}[$__interval])",
           "format": "time_series",
           "interval": "1m",
@@ -1282,6 +1416,9 @@
           "refId": "B"
         },
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "rate(node_disk_io_time_seconds_total{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\"}[$__interval])",
           "format": "time_series",
           "interval": "1m",
@@ -1291,9 +1428,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Disk I/O",
       "tooltip": {
         "shared": true,
@@ -1302,9 +1437,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1312,25 +1445,18 @@
         {
           "$$hashKey": "object:3100",
           "format": "bytes",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:3101",
           "format": "s",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1338,7 +1464,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasource",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "fieldConfig": {
         "defaults": {
           "unit": "bytes"
@@ -1363,7 +1491,6 @@
         "min": false,
         "rightSide": false,
         "show": true,
-        "sideWidth": null,
         "total": false,
         "values": false
       },
@@ -1375,11 +1502,10 @@
         "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "pointradius": 1,
       "points": false,
       "renderer": "flot",
-      "repeat": null,
       "seriesOverrides": [
         {
           "$$hashKey": "object:3185",
@@ -1399,6 +1525,9 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "sum(\n  max by (device) (\n    node_filesystem_size_bytes{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\", fstype!=\"\"}\n  -\n    node_filesystem_avail_bytes{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\", fstype!=\"\"}\n  )\n)\n",
           "format": "time_series",
@@ -1408,6 +1537,9 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "exemplar": true,
           "expr": "sum (\nmax by (device) (\n    node_filesystem_size_bytes{job=\"node-exporter\",cluster=~\"$cluster\",node=~\"$node\",device!~\"(tmpfs|lxcfs|shm)\",fstype!=\"\"}\n  )\n)",
           "hide": false,
@@ -1417,9 +1549,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Disk Space Usage",
       "tooltip": {
         "shared": true,
@@ -1428,9 +1558,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1440,28 +1568,27 @@
           "format": "bytes",
           "label": "",
           "logBase": 1,
-          "max": null,
           "min": 0,
           "show": true
         },
         {
           "$$hashKey": "object:3200",
           "format": "bytes",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": 0,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1470,6 +1597,15 @@
       },
       "id": 23,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Network",
       "type": "row"
     },
@@ -1478,7 +1614,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasource",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1497,7 +1635,6 @@
         "min": false,
         "rightSide": false,
         "show": true,
-        "sideWidth": null,
         "total": false,
         "values": false
       },
@@ -1509,17 +1646,19 @@
         "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "repeat": null,
       "seriesOverrides": [],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "rate(node_network_receive_bytes_total{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\", device!=\"lo\"}[$__interval])",
           "format": "time_series",
           "interval": "1m",
@@ -1529,9 +1668,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Network Received",
       "tooltip": {
         "shared": true,
@@ -1540,9 +1677,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1550,25 +1685,20 @@
         {
           "$$hashKey": "object:3283",
           "format": "bytes",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": 0,
           "show": true
         },
         {
           "$$hashKey": "object:3284",
           "format": "bytes",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": 0,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1576,7 +1706,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasource",
+      "datasource": {
+        "uid": "$datasource"
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1595,7 +1727,6 @@
         "min": false,
         "rightSide": false,
         "show": true,
-        "sideWidth": null,
         "total": false,
         "values": false
       },
@@ -1607,17 +1738,19 @@
         "alertThreshold": false
       },
       "percentage": false,
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "repeat": null,
       "seriesOverrides": [],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "$datasource"
+          },
           "expr": "rate(node_network_transmit_bytes_total{job=\"node-exporter\", cluster=~\"$cluster\", node=\"$node\", device!=\"lo\"}[$__interval])",
           "format": "time_series",
           "interval": "1m",
@@ -1627,9 +1760,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Network Transmitted",
       "tooltip": {
         "shared": true,
@@ -1638,9 +1769,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1648,30 +1777,28 @@
         {
           "$$hashKey": "object:3367",
           "format": "bytes",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": 0,
           "show": true
         },
         {
           "$$hashKey": "object:3368",
           "format": "bytes",
-          "label": null,
           "logBase": 1,
-          "max": null,
           "min": 0,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1680,20 +1807,32 @@
       },
       "id": 25,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Pods",
       "type": "row"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
+            "align": "auto",
             "displayMode": "auto",
-            "filterable": false
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -1750,13 +1889,21 @@
         ]
       },
       "gridPos": {
-        "h": 7,
+        "h": 14,
         "w": 24,
         "x": 0,
         "y": 43
       },
       "id": 13,
       "options": {
+        "footer": {
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": [
           {
@@ -1765,9 +1912,12 @@
           }
         ]
       },
-      "pluginVersion": "8.1.0",
+      "pluginVersion": "9.0.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "expr": "sum(kube_pod_info{cluster=~\"$cluster\",node=\"$node\"}) by (created_by_kind,created_by_name,namespace,pod,pod_ip)",
           "format": "table",
           "instant": true,
@@ -1776,8 +1926,6 @@
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Pods running on this node",
       "transformations": [
         {
@@ -1810,7 +1958,7 @@
     }
   ],
   "refresh": "1m",
-  "schemaVersion": 30,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [
     "kubernetes",
@@ -1824,8 +1972,6 @@
           "text": "Prometheus",
           "value": "Prometheus"
         },
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Datasource",
@@ -1835,22 +1981,22 @@
         "query": "prometheus",
         "queryValue": "",
         "refresh": 1,
-        "regex": "",
+        "regex": "/^Prometheus/",
         "skipUrlSync": false,
         "type": "datasource"
       },
       {
-        "allValue": null,
         "current": {
           "isNone": true,
-          "selected": true,
+          "selected": false,
           "text": "None",
           "value": ""
         },
-        "datasource": "${datasource}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
         "definition": "label_values(kube_pod_info, cluster)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Cluster",
@@ -1871,16 +2017,16 @@
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {
           "selected": false,
-          "text": "aks-valpoolmd-39765078-vmss00000y",
-          "value": "aks-valpoolmd-39765078-vmss00000y"
+          "text": "aks-agentpool-39765078-vmss000000",
+          "value": "aks-agentpool-39765078-vmss000000"
         },
-        "datasource": "${datasource}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
         "definition": "label_values(kubelet_node_name{job=\"kubelet\",cluster=~\"$cluster\"}, node)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Node",
@@ -1934,5 +2080,6 @@
   "timezone": "browser",
   "title": "kubernetes / nodes",
   "uid": "kubernetes-nodes",
-  "version": 20
+  "version": 4,
+  "weekStart": ""
 }
