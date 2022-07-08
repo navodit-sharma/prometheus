@@ -1,13 +1,13 @@
 groups:
 - name: k8s-node.rules
   rules:
-  - alert: KubernetesNodeReady
-    expr: kube_node_status_condition{condition="Ready",status="true"} == 0
+  - alert: KubernetesNodeNotReady
+    expr: group(kube_node_status_condition{condition="Ready",status="true"} == 0) by (node)
     for: 15m
     labels:
       severity: critical
     annotations:
-      summary: Kubernetes Node ready
+      summary: Kubernetes node not ready
       description: "Node {{ $labels.node }} has been unready for last 15m"
   - alert: KubernetesMemoryPressure
     expr: kube_node_status_condition{condition="MemoryPressure",status="true"} == 1

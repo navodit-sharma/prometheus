@@ -2,7 +2,7 @@ groups:
 - name: k8s-daemonset.rules
   rules:
   - alert: KubernetesDaemonsetRolloutStuck
-    expr: kube_daemonset_status_number_ready / kube_daemonset_status_desired_number_scheduled * 100 < 100 or kube_daemonset_status_desired_number_scheduled - kube_daemonset_status_current_number_scheduled > 0
+    expr: group(kube_daemonset_status_number_ready / kube_daemonset_status_desired_number_scheduled * 100 < 100 or kube_daemonset_status_desired_number_scheduled - kube_daemonset_status_current_number_scheduled > 0) by (daemonset,namespace)
     for: 15m
     labels:
       severity: warning
@@ -10,8 +10,8 @@ groups:
       summary: Kubernetes DaemonSet rollout stuck
       description: "Some Pods of DaemonSet are not scheduled or not ready."
   - alert: KubernetesDaemonsetMisscheduled
-    expr: kube_daemonset_status_number_misscheduled > 0
-    for: 1m
+    expr: group(kube_daemonset_status_number_misscheduled > 0) by (daemonset,namespace)
+    for: 5m
     labels:
       severity: critical
     annotations:
