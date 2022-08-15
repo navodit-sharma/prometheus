@@ -9,7 +9,8 @@ groups:
       severity: warning
     annotations:
       summary: Kubernetes container oom killed
-      description: Container {{ $labels.container }} in pod {{ $labels.namespace }}/{{ $labels.pod }} has been OOMKilled {{ $value }} times in the last 10 minutes. Check dashboard - {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kubernetes-pods/kubernetes-pods?var-datasource=Prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-pod={{ $labels.pod }}&var-container={{ $labels.container }}
+      description: Container {{ $labels.container }} in pod {{ $labels.namespace }}/{{ $labels.pod }} has been OOMKilled {{ $value }} times in the last 10 minutes.
+      dashboard: Check {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kubernetes-pods/kubernetes-pods?var-datasource=Prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-pod={{ $labels.pod }}&var-container={{ $labels.container }}
 
   # - alert: ContainerKilled
   #   expr: time() - container_last_seen > 60
@@ -31,7 +32,8 @@ groups:
       severity: warning
     annotations:
       summary: Container CPU usage high
-      description: Container CPU usage is above 80% for last 5m. Check dashboard - {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kubernetes-pods/kubernetes-pods?var-datasource=Prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-pod={{ $labels.pod }}&var-container={{ $labels.container }}
+      description: Container CPU usage is above 80% for last 5m.
+      dashboard: Check {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kubernetes-pods/kubernetes-pods?var-datasource=Prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-pod={{ $labels.pod }}&var-container={{ $labels.container }}
 
   # See https://medium.com/faun/how-much-is-too-much-the-linux-oomkiller-and-used-memory-d32186f29c9d
   - alert: ContainerMemoryUsageHigh
@@ -41,7 +43,8 @@ groups:
       severity: warning
     annotations:
       summary: Container Memory usage high
-      description: Container Memory usage is above 80% for last 5m. Check dashboard - {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kubernetes-pods/kubernetes-pods?var-datasource=Prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-pod={{ $labels.pod }}&var-container={{ $labels.container }}
+      description: Container Memory usage is above 80% for last 5m.
+      dashboard: Check {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kubernetes-pods/kubernetes-pods?var-datasource=Prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-pod={{ $labels.pod }}&var-container={{ $labels.container }}
 
   # - alert: ContainerVolumeUsage
   #   expr: (1 - (sum(container_fs_inodes_free) BY (instance) / sum(container_fs_inodes_total) BY (instance))) * 100 > 80
@@ -67,7 +70,8 @@ groups:
       severity: warning
     annotations:
       summary: Container high throttle rate
-      description: Container is being throttled for last 3m. Check dashboard - {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kubernetes-pods/kubernetes-pods?var-datasource=Prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-pod={{ $labels.pod }}&var-container={{ $labels.container }}
+      description: Container is being throttled for last 3m.
+      dashboard: Check {{ .ExternalURL | reReplaceAll "(.*)/prometheus" "${1}" }}/d/kubernetes-pods/kubernetes-pods?var-datasource=Prometheus&var-cluster={{ $labels.cluster }}&var-namespace={{ $labels.namespace }}&var-pod={{ $labels.pod }}&var-container={{ $labels.container }}
 
   # Duplicate from pod
   # - alert: KubernetesContainersNotRunning

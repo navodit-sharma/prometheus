@@ -7,7 +7,6 @@ groups:
       description: Disk space utilization of persistent volume claim is at WARNING
         level.
       summary: Persistent volume disk utilization >= 80
-      value: '{{ printf "%.2f" $value }}%'
     expr: group(90 > (kubelet_volume_stats_used_bytes/kubelet_volume_stats_capacity_bytes)*100 >= 80) by (namespace,node,persistentvolumeclaim)
     labels:
       severity: warning
@@ -17,7 +16,6 @@ groups:
       description: Disk space utilization of persistent volume claim is at CRITICAL
         level.
       summary: Persistent volume disk utilization >= 90
-      value: '{{ printf "%.2f" $value }}%'
     expr: group(100 > (kubelet_volume_stats_used_bytes/kubelet_volume_stats_capacity_bytes)*100 >= 90) by (namespace,node,persistentvolumeclaim)
     labels:
       severity: critical
@@ -27,7 +25,6 @@ groups:
       description: Disk space utilization of persistent volume claim is at CRITICAL
         level.
       summary: Persistent volume disk full
-      value: '{{ printf "%.2f" $value }}%'
     expr: group((kubelet_volume_stats_used_bytes/kubelet_volume_stats_capacity_bytes)*100
       == 100) by (namespace,node,persistentvolumeclaim)
     labels:

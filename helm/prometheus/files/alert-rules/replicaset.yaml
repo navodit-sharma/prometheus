@@ -9,4 +9,3 @@ groups:
     annotations:
       summary: Kubernetes ReplicasSet mismatch
       description: "Number of ready replicas for replicaset {{ $labels.replicaset }} does not match the desired number of replicas for last 10m."
-      value: '{{ printf "%.2f" $value }}'
