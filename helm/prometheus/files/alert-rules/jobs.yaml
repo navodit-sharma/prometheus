@@ -9,7 +9,6 @@ groups:
     annotations:
       summary: Kubernetes Job failed
       description: "Job {{$labels.namespace}}/{{$labels.job_name}} failed to complete."
-      value: '{{ printf "%.2f" $value }}'
   # - alert: KubernetesCronjobSuspended
   #   expr: kube_cronjob_spec_suspend != 0
   #   for: 0m
@@ -26,7 +25,6 @@ groups:
     annotations:
       summary: Kubernetes CronJob too long
       description: "CronJob {{ $labels.namespace }}/{{ $labels.cronjob }} is taking more than 6h to complete."
-      value: '{{ printf "%.2f" $value }}'
   - alert: KubernetesJobSlowCompletion
     expr: kube_job_spec_completions - kube_job_status_succeeded > 0
     for: 12h
