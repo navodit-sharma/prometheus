@@ -1,11 +1,9 @@
 ---
 
 global:
-  grafanaAdminPassword: "notInUse-random-value-to-pass-schema-validation"
-  smtpApiKey: "notInUse-random-value-to-pass-schema-validation"
-  slackApiUrl: "notInUse-random-value-to-pass-schema-validation"
   externalDomain: "ersolab-monitor.valamis.io"
   smtpDestinationAddress: "navodit.sharma@valamis.com"
+  smtpDestinationAddressAnalytics: "navsharma0491@gmail.com, navodit.u.sharma@gmail.com"
   web:
     ssl:
       enabled: true
@@ -76,20 +74,40 @@ kube-prometheus-stack:
           headers:
             From: Valamis Alert Manager<alerts@valamis.com>
             Subject: '{{`{{`}}`{{`{{`}}`}} .CommonLabels.alertname {{`{{`}}`}}`{{`}}`}} - [ Cluster = {{`{{`}}`{{`{{`}}`}} .CommonLabels.cluster {{`{{`}}`}}`{{`}}`}} ]'
-            To: "{{ .Values.global.smtpDestinationAddress }}"
           html: '{{`{{`}}`{{`{{`}}`}} template "email.default.html" . {{`{{`}}`}}`{{`}}`}}'
           {{- else }}
           auth_password: {{ .Values.global.smtpApiKey }}
           headers:
             From: Valamis Alert Manager<alerts@valamis.com>
             Subject: '{{`{{`}} .CommonLabels.alertname {{`}}`}} - [ Cluster = {{`{{`}} .CommonLabels.cluster {{`}}`}} ]'
-            To: "{{ .Values.global.smtpDestinationAddress }}"
           html: ''{{`{{`}} template "email.default.html" . {{`}}`}}''
           {{- end }}
           require_tls: true
           send_resolved: false
           smarthost: smtp.sendgrid.net:587
           to: "{{ .Values.global.smtpDestinationAddress }}"
+      - name: email-analytics
+        email_configs:
+        - auth_identity: apikey
+          auth_username: apikey
+          from: alerts@valamis.com
+          {{- if and (.Values.global.web.ssl.externalSecret.enabled) (.Values.global.web.ssl.externalSecret.esoMigrated) }}
+          auth_password: {{`{{`}} .smtpapikey {{`}}`}}
+          headers:
+            From: Valamis Alert Manager<alerts@valamis.com>
+            Subject: '{{`{{`}}`{{`{{`}}`}} .CommonLabels.alertname {{`{{`}}`}}`{{`}}`}} - [ Cluster = {{`{{`}}`{{`{{`}}`}} .CommonLabels.cluster {{`{{`}}`}}`{{`}}`}} ]'
+          html: '{{`{{`}}`{{`{{`}}`}} template "email.default.html" . {{`{{`}}`}}`{{`}}`}}'
+          {{- else }}
+          auth_password: {{ .Values.global.smtpApiKey }}
+          headers:
+            From: Valamis Alert Manager<alerts@valamis.com>
+            Subject: '{{`{{`}} .CommonLabels.alertname {{`}}`}} - [ Cluster = {{`{{`}} .CommonLabels.cluster {{`}}`}} ]'
+          html: ''{{`{{`}} template "email.default.html" . {{`}}`}}''
+          {{- end }}
+          require_tls: true
+          send_resolved: false
+          smarthost: smtp.sendgrid.net:587
+          to: "{{ .Values.global.smtpDestinationAddressAnalytics }}"
       - name: slack
         slack_configs:
         - channel: '#prometheus-alerts'
@@ -125,11 +143,17 @@ kube-prometheus-stack:
         group_by: [alertname]
         routes:
         - receiver: email-support
+          continue: true
           matchers:
-          - alertname=~"KubernetesClientCertificateExpiresNextWeek|KubernetesClientCertificateExpiresSoon|KubernetesNodeNotReady|PersistentVolumeUtilizationHigh|PersistentVolumeUtilizationCritical|PersistentVolumeFull|PersistentvolumeclaimPending|PersistentvolumeError|KubernetesContainerOomKilled|KubernetesDaemonsetRolloutStuck|KubernetesDeploymentReplicasMismatch|KafkaTopicsReplicasNotInSync|KafkaConsumerLag|KafkaConsumerLagAnalytics|KubernetesPodNotReady|KubernetesPodPending|KubernetesPodFailed|KubernetesPodStateUnknown|KubernetesPodCrashLoop"
+          - alertname=~"KubernetesClientCertificateExpiresNextWeek|KubernetesClientCertificateExpiresSoon|KubernetesContainerOomKilled|KubernetesDaemonsetRolloutStuck|KubernetesDeploymentReplicasMismatch|KubernetesJobFailed|KafkaTopicsReplicasNotInSync|KafkaConsumerLag|KafkaConsumerLagAnalytics|KubernetesNodeNotReady|KubernetesMemoryPressure|KubernetesDiskPressure|KubernetesOutOfDisk|KubernetesOutOfCapacity|PersistentVolumeUtilizationHigh|PersistentVolumeUtilizationCritical|PersistentVolumeFull|PersistentvolumeclaimPending|PersistentvolumeError|KubernetesPodPending|KubernetesPodFailed|KubernetesPodCrashLoop|KubernetesReplicassetMismatch|KubernetesStatefulsetReplicaDown|KubernetesStatefulsetReplicasMismatch|KubernetesStatefulsetUpdateNotRolledOut"
+        - receiver: email-analytics
+          continue: true
+          matchers:
+          - alertname=~"KafkaConsumerLagAnalytics"
         - receiver: slack
+          continue: true
           matchers:
-          - alertname=~"KubernetesClientCertificateExpiresNextWeek|KubernetesClientCertificateExpiresSoon|KubernetesNodeNotReady|PersistentVolumeUtilizationHigh|PersistentVolumeUtilizationCritical|PersistentVolumeFull|PersistentvolumeclaimPending|PersistentvolumeError|KubernetesContainerOomKilled|KubernetesDaemonsetRolloutStuck|KubernetesDeploymentReplicasMismatch|KubernetesReplicassetMismatch|KafkaTopicsReplicasNotInSync|KafkaConsumerLag|KafkaConsumerLagAnalytics|KubernetesPodNotReady|KubernetesPodPending|KubernetesPodFailed|KubernetesPodStateUnknown|KubernetesPodCrashLoop"
+          - alertname=~"KubernetesClientCertificateExpiresNextWeek|KubernetesClientCertificateExpiresSoon|KubernetesContainerOomKilled|KubernetesDaemonsetRolloutStuck|KubernetesDeploymentReplicasMismatch|KubernetesJobFailed|KubernetesNodeNotReady|PersistentVolumeUtilizationCritical|PersistentVolumeFull|PersistentvolumeclaimPending|PersistentvolumeError|KubernetesPodPending|KubernetesPodFailed|KubernetesPodCrashLoop|KubernetesReplicassetMismatch|KubernetesStatefulsetReplicaDown|KubernetesStatefulsetReplicasMismatch|KubernetesStatefulsetUpdateNotRolledOut"
       templates:
       - /etc/alertmanager/config/*.tmpl
     alertmanagerSpec:
