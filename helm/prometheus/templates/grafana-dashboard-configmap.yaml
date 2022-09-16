@@ -1,4 +1,4 @@
-{{- if $.Values.customResources.grafanaCustomDashboard.create -}}
+{{- if and (index $.Values.global "kube-prometheus-stack" "enabled") (index $.Values "kube-prometheus-stack" "grafana" "enabled") ($.Values.customResources.grafanaCustomDashboard.create) -}}
 {{ $releasename := .Release.Name }}
 {{ $releasenamespace := .Release.Namespace }}
 {{ range $path, $_ := .Files.Glob "files/dashboards/*.json" }}
