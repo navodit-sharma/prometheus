@@ -1,4 +1,4 @@
-{{- if $.Values.customResources.prometheusCustomAlertRules.create -}}
+{{- if and (index $.Values.global "kube-prometheus-stack" "enabled") ($.Values.customResources.prometheusCustomAlertRules.create) -}}
 {{ $releasename := .Release.Name }}
 {{ $releasenamespace := .Release.Namespace }}
 {{ range $ruleName, $_ := $.Values.customResources.prometheusCustomAlertRules.rules }}
