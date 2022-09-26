@@ -3,6 +3,7 @@ kube-prometheus-stack:
     additionalServiceMonitors:
     - name: "bookmarks-service"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": bookmarks-service
       selector:
         matchLabels:
@@ -15,6 +16,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "bookmarks-ui"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": bookmarks-ui
       selector:
         matchLabels:
@@ -27,6 +29,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "certificates-ui"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": certificates-ui
       selector:
         matchLabels:
@@ -39,6 +42,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "course-result"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": course-result
       selector:
         matchLabels:
@@ -51,6 +55,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "courses-ui"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": courses-ui
       selector:
         matchLabels:
@@ -63,6 +68,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "ecommerce-service"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": ecommerce-service
       selector:
         matchLabels:
@@ -75,6 +81,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "ecommerce-ui"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": ecommerce-ui
       selector:
         matchLabels:
@@ -87,6 +94,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "ecommerce-mediator"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": ecommerce-mediator
       selector:
         matchLabels:
@@ -99,6 +107,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "etherpad"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": etherpad
       selector:
         matchLabels:
@@ -111,6 +120,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "gradebook-overview-result"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": gradebook-overview-result
       selector:
         matchLabels:
@@ -123,6 +133,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "gradebook-notifier"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": gradebook-notifier
       selector:
         matchLabels:
@@ -135,6 +146,7 @@ kube-prometheus-stack:
           path: /metrics/http
     - name: "grading-service"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": grading-service
       selector:
         matchLabels:
@@ -147,6 +159,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "grading-ui"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": grading-ui
       selector:
         matchLabels:
@@ -159,6 +172,7 @@ kube-prometheus-stack:
           path: /metrics
     # - name: "gradebook-ui"
     #   additionalLabels:
+    #     prometheus-target-discovery: enabled
     #     "app.kubernetes.io/name": gradebook-ui
     #   selector:
     #     matchLabels:
@@ -171,6 +185,7 @@ kube-prometheus-stack:
     #       path: /metrics
     # - name: "integrations-ui"
     #   additionalLabels:
+    #     prometheus-target-discovery: enabled
     #     "app.kubernetes.io/name": integrations-ui
     #   selector:
     #     matchLabels:
@@ -183,6 +198,7 @@ kube-prometheus-stack:
     #       path: /metrics
     - name: "invitation-links-service"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": invitation-links-service
       selector:
         matchLabels:
@@ -195,6 +211,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "invitation-links-ui"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": invitation-links-ui
       selector:
         matchLabels:
@@ -207,6 +224,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "kafka-exporter"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": kafka-exporter
       selector:
         matchLabels:
@@ -221,6 +239,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "learning-paths-ui"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": learning-paths-ui
       selector:
         matchLabels:
@@ -233,6 +252,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "lesson-studio-content"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": lesson-studio-content
       selector:
         matchLabels:
@@ -245,6 +265,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "lesson-studio-document-importer"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": lesson-studio-document-importer
       selector:
         matchLabels:
@@ -257,6 +278,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "lesson-studio-lesson-importer"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": lesson-studio-lesson-importer
       selector:
         matchLabels:
@@ -269,6 +291,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "lesson-studio-slides"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": lesson-studio-slides
       selector:
         matchLabels:
@@ -281,6 +304,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "lesson-studio-theme"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": lesson-studio-theme
       selector:
         matchLabels:
@@ -293,6 +317,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "lessons-ui"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": lessons-ui
       selector:
         matchLabels:
@@ -305,6 +330,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "lessons-service"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": lessons-service
       selector:
         matchLabels:
@@ -317,6 +343,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "lrs"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": lrs
       selector:
         matchLabels:
@@ -329,6 +356,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "lrs-jdbc-statement-id-storage"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": lrs-jdbc-statement-id-storage
       selector:
         matchLabels:
@@ -341,6 +369,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "lrs-main"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": lrs-main
       selector:
         matchLabels:
@@ -353,6 +382,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "lrs-statements-rdbms"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": lrs-statements-rdbms
       selector:
         matchLabels:
@@ -365,6 +395,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "messaging-tool-service"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": messaging-service
       selector:
         matchLabels:
@@ -377,6 +408,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "messaging-ui"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": messaging-ui
       selector:
         matchLabels:
@@ -389,6 +421,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "profile-ui"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": profile-ui
       selector:
         matchLabels:
@@ -401,6 +434,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "ribbons-ui"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": recommendations-ui
       selector:
         matchLabels:
@@ -413,6 +447,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "reports-kibana-proxy"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": reports-kibana-proxy
       selector:
         matchLabels:
@@ -425,6 +460,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "study-summary-ui"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": study-summary-ui
       selector:
         matchLabels:
@@ -437,6 +473,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "training-events-ui"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": training-events-ui
       selector:
         matchLabels:
@@ -449,6 +486,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "valbo-admin"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": valbo-admin
       selector:
         matchLabels:
@@ -461,6 +499,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: "valbo-chat"
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": valbo-chat
       selector:
         matchLabels:
@@ -473,6 +512,7 @@ kube-prometheus-stack:
           path: /metrics
     - name: logging-fluent-bit
       additionalLabels:
+        prometheus-target-discovery: enabled
         "app.kubernetes.io/name": fluent-bit
       selector:
         matchLabels:
