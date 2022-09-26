@@ -1,8 +1,8 @@
 apiVersion: v2
-appVersion: "4.0.4"
+appVersion: "4.0.5"
 description: "Prometheus - Monitoring tool for Kubernetes"
 name: prometheus
-version: 4.0.4
+version: 4.0.5
 dependencies:
   - name: kube-prometheus-stack
     version: 36.2.0
