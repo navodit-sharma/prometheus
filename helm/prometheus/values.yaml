@@ -1,0 +1,737 @@
+---
+
+global:
+  platform: onprem
+  emissary-ingress:
+    enabled: true
+  kube-prometheus-stack:
+    enabled: true
+  prometheus-elasticsearch-exporter:
+    enabled: true
+  prometheus-postgres-exporter:
+    enabled: true
+  grafanaAdminPassword: 'change-me-if-not-using-external-secret'
+  postgres:
+    password: 'change-me-if-not-using-external-secret'
+  smtpApiKey: 'change-me-if-not-using-external-secret'
+  slackApiUrl: 'change-me-if-not-using-external-secret'
+  externalDomain: 'change-me'
+  smtpDestinationAddress: abc@xyz.com
+  web:
+    ssl:
+      enabled: true
+      letsencrypt:
+        # NOTE : With letsencrypt enabled, no IP restriction is applied to secure prometheus from the internet.
+        enabled: false
+        server: "https://acme-v02.api.letsencrypt.org/directory"
+        issuerEmail: "{{ .Values.global.smtpDestinationAddress }}"
+        preferredRootChain: "ISRG Root X1"
+      externalSecret:
+        enabled: false
+        esoMigrated: false
+        backendType: "azureKeyVault"
+        keyVaultName:
+      default:
+        selfsigned:
+          cert: |
+            -----BEGIN CERTIFICATE-----
+            MIIC7jCCAdYCCQDoXBD8lP1FWjANBgkqhkiG9w0BAQsFADA5MQswCQYDVQQGEwJm
+            aTEQMA4GA1UECgwHdmFsYW1pczEYMBYGA1UEAwwPbW9jay52YWxhbWlzLmlvMB4X
+            DTE5MDIxMzE3NTAwNVoXDTIwMDIxMzE3NTAwNVowOTELMAkGA1UEBhMCZmkxEDAO
+            BgNVBAoMB3ZhbGFtaXMxGDAWBgNVBAMMD21vY2sudmFsYW1pcy5pbzCCASIwDQYJ
+            KoZIhvcNAQEBBQADggEPADCCAQoCggEBANGKFDTmSbAYWrogobLayIvFkhSzaGz1
+            lOxSQEHsC0fBvyJiKISLuF4JLf3I5PfVgQXwLUQBkRdxmk3SO5Zr78zQU7G5LCN5
+            /OMOQhf4d20F62enYLvpYL0642UlJS9YFdl5LTqrtu41kqHnoMtFB4i2cKAl7pP9
+            AbNWRRS5eFU5rLo0BJkQ/S2WO98OsRvBUGYWbb0Ucf5QwW6TJ2sZPm27mirjBQnX
+            sR79fdSdjGnkL8w4QBlWQPOztSOjvLtKfym0Ls7EJDIwUsarRNvZPhJhwThM9EFj
+            DXy+OWrb2mSDkgn1CW18Le8T0h2C8Tv9KR+mmGzb28ATVjA9XLWhXk0CAwEAATAN
+            BgkqhkiG9w0BAQsFAAOCAQEAx3ZOZlcX+GYvHF0hmLVp/gyLRdIdFqBoO79FeFtk
+            14ZDj4ZJA3RQwLbFUzyi1jpUUKQ7tOMEFav69proJBXRb/TDuHUZUXIP5I6lkgnp
+            LAaDwUlJirTs4HWlGvhkp/tSyYRWi/GPocilgxXSghUK6Af2XEWjhHg4dhkgsEbD
+            jSgiJvvWb6TJLe7pZf0XlSZyyq6mjzyG2tsU3mmB4TpnUiczbhuFyp7cL+qqsUjG
+            JYorZSd2s2RWo6i7zqSTALl5VUkzwkoEEl6VeeITNewKsf/SLbXNE2LwOOWa6Zo4
+            +sDzgxedV3tbU6px7pF/OLUtPYsBcdPbTrPv6Ebf8JHhIA==
+            -----END CERTIFICATE-----
+          key: |
+            -----BEGIN RSA PRIVATE KEY-----
+            MIIEowIBAAKCAQEA0YoUNOZJsBhauiChstrIi8WSFLNobPWU7FJAQewLR8G/ImIo
+            hIu4Xgkt/cjk99WBBfAtRAGRF3GaTdI7lmvvzNBTsbksI3n84w5CF/h3bQXrZ6dg
+            u+lgvTrjZSUlL1gV2XktOqu27jWSoeegy0UHiLZwoCXuk/0Bs1ZFFLl4VTmsujQE
+            mRD9LZY73w6xG8FQZhZtvRRx/lDBbpMnaxk+bbuaKuMFCdexHv191J2MaeQvzDhA
+            GVZA87O1I6O8u0p/KbQuzsQkMjBSxqtE29k+EmHBOEz0QWMNfL45atvaZIOSCfUJ
+            bXwt7xPSHYLxO/0pH6aYbNvbwBNWMD1ctaFeTQIDAQABAoIBADSjy4++iqSCecho
+            ija0X809RQWOTJ2S1GbKAvqMogjU039/yU4DC74T8EnhPiRErrUfMT/0ZM7O60TB
+            m9aeJw/9BgmPy1bePnmMC26aLOZmpkzT76lFZ9giAx5VxpGuP07y8jnbCYmuS7gA
+            yJRIMyxVKNYSsWzcEqFK+u/J6EEAV62hb9CIfu9+ZhnSEPuEKfS8cQz7KZ5k42KG
+            JtxLPjR06ODWZaVW75+ivGrXpBuc9qFIi6Ari+L6mti5wLz0v2vA4x0gYu1dWGPj
+            BawyqnyCh/3ngglsca8Eofn50K539Y9D7aMcC/lJQR878ZBQ6hL7UT1aOXNSt3Jc
+            S490SsECgYEA8+3cY4gpXJq25So0WKDOw6iH8iUnOby/p8hl5J1gk9BrtXXw6nzQ
+            0Ws5uQ3otxN9jeFZH1wMfyKNOz3tXEoDax6hwxNfgO+fl9H7FK4gZnPALr0p+Hp1
+            sX/6oLKntaCltqqIe1gC4iHemCBfIG5NsHQIV/Ti4VNWPCshlu+cuOsCgYEA2+iP
+            5PQqT1hzB7a3WQPytqWS3vYGvfQ3wjXTjWaxCicXNjgRGd7uKruwbL5u8ObtsCAf
+            3DAdiN48J39j4bTcp5CqMorTWKjP1Q8hfFGqjr0HgQ8r8NDm94x2tNqZ+tcjNJMG
+            GonBNZOoQJL0SQZetBHI+i0oo6MIkJyPfXFu96cCgYEA7ryobMnBIZ9SzeuGnA+X
+            DiwOEdKHF51CPuaFw0C8Wy8rm8g46GcMwUoejp2sXDI5OfmKDoU6vduFOqwbea3+
+            toKec5ysZjcgjai4Ar+BeoRjXdtKDqVcN0M4ersgJUV7qtIxDfdPqx7XCzDzqXwL
+            kV2fJObKfxnfVrgoAd+2Fc0CgYBcu3ESZzQASZgYRKCEVPngs2l/w9eL+pQYvYH8
+            OrWlRl6vam0rr6pXMtZuxM8bnwXUI3fL7i5GLRDIxxtjblUuA/8BWTFOTcF2Yu8H
+            8ZguoN+tOKya3DzJXt4f3Z7Y/CfIX8dPIY/r+9wTfuSsdpcw798EQE7G0lUmRh7s
+            Ew1sOQKBgDfjj7TbnLYFqTTZs7btbSxAu7l7ebyPREJ8vaAK6lAiI381Fh9Nedrs
+            HBJOUzIKthHGmoCSwWP6HnED91uDROlIVOeyjBVMPgut/qujEcw/+GrHkOvApvAY
+            TcRAknkHaIlzPGf4ZSJpK2AP2px9s4cbC7o/1KZrcLKgla0KPNbi
+            -----END RSA PRIVATE KEY-----
+
+emissary-ingress:
+  replicaCount: 1
+  ambassadorConfig  : ""
+  authService:
+    create: false
+    optional_configurations: null
+  crds:
+    create: false
+    enabled: true
+    keep: true
+  createDevPortalMappings: false
+  daemonSet: false
+  deploymentStrategy:
+    type: RollingUpdate
+  enableAES: false
+  priorityClassName: ""
+  rateLimit:
+    create: false
+  rbac:
+    create: true
+  redis:
+    create: false
+  resources:
+    limits:
+      cpu: 300m
+      memory: 500Mi
+    requests:
+      cpu: 300m
+      memory: 500Mi
+  scope:
+    singleNamespace: true
+  service:
+    type: LoadBalancer
+    loadBalancerIP:
+    externalTrafficPolicy: "Local"
+  customModule:
+    ipWhitelist:
+      enabled: true
+    config:
+      custom: |-
+        server_name: unknown
+      ipWhitelist: |-
+        ip_allow:
+        - peer: 127.0.0.1
+        - remote: 62.165.181.190
+        - remote: 62.183.141.126
+        - remote: 62.183.141.134
+        - remote: 62.183.141.142
+        - remote: 217.77.48.197
+
+prometheus-elasticsearch-exporter:
+  es:
+    uri: "http://aux-elasticsearch-master.shared.svc.cluster.local:9200"
+    cluster_settings: true
+  resources:
+    requests:
+      cpu: 300m
+      memory: 256Mi
+    limits:
+      cpu: 300m
+      memory: 256Mi
+  priorityClassName: ""
+  serviceMonitor:
+    enabled: true
+
+prometheus-postgres-exporter:
+  serviceMonitor:
+    enabled: true
+    labels:
+      release: monitor
+    interval: 30s
+    timeout: 15s
+  prometheusRule:
+    enabled: false
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  rbac:
+    create: true
+    pspEnabled: true
+  config:
+    datasource:
+      host:
+      user:
+      passwordSecret:
+        name: postgres-config-secret
+        key: postgres-monitor-password
+      port: "5432"
+      database: 'postgres'
+      sslmode: disable
+      extraParams: ''
+    queries: |-
+      pg_replication:
+        query: "SELECT CASE WHEN NOT pg_is_in_recovery() THEN 0 ELSE GREATEST (0, EXTRACT(EPOCH FROM (now() - pg_last_xact_replay_timestamp()))) END AS lag"
+        master: true
+        metrics:
+          - lag:
+              usage: "GAUGE"
+              description: "Replication lag behind master in seconds"
+      pg_postmaster:
+        query: "SELECT pg_postmaster_start_time as start_time_seconds from pg_postmaster_start_time()"
+        master: true
+        metrics:
+          - start_time_seconds:
+              usage: "GAUGE"
+              description: "Time at which postmaster started"
+      pg_stat_user_tables:
+        query: |
+          SELECT
+            current_database() datname,
+            schemaname,
+            relname,
+            seq_scan,
+            seq_tup_read,
+            idx_scan,
+            idx_tup_fetch,
+            n_tup_ins,
+            n_tup_upd,
+            n_tup_del,
+            n_tup_hot_upd,
+            n_live_tup,
+            n_dead_tup,
+            n_mod_since_analyze,
+            COALESCE(last_vacuum, '1970-01-01Z') as last_vacuum,
+            COALESCE(last_autovacuum, '1970-01-01Z') as last_autovacuum,
+            COALESCE(last_analyze, '1970-01-01Z') as last_analyze,
+            COALESCE(last_autoanalyze, '1970-01-01Z') as last_autoanalyze,
+            vacuum_count,
+            autovacuum_count,
+            analyze_count,
+            autoanalyze_count
+          FROM
+            pg_stat_user_tables
+        metrics:
+          - datname:
+              usage: "LABEL"
+              description: "Name of current database"
+          - schemaname:
+              usage: "LABEL"
+              description: "Name of the schema that this table is in"
+          - relname:
+              usage: "LABEL"
+              description: "Name of this table"
+          - seq_scan:
+              usage: "COUNTER"
+              description: "Number of sequential scans initiated on this table"
+          - seq_tup_read:
+              usage: "COUNTER"
+              description: "Number of live rows fetched by sequential scans"
+          - idx_scan:
+              usage: "COUNTER"
+              description: "Number of index scans initiated on this table"
+          - idx_tup_fetch:
+              usage: "COUNTER"
+              description: "Number of live rows fetched by index scans"
+          - n_tup_ins:
+              usage: "COUNTER"
+              description: "Number of rows inserted"
+          - n_tup_upd:
+              usage: "COUNTER"
+              description: "Number of rows updated"
+          - n_tup_del:
+              usage: "COUNTER"
+              description: "Number of rows deleted"
+          - n_tup_hot_upd:
+              usage: "COUNTER"
+              description: "Number of rows HOT updated (i.e., with no separate index update required)"
+          - n_live_tup:
+              usage: "GAUGE"
+              description: "Estimated number of live rows"
+          - n_dead_tup:
+              usage: "GAUGE"
+              description: "Estimated number of dead rows"
+          - n_mod_since_analyze:
+              usage: "GAUGE"
+              description: "Estimated number of rows changed since last analyze"
+          - last_vacuum:
+              usage: "GAUGE"
+              description: "Last time at which this table was manually vacuumed (not counting VACUUM FULL)"
+          - last_autovacuum:
+              usage: "GAUGE"
+              description: "Last time at which this table was vacuumed by the autovacuum daemon"
+          - last_analyze:
+              usage: "GAUGE"
+              description: "Last time at which this table was manually analyzed"
+          - last_autoanalyze:
+              usage: "GAUGE"
+              description: "Last time at which this table was analyzed by the autovacuum daemon"
+          - vacuum_count:
+              usage: "COUNTER"
+              description: "Number of times this table has been manually vacuumed (not counting VACUUM FULL)"
+          - autovacuum_count:
+              usage: "COUNTER"
+              description: "Number of times this table has been vacuumed by the autovacuum daemon"
+          - analyze_count:
+              usage: "COUNTER"
+              description: "Number of times this table has been manually analyzed"
+          - autoanalyze_count:
+              usage: "COUNTER"
+              description: "Number of times this table has been analyzed by the autovacuum daemon"
+      pg_statio_user_tables:
+        query: "SELECT current_database() datname, schemaname, relname, heap_blks_read, heap_blks_hit, idx_blks_read, idx_blks_hit, toast_blks_read, toast_blks_hit, tidx_blks_read, tidx_blks_hit FROM pg_statio_user_tables"
+        metrics:
+          - datname:
+              usage: "LABEL"
+              description: "Name of current database"
+          - schemaname:
+              usage: "LABEL"
+              description: "Name of the schema that this table is in"
+          - relname:
+              usage: "LABEL"
+              description: "Name of this table"
+          - heap_blks_read:
+              usage: "COUNTER"
+              description: "Number of disk blocks read from this table"
+          - heap_blks_hit:
+              usage: "COUNTER"
+              description: "Number of buffer hits in this table"
+          - idx_blks_read:
+              usage: "COUNTER"
+              description: "Number of disk blocks read from all indexes on this table"
+          - idx_blks_hit:
+              usage: "COUNTER"
+              description: "Number of buffer hits in all indexes on this table"
+          - toast_blks_read:
+              usage: "COUNTER"
+              description: "Number of disk blocks read from this table's TOAST table (if any)"
+          - toast_blks_hit:
+              usage: "COUNTER"
+              description: "Number of buffer hits in this table's TOAST table (if any)"
+          - tidx_blks_read:
+              usage: "COUNTER"
+              description: "Number of disk blocks read from this table's TOAST table indexes (if any)"
+          - tidx_blks_hit:
+              usage: "COUNTER"
+              description: "Number of buffer hits in this table's TOAST table indexes (if any)"
+      pg_stat_statements:
+        query: "SELECT t2.rolname, t3.datname, queryid, calls, total_time / 1000 as total_time_seconds, min_time / 1000 as min_time_seconds, max_time / 1000 as max_time_seconds, mean_time / 1000 as mean_time_seconds, stddev_time / 1000 as stddev_time_seconds, rows, shared_blks_hit, shared_blks_read, shared_blks_dirtied, shared_blks_written, local_blks_hit, local_blks_read, local_blks_dirtied, local_blks_written, temp_blks_read, temp_blks_written, blk_read_time / 1000 as blk_read_time_seconds, blk_write_time / 1000 as blk_write_time_seconds FROM pg_stat_statements t1 JOIN pg_roles t2 ON (t1.userid = t2.oid) JOIN pg_database t3 ON (t1.dbid = t3.oid) WHERE t2.rolname != 'rdsadmin' AND queryid IS NOT NULL"
+        master: true
+        metrics:
+          - rolname:
+              usage: "LABEL"
+              description: "Name of user"
+          - datname:
+              usage: "LABEL"
+              description: "Name of database"
+          - queryid:
+              usage: "LABEL"
+              description: "Query ID"
+          - calls:
+              usage: "COUNTER"
+              description: "Number of times executed"
+          - total_time_seconds:
+              usage: "COUNTER"
+              description: "Total time spent in the statement, in milliseconds"
+          - min_time_seconds:
+              usage: "GAUGE"
+              description: "Minimum time spent in the statement, in milliseconds"
+          - max_time_seconds:
+              usage: "GAUGE"
+              description: "Maximum time spent in the statement, in milliseconds"
+          - mean_time_seconds:
+              usage: "GAUGE"
+              description: "Mean time spent in the statement, in milliseconds"
+          - stddev_time_seconds:
+              usage: "GAUGE"
+              description: "Population standard deviation of time spent in the statement, in milliseconds"
+          - rows:
+              usage: "COUNTER"
+              description: "Total number of rows retrieved or affected by the statement"
+          - shared_blks_hit:
+              usage: "COUNTER"
+              description: "Total number of shared block cache hits by the statement"
+          - shared_blks_read:
+              usage: "COUNTER"
+              description: "Total number of shared blocks read by the statement"
+          - shared_blks_dirtied:
+              usage: "COUNTER"
+              description: "Total number of shared blocks dirtied by the statement"
+          - shared_blks_written:
+              usage: "COUNTER"
+              description: "Total number of shared blocks written by the statement"
+          - local_blks_hit:
+              usage: "COUNTER"
+              description: "Total number of local block cache hits by the statement"
+          - local_blks_read:
+              usage: "COUNTER"
+              description: "Total number of local blocks read by the statement"
+          - local_blks_dirtied:
+              usage: "COUNTER"
+              description: "Total number of local blocks dirtied by the statement"
+          - local_blks_written:
+              usage: "COUNTER"
+              description: "Total number of local blocks written by the statement"
+          - temp_blks_read:
+              usage: "COUNTER"
+              description: "Total number of temp blocks read by the statement"
+          - temp_blks_written:
+              usage: "COUNTER"
+              description: "Total number of temp blocks written by the statement"
+          - blk_read_time_seconds:
+              usage: "COUNTER"
+              description: "Total time the statement spent reading blocks, in milliseconds (if track_io_timing is enabled, otherwise zero)"
+          - blk_write_time_seconds:
+              usage: "COUNTER"
+              description: "Total time the statement spent writing blocks, in milliseconds (if track_io_timing is enabled, otherwise zero)"
+      pg_stat_activity_idle:
+        query: |
+          WITH
+            metrics AS (
+              SELECT
+                application_name,
+                SUM(EXTRACT(EPOCH FROM (CURRENT_TIMESTAMP - state_change))::bigint)::float AS process_seconds_sum,
+                COUNT(*) AS process_seconds_count
+              FROM pg_stat_activity
+              WHERE state = 'idle'
+              GROUP BY application_name
+            ),
+            buckets AS (
+              SELECT
+                application_name,
+                le,
+                SUM(
+                  CASE WHEN EXTRACT(EPOCH FROM (CURRENT_TIMESTAMP - state_change)) <= le
+                    THEN 1
+                    ELSE 0
+                  END
+                )::bigint AS bucket
+              FROM
+                pg_stat_activity,
+                UNNEST(ARRAY[1, 2, 5, 15, 30, 60, 90, 120, 300]) AS le
+              GROUP BY application_name, le
+              ORDER BY application_name, le
+            )
+          SELECT
+            application_name,
+            process_seconds_sum,
+            process_seconds_count,
+            ARRAY_AGG(le) AS process_seconds,
+            ARRAY_AGG(bucket) AS process_seconds_bucket
+          FROM metrics JOIN buckets USING (application_name)
+          GROUP BY 1, 2, 3
+        metrics:
+          - application_name:
+              usage: "LABEL"
+              description: "Application Name"
+          - process_seconds:
+              usage: "HISTOGRAM"
+              description: "Idle time of server processes"
+    disableDefaultMetrics: false
+    disableSettingsMetrics: false
+    autoDiscoverDatabases: false
+    excludeDatabases: []
+    includeDatabases: []
+    constantLabels: {}
+    logLevel: "error"
+
+customResources:
+  prometheusCustomAlertRules:
+    create: false
+    rules:
+      apiserver: true
+      container: true
+      daemonset: true
+      deployment: true
+      elasticsearch: true
+      jobs: true
+      kafka: true
+      node: true
+      persistent-volumes: true
+      pod: true
+      prometheus: true
+      replicaset: true
+      statefulset: true
+  grafanaCustomDashboard:
+    create: true
+
+kube-prometheus-stack:
+  kubeStateMetrics:
+    enabled: true
+  kubeControllerManager:
+    enabled: false
+  kubeEtcd:
+    enabled: false
+  kubeScheduler:
+    enabled: false
+  kubeProxy:
+    enabled: false
+  nameOverride: "prometheus"
+  fullnameOverride: ""
+  defaultRules:
+    create: false
+    rules: {}
+  additionalPrometheusRulesMap: {}
+  nodeExporter:
+    enabled: true
+  prometheus-node-exporter:
+    prometheus:
+      monitor:
+        enabled: true
+        relabelings:
+        - sourceLabels: [__meta_kubernetes_pod_node_name]
+          separator: ;
+          regex: ^(.*)$
+          targetLabel: node
+          replacement: $1
+          action: replace
+  alertmanager:
+    enabled: true
+    customConfig: |
+      global:
+        resolve_timeout: 5m
+      inhibit_rules:
+      - equal:
+        - namespace
+        - alertname
+        source_matchers:
+        - severity = critical
+        target_matchers:
+        - severity =~ warning|info
+      - equal:
+        - namespace
+        - alertname
+        source_matchers:
+        - severity = warning
+        target_matchers:
+        - severity = info
+      - equal:
+        - namespace
+        source_matchers:
+        - alertname = InfoInhibitor
+        target_matchers:
+        - severity = info
+      receivers:
+      - name: "null"
+      - name: email
+        email_configs:
+        - auth_identity: apikey
+          auth_username: apikey
+          from: abc@xyz.com
+          {{- if and (.Values.global.web.ssl.externalSecret.enabled) (.Values.global.web.ssl.externalSecret.esoMigrated) }}
+          auth_password: {{`{{`}} .smtpapikey {{`}}`}}
+          headers:
+            From: Alert Manager<abc@xyz.com>
+            Subject: '{{`{{`}}`{{`{{`}}`}} .CommonLabels.alertname {{`{{`}}`}}`{{`}}`}} - [ Cluster = {{`{{`}}`{{`{{`}}`}} .CommonLabels.cluster {{`{{`}}`}}`{{`}}`}} ]'
+          html: '{{`{{`}}`{{`{{`}}`}} template "email.default.html" . {{`{{`}}`}}`{{`}}`}}'
+          {{- else }}
+          auth_password: {{ .Values.global.smtpApiKey }}
+          headers:
+            From: Alert Manager<abc@xyz.com>
+            Subject: '{{`{{`}} .CommonLabels.alertname {{`}}`}} - [ Cluster = {{`{{`}} .CommonLabels.cluster {{`}}`}} ]'
+          html: '{{`{{`}} template "email.default.html" . {{`}}`}}'
+          {{- end }}
+          require_tls: true
+          send_resolved: false
+          smarthost: smtp.sendgrid.net:587
+          to: "{{ .Values.global.smtpDestinationAddress }}"
+      route:
+        receiver: "null"
+        group_wait: 30s
+        group_interval: 5m
+        repeat_interval: 24h
+        group_by: [alertname]
+        routes:
+        - receiver: email
+          matchers:
+          - alertname=~"KubernetesClientCertificateExpiresNextWeek|KubernetesClientCertificateExpiresSoon|KubernetesContainerOomKilled|KubernetesDaemonsetRolloutStuck|KubernetesDeploymentReplicasMismatch|KubernetesJobFailed|KafkaTopicsReplicasNotInSync|KafkaConsumerLag|KafkaConsumerLagAnalytics|KubernetesNodeNotReady|KubernetesMemoryPressure|KubernetesDiskPressure|KubernetesOutOfDisk|KubernetesOutOfCapacity|PersistentVolumeUtilizationHigh|PersistentVolumeUtilizationCritical|PersistentVolumeFull|PersistentvolumeclaimPending|PersistentvolumeError|KubernetesPodPending|KubernetesPodFailed|KubernetesPodCrashLoop|KubernetesReplicassetMismatch|KubernetesStatefulsetReplicaDown|KubernetesStatefulsetReplicasMismatch|KubernetesStatefulsetUpdateNotRolledOut"
+      templates:
+      - /etc/alertmanager/config/*.tmpl
+    alertmanagerSpec:
+      useExistingSecret: true
+      configSecret: "alertmanager-config-secret"
+      logLevel: error
+      retention: 360h
+      storage:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: "managed-premium"
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 5Gi
+      externalUrl:
+      # externalUrl : Dynamic value is not allowed for this variable, define it manually. ex.
+      # externalUrl: "http://{{ .Values.global.externalDomain }}/alertmanager"
+      routePrefix: /
+      priorityClassName: ""
+  grafana:
+    enabled: true
+    securityContext:
+      runAsUser: 472
+      runAsGroup: 0
+      fsGroup: 0
+    defaultDashboardsEnabled: false
+    adminUser:
+    adminPassword:
+    priorityClassName: ""
+    replicas: 1
+    resources:
+      limits:
+        cpu: 300m
+        memory: 256Mi
+      requests:
+        cpu: 300m
+        memory: 256Mi
+    nodeSelector: {}
+    tolerations: []
+    persistence:
+      enabled: true
+      type: statefulset
+      size: 10Gi
+      storageClassName: "managed-premium"
+      accessModes: ["ReadWriteOnce"]
+    admin:
+      existingSecret: "{{ .Release.Name }}-grafana-env-vars"
+      passwordKey: grafana-admin-password
+    env:
+      GF_SECURITY_ADMIN_USER: "admin"
+      GF_DATE_FORMATS_DEFAULT_TIMEZONE: "Europe/Helsinki"
+      GF_SMTP_ENABLED: "false"
+      GF_SMTP_USER: "apikey"
+      GF_SERVER_ROOT_URL: "http://{{ .Values.global.externalDomain }}"
+    envFromSecret: "{{ .Release.Name }}-grafana-env-vars"
+    dashboardProviders: {}
+    dashboards: {}
+    datasources: {}
+    sidecar:
+      resources:
+        limits:
+          cpu: 100m
+          memory: 100Mi
+        requests:
+          cpu: 50m
+          memory: 50Mi
+      skipTlsVerify: true
+      dashboards:
+        enabled: true
+        SCProvider: true
+        label: role
+        labelValue: grafana-dashboard
+        folder: /tmp/dashboards
+        defaultFolderName: null
+        searchNamespace: null
+        provider:
+          name: sidecarProvider
+          orgid: 1
+          folder: ''
+          type: file
+          disableDelete: false
+          allowUiUpdates: false
+          foldersFromFilesStructure: false
+      datasources:
+        enabled: true
+        defaultDatasourceEnabled: true
+        label: grafana_datasource
+        labelValue: "1"
+        initDatasources: true
+    grafana.ini:
+      paths:
+        data: /var/lib/grafana/data
+        logs: /var/log/grafana
+        plugins: /var/lib/grafana/plugins
+        provisioning: /etc/grafana/provisioning
+      security:
+        disable_brute_force_login_protection: false
+        cookie_secure: false
+        cookie_samesite: lax
+        strict_transport_security: false
+        x_content_type_options: true
+        x_xss_protection: true
+      snapshots:
+        external_enabled: false
+      dashboards:
+        default_home_dashboard_path: /tmp/dashboards/prometheus-alerts.json
+      users:
+        allow_sign_up: false
+        allow_org_create: false
+        auto_assign_org: true
+        auto_assign_org_id: 1
+        auto_assign_org_role: Viewer
+        verify_email_enabled: true
+        login_hint: "Username or Email"
+        default_theme: dark
+        viewers_can_edit: false
+        editors_can_admin: false
+      auth:
+        login_maximum_inactive_lifetime_days: 1
+        login_maximum_lifetime_days: 1
+      auth.anonymous:
+        enabled: false
+        hide_version: true
+        org_name: Visitors
+        org_role: Viewer
+      analytics:
+        reporting_enabled: false
+        check_for_updates: false
+      smtp:
+        host: "smtp.sendgrid.net:587"
+        from_address: abc@xyz.com
+        from_name: "Alert Manager"
+      log:
+        level: error
+        mode: console
+      grafana_net:
+        url: https://grafana.net
+  prometheusOperator:
+    enabled: true
+    admissionWebhooks:
+      patch:
+        priorityClassName: ""
+  prometheus:
+    enabled: true
+    prometheusSpec:
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 4096Mi
+        requests:
+          cpu: 1000m
+          memory: 4096Mi
+      scrapeInterval: "15s"
+      scrapeTimeout: "10s"
+      evaluationInterval: "15s"
+      externalLabels: {}
+      # This will be a Unique identifier for the Kubernetes cluster
+      # externalLabels:
+      #   cluster: "Sandbox"
+      ruleNamespaceSelector: {}
+      ruleSelector:
+        matchExpressions:
+          - key: role
+            operator: In
+            values:
+              - prometheus-alerting-rules
+              - prometheus-recording-rules
+      externalUrl: "https://{{ .Values.global.externalDomain }}/prometheus"
+      routePrefix: /
+      retention: 15d
+      logLevel: error
+      storageSpec:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: "managed-premium"
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 50Gi
+      priorityClassName: ""
+    additionalPodMonitors: []
+    additionalServiceMonitors: []
