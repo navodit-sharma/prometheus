@@ -10,4 +10,3 @@ helm/**/*-local*.yaml
 *.iml
 *.DS_Store
 **/extra/**
-helm/prometheus/values.yaml
