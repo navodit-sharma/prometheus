@@ -10,14 +10,3 @@ helm/**/*-local*.yaml
 *.iml
 *.DS_Store
 **/extra/**
-#
-#
-helm/prometheus/values.yaml
-sample/additional-servicemonitors.yaml
-azure-pipeline.yaml
-README.md
-CHANGELOG.md
-helm/prometheus/files/dashboards/app-kafka-consumer-group-lag-and-throughput.json
-helm/prometheus/files/dashboards/app-kafka-exporter-main.json
-helm/prometheus/files/dashboards/app-valamis-ui-containers-by-service.json
-helm/prometheus/files/alert-rules/kafka.yaml
