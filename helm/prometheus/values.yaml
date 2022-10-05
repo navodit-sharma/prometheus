@@ -122,14 +122,6 @@ emissary-ingress:
     config:
       custom: |-
         server_name: unknown
-      ipWhitelist: |-
-        ip_allow:
-        - peer: 127.0.0.1
-        - remote: 62.165.181.190
-        - remote: 62.183.141.126
-        - remote: 62.183.141.134
-        - remote: 62.183.141.142
-        - remote: 217.77.48.197
 
 prometheus-elasticsearch-exporter:
   es:
